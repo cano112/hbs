@@ -1,0 +1,4 @@
+rootProject.name = 'hbs'
+include 'hbs-core'
+include 'hbs-herd-model'
+
