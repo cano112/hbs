@@ -65,7 +65,7 @@ public class WebSocketListener extends EventListener {
 
     @Subscribe
     public void onError(WebSocketErrorEvent event) {
-        log.error("Error ocurred: "+ event.getException().getMessage());
+        log.error("Error ocurred: " + event.getException().getMessage());
     }
 
     @Subscribe

@@ -5,7 +5,8 @@ public class Body {
     private String color;
     private String kind;
 
-    public Body() {}
+    public Body() {
+    }
 
     public Body(Position position, String color, String kind) {
         this.position = position;

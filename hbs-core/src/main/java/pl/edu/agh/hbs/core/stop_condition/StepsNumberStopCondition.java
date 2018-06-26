@@ -22,7 +22,7 @@ public class StepsNumberStopCondition implements StopCondition {
 
     @Override
     public boolean isReached(String id) {
-        if(stateProvider.getStepsNumber(id) >= stepsLimit) {
+        if (stateProvider.getStepsNumber(id) >= stepsLimit) {
             eventBus.post(new StopConditionReachedEvent(id));
             return true;
         }

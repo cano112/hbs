@@ -28,7 +28,7 @@ public class StepRunner implements Runnable {
 
     @Override
     public void run() {
-        while(!stopCondition.isReached(areaId)) {
+        while (!stopCondition.isReached(areaId)) {
             step.beforeStep(areaId);
             step.step(areaId);
             step.afterStep(areaId);

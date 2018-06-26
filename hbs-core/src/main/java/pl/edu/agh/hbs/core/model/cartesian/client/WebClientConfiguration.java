@@ -8,7 +8,8 @@ public class WebClientConfiguration {
     private int width;
     private int height;
 
-    public WebClientConfiguration() {}
+    public WebClientConfiguration() {
+    }
 
     public WebClientConfiguration(int width, int height, AgentViewShape... shapes) {
         this.width = width;

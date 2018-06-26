@@ -10,8 +10,8 @@ import pl.edu.agh.age.compute.api.UnicastMessenger;
 import pl.edu.agh.age.compute.api.WorkerAddress;
 import pl.edu.agh.age.compute.api.topology.Topology;
 import pl.edu.agh.hbs.core.model.Area;
-import pl.edu.agh.hbs.core.runners.StepRunner;
 import pl.edu.agh.hbs.core.model.SimulationMap;
+import pl.edu.agh.hbs.core.runners.StepRunner;
 import pl.edu.agh.hbs.core.stop_condition.StopCondition;
 
 import java.io.Serializable;
@@ -73,6 +73,6 @@ public class SimulationTopologyConfigurer {
 
     @SuppressWarnings("unchecked")
     public <T extends Serializable> Topology<T> topology() {
-        return (Topology<T>)topology;
+        return (Topology<T>) topology;
     }
 }

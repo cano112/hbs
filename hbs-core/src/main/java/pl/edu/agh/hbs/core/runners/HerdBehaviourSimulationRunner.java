@@ -1,7 +1,5 @@
 package pl.edu.agh.hbs.core.runners;
 
-import static com.google.common.base.Preconditions.*;
-
 import com.google.common.util.concurrent.ListenableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +13,8 @@ import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class HerdBehaviourSimulationRunner implements Runnable {
 
