@@ -11,7 +11,7 @@
 
     <bean id="stopCondition" class="pl.edu.agh.hbs.core.stop_condition.StepsNumberStopCondition">
         <constructor-arg name="stateProvider" ref="simulationStateProvider"/>
-        <constructor-arg name="stepsLimit" value="5" />
+        <constructor-arg name="stepsLimit" value="5"/>
     </bean>
 
     <bean id="step" class="pl.edu.agh.hbs.core.steps.Cartesian2DAreaStep">
@@ -34,12 +34,19 @@
         </constructor-arg>
     </bean>
 
-    <bean id="simulationMap" class="pl.edu.agh.hbs.core.model.cartesian.Cartesian2DSimulationMap" >
+    <bean id="simulationMap" class="pl.edu.agh.hbs.core.model.cartesian.Cartesian2DSimulationMap">
         <constructor-arg>
             <list>
                 <bean id="area-1" class="pl.edu.agh.hbs.core.model.cartesian.Cartesian2DArea">
-                    <constructor-arg name="step" ref="step" />
-                    <constructor-arg name="areaId" value="area-1" />
+                    <constructor-arg name="step" ref="step"/>
+                    <constructor-arg name="areaId" value="area-1"/>
+                    <constructor-arg name="agents">
+                        <list>
+                            <bean id="agent1" class="pl.edu.agh.hbs.simulation.Human"/>
+                            <bean id="agent2" class="pl.edu.agh.hbs.simulation.Human"/>
+                            <bean id="agent3" class="pl.edu.agh.hbs.simulation.Human"/>
+                        </list>
+                    </constructor-arg>
                 </bean>
             </list>
         </constructor-arg>

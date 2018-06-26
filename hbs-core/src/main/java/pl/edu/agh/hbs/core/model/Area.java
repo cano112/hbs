@@ -20,6 +20,12 @@ public abstract class Area implements Serializable {
         this.agents = new LinkedList<>();
     }
 
+    public Area(String areaId, Step step, List<Agent> agents) {
+        this.areaId = areaId;
+        this.step = step;
+        this.agents = agents;
+    }
+
     public String getAreaId() {
         return areaId;
     }
