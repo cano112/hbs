@@ -38,4 +38,8 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
     public Area getAreaById(String areaId) {
         return areas.get(areaId);
     }
+
+    public void setAreaById(String areaId, Area area) {
+        areas.set(areaId, area);
+    }
 }
