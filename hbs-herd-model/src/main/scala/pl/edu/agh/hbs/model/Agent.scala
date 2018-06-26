@@ -22,7 +22,7 @@ abstract class Agent extends Serializable {
   }
 
   def takeAction(i: Int): Unit = {
-    actions(i)
+    actions(i).action(modifiers)
   }
 
 }

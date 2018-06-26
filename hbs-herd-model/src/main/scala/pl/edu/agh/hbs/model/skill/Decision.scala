@@ -2,7 +2,7 @@ package pl.edu.agh.hbs.model.skill
 
 import scala.collection.mutable.ListBuffer
 
-abstract class Decision {
+abstract class Decision extends Serializable {
 
   def priority: Int
 

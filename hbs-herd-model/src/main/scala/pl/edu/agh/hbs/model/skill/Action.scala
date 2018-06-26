@@ -2,7 +2,7 @@ package pl.edu.agh.hbs.model.skill
 
 import scala.collection.mutable.ListBuffer
 
-abstract class Action {
+abstract class Action extends Serializable {
 
   def stepsDuration: Int
 
