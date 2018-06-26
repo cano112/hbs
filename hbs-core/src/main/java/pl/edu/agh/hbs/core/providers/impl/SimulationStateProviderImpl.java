@@ -31,7 +31,7 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
     }
 
     public void incrementStepsNumber(String areaId) {
-        int currentVal = areaStepsCount.get(areaId);
+        final int currentVal = areaStepsCount.get(areaId);
         areaStepsCount.put(areaId, currentVal + 1);
     }
 

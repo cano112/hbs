@@ -9,9 +9,9 @@ import pl.edu.agh.hbs.core.providers.WebClientConfigProvider;
 public class WebClientConfigProviderImpl implements WebClientConfigProvider {
 
     private final ObjectMapper objectMapper;
+    private final AgentViewShape[] agentShapes;
     private final int width;
     private final int height;
-    private final AgentViewShape[] agentShapes;
 
     public WebClientConfigProviderImpl(ObjectMapper objectMapper,
                                        int width,

@@ -1,13 +1,15 @@
 package pl.edu.agh.hbs.core.steps;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.edu.agh.hbs.core.model.Area;
 import pl.edu.agh.hbs.core.model.cartesian.client.*;
-import pl.edu.agh.hbs.core.providers.impl.SimulationStateProviderImpl;
-import pl.edu.agh.hbs.core.websocket.SimulationWebSocketServer;
+import pl.edu.agh.hbs.core.model.events.FramePreparedEvent;
+import pl.edu.agh.hbs.core.model.events.StepCompletedEvent;
+import pl.edu.agh.hbs.core.providers.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Agent;
 import pl.edu.agh.hbs.model.skill.Modifier;
 import pl.edu.agh.hbs.model.skill.move.modifier.ModPosition;
@@ -17,21 +19,21 @@ import scala.runtime.AbstractFunction1;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+@Component("cartesianStep")
 public class Cartesian2DAreaStep implements Step {
 
-    private static final Logger log = LoggerFactory.getLogger(Step.class);
+    private static final Logger log = LoggerFactory.getLogger(Cartesian2DAreaStep.class);
 
-    private final SimulationStateProviderImpl stateProvider;
-    private final SimulationWebSocketServer webSocketServer;
-    private final ObjectMapper objectMapper;
+    private final EventBus eventBus;
+    private final SimulationStateProvider stateProvider;
 
-    public Cartesian2DAreaStep(final SimulationStateProviderImpl stateProvider,
-                               final SimulationWebSocketServer webSocketServer,
-                               final ObjectMapper objectMapper) {
-        this.stateProvider = stateProvider;
-        this.webSocketServer = webSocketServer;
-
-        this.objectMapper = objectMapper;
+    @Autowired
+    public Cartesian2DAreaStep(final EventBus eventBus,
+                               final SimulationStateProvider stateProvider) {
+        this.eventBus = checkNotNull(eventBus);
+        this.stateProvider = checkNotNull(stateProvider);
     }
 
     @Override
@@ -49,9 +51,7 @@ public class Cartesian2DAreaStep implements Step {
         Area area = stateProvider.getAreaById(areaId);
         List<Agent> agents = area.getAgents();
 
-        agents.forEach(agent -> {
-            agent.takeAction(agent.decide());
-        });
+        agents.forEach(agent -> agent.takeAction(agent.decide()));
 
         stateProvider.setAreaById(areaId, area);
     }
@@ -75,14 +75,7 @@ public class Cartesian2DAreaStep implements Step {
                     AgentViewShape.values()[0].getName()));
         });
 
-        Frame frame = new Frame(bodies);
-        try {
-            log.info("Frame: " + objectMapper.writeValueAsString(frame));
-            webSocketServer.broadcast(objectMapper.writeValueAsString(frame));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        stateProvider.incrementStepsNumber(areaId);
+        eventBus.post(new FramePreparedEvent(new Frame(bodies), areaId));
+        eventBus.post(new StepCompletedEvent(areaId));
     }
 }

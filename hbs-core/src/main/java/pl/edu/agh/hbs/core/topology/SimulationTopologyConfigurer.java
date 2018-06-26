@@ -30,8 +30,8 @@ public class SimulationTopologyConfigurer {
 
     private final IdGenerator idGenerator;
     private final IMap<Long, WorkerAddress> areaLocations;
-    private final IMap<String, Area> areaModels;
     private final IMap<String, Integer> stepsCount;
+    private final IMap<String, Area> areas;
 
     @Autowired
     @SuppressWarnings("unchecked")
@@ -46,16 +46,16 @@ public class SimulationTopologyConfigurer {
         this.stopCondition = checkNotNull(stopCondition);
         this.idGenerator = distributionUtilities.getIdGenerator("area");
         this.areaLocations = distributionUtilities.getMap("area-locations");
-        this.areaModels = distributionUtilities.getMap("area-models");
         this.stepsCount = distributionUtilities.getMap("steps-count");
+        this.areas = distributionUtilities.getMap("area-models");
     }
 
     public List<StepRunner> configure(SimulationMap simulationMap) {
         topologyProvider.setTopology(this.topology());
 
         simulationMap.getAreas().forEach(area -> {
-            areaModels.put(area.getAreaId(), area);
             stepsCount.put(area.getAreaId(), 0);
+            areas.put(area.getAreaId(), area);
         });
 
         List<StepRunner> stepRunners = simulationMap.getAreas()

@@ -1,49 +1,45 @@
 package pl.edu.agh.hbs.core.websocket;
 
+import com.google.common.eventbus.EventBus;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import pl.edu.agh.hbs.core.providers.impl.WebClientConfigProviderImpl;
+import pl.edu.agh.hbs.core.model.events.websocket.*;
 
 import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class SimulationWebSocketServer extends WebSocketServer {
+    private final EventBus eventBus;
 
-    private static final Logger log = LoggerFactory.getLogger(SimulationWebSocketServer.class);
-
-    private final WebClientConfigProviderImpl webClientConfigProvider;
-
-    public SimulationWebSocketServer(WebClientConfigProviderImpl webClientConfigProvider, int port) throws UnknownHostException {
+    public SimulationWebSocketServer(EventBus eventBus, int port) {
         super(new InetSocketAddress(port));
-        this.webClientConfigProvider = webClientConfigProvider;
+        this.eventBus = checkNotNull(eventBus);
     }
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        log.info("Connection with: " + conn.getResourceDescriptor() + " opened");
-        conn.send(webClientConfigProvider.getClientConfigString());
+        eventBus.post(new WebSocketConnectionOpenedEvent(conn));
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-        log.info("Connection: " + conn.getResourceDescriptor() + " closed. Reason: " + reason);
+        eventBus.post(new WebSocketConnectionClosedEvent(conn, code, reason));
     }
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        log.info("Message received: " + message);
+        eventBus.post(new WebSocketMessageReceivedEvent(conn, message));
     }
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-        System.out.println("Error ocurred: "+ ex.getMessage());
+        eventBus.post(new WebSocketErrorEvent(conn, ex));
     }
 
     @Override
     public void onStart() {
-        log.info("WebSocket server started");
+        eventBus.post(new WebSocketServerStartedEvent());
     }
 }
