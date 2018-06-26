@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="pl.edu.agh.hbs.core"/>
+
+    <bean id="propertiesProvider" class="pl.edu.agh.hbs.core.providers.impl.SimulationPropertiesProvider">
+    </bean>
+
+    <bean id="stopCondition" class="pl.edu.agh.hbs.core.stop_condition.StepsNumberStopCondition">
+        <constructor-arg name="stateProvider" ref="simulationStateProvider"/>
+        <constructor-arg name="stepsLimit" value="5" />
+    </bean>
+
+    <bean id="step" class="pl.edu.agh.hbs.core.steps.Cartesian2DAreaStep">
+        <constructor-arg name="stateProvider" ref="simulationStateProvider"/>
+        <constructor-arg name="objectMapper" ref="objectMapper"/>
+        <constructor-arg name="webSocketServer" ref="webSocketServer"/>
+    </bean>
+
+    <bean id="webClientConfigProvider" class="pl.edu.agh.hbs.core.providers.impl.WebClientConfigProviderImpl">
+        <constructor-arg name="objectMapper" ref="objectMapper"/>
+        <constructor-arg name="width" value="1300"/>
+        <constructor-arg name="height" value="700"/>
+        <constructor-arg name="agentShapes">
+            <list>
+                <value>CIRCLE</value>
+                <value>BOX</value>
+                <value>TRIANGLE</value>
+                <value>HUMAN</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="simulationMap" class="pl.edu.agh.hbs.core.model.cartesian.Cartesian2DSimulationMap" >
+        <constructor-arg>
+            <list>
+                <bean id="area-1" class="pl.edu.agh.hbs.core.model.cartesian.Cartesian2DArea">
+                    <constructor-arg name="step" ref="step" />
+                    <constructor-arg name="areaId" value="area-1" />
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+</beans>

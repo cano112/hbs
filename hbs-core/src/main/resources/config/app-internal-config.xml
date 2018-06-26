@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="pl.edu.agh.hbs.core"/>
+    <import resource="classpath:config/simulation-config.xml" />
+
+    <bean id="topology" class="pl.edu.agh.age.compute.api.topology.FullMeshTopology"/>
+
+    <bean id="webSocketServer" class="pl.edu.agh.hbs.core.websocket.SimulationWebSocketServer">
+        <constructor-arg ref="webClientConfigProvider" />
+        <constructor-arg type="int" value="8765"/>
+    </bean>
+
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+
+    <bean id="runnable" class="pl.edu.agh.hbs.core.runners.HerdBehaviourSimulationRunner" />
+</beans>
