@@ -2,6 +2,7 @@ package pl.edu.agh.hbs.model
 
 import pl.edu.agh.hbs.model.position.Position
 import pl.edu.agh.hbs.model.representation.Representation
+import pl.edu.agh.hbs.model.representation.elm.shape.BoxShape
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
 
 import scala.collection.mutable.ListBuffer
@@ -41,6 +42,7 @@ abstract class Agent(var position: Position, val representation: Representation)
   private def takeAction(i: Int): Unit = {
     val messages = actions(i).action(modifiers)
     outMessages ++= messages
+    BoxShape(1)
   }
 
 }
