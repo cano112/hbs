@@ -1,4 +1,4 @@
-package pl.edu.agh.hbs.model.position
+package pl.edu.agh.hbs.model.skill.basic.modifier.position
 
 abstract class Position(val value: Int*) {
 

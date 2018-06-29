@@ -13,7 +13,7 @@ import pl.edu.agh.hbs.core.providers.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Agent;
 import pl.edu.agh.hbs.model.skill.Message;
 import pl.edu.agh.hbs.model.skill.Modifier;
-import pl.edu.agh.hbs.model.skill.move.modifier.ModPosition;
+import pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition;
 import scala.Function1;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;

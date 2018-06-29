@@ -1,6 +1,7 @@
 package pl.edu.agh.hbs.model.skill.move.action
 
-import pl.edu.agh.hbs.model.skill.move.modifier.{ModMoveDirection, ModPosition}
+import pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition
+import pl.edu.agh.hbs.model.skill.move.modifier.ModMoveDirection
 import pl.edu.agh.hbs.model.skill.{Action, Message, Modifier}
 
 import scala.collection.mutable.ListBuffer

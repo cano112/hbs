@@ -1,6 +1,6 @@
 package pl.edu.agh.hbs.model
 
-import pl.edu.agh.hbs.model.position.Position
+import pl.edu.agh.hbs.model.skill.basic.modifier.position.Position
 import pl.edu.agh.hbs.model.representation.Representation
 import pl.edu.agh.hbs.model.representation.elm.shape.BoxShape
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}

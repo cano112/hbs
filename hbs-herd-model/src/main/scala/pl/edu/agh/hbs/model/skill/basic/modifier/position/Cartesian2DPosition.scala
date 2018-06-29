@@ -1,4 +1,4 @@
-package pl.edu.agh.hbs.model.position
+package pl.edu.agh.hbs.model.skill.basic.modifier.position
 
 
 class Cartesian2DPosition private(val x: Int, val y: Int) extends Position {
