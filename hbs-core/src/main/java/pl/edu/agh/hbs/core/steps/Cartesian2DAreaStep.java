@@ -11,13 +11,15 @@ import pl.edu.agh.hbs.core.model.events.FramePreparedEvent;
 import pl.edu.agh.hbs.core.model.events.StepCompletedEvent;
 import pl.edu.agh.hbs.core.providers.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Agent;
+import pl.edu.agh.hbs.model.skill.Message;
 import pl.edu.agh.hbs.model.skill.Modifier;
 import pl.edu.agh.hbs.model.skill.move.modifier.ModPosition;
 import scala.Function1;
+import scala.collection.JavaConverters;
+import scala.collection.Seq;
 import scala.runtime.AbstractFunction1;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -49,9 +51,14 @@ public class Cartesian2DAreaStep implements Step {
     public void step(String areaId) {
         log.info("Step: " + stateProvider.getStepsNumber(areaId));
         Area area = stateProvider.getAreaById(areaId);
-        List<Agent> agents = area.getAgents();
 
-        agents.forEach(agent -> agent.takeAction(agent.decide()));
+        List<Message> messages = Collections.emptyList();
+        Seq<Message> inMessages = JavaConverters.collectionAsScalaIterableConverter(messages).asScala().toSeq();
+        List<Message> outMessages = new ArrayList<>();
+
+        area.getAgents().forEach(a -> a.beforeStep(inMessages));
+        area.getAgents().forEach(Agent::step);
+        area.getAgents().forEach(a -> outMessages.addAll(JavaConverters.asJavaCollectionConverter(a.afterStep()).asJavaCollection()));
 
         stateProvider.setAreaById(areaId, area);
     }

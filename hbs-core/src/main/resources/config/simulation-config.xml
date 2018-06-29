@@ -9,7 +9,7 @@
     <bean id="stopCondition" class="pl.edu.agh.hbs.core.stop_condition.StepsNumberStopCondition">
         <constructor-arg name="stateProvider" ref="simulationStateProvider"/>
         <constructor-arg name="eventBus" ref="eventBus"/>
-        <constructor-arg name="stepsLimit" value="5"/>
+        <constructor-arg name="stepsLimit" value="60"/>
     </bean>
 
     <bean id="webClientConfigProvider" class="pl.edu.agh.hbs.core.providers.impl.WebClientConfigProviderImpl">
