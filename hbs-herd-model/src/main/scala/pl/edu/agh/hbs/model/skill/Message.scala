@@ -1,8 +1,7 @@
 package pl.edu.agh.hbs.model.skill
 
-import pl.edu.agh.hbs.model.propagation.Propagation
 import pl.edu.agh.hbs.model.Agent
-import pl.edu.agh.hbs.model.skill.basic.modifier.position.Position
+import pl.edu.agh.hbs.model.propagation.Propagation
 
 abstract class Message(val propagation: Propagation) extends Serializable {
 

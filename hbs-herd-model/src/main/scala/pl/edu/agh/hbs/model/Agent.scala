@@ -1,13 +1,13 @@
 package pl.edu.agh.hbs.model
 
-import pl.edu.agh.hbs.model.skill.basic.modifier.position.Position
 import pl.edu.agh.hbs.model.representation.Representation
 import pl.edu.agh.hbs.model.representation.elm.shape.BoxShape
+import pl.edu.agh.hbs.model.skill.basic.modifier.{ModPosition, ModRepresentation}
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
 
 import scala.collection.mutable.ListBuffer
 
-abstract class Agent(var position: Position, val representation: Representation) extends Serializable {
+abstract class Agent extends Serializable {
   final var modifiers: ListBuffer[Modifier] = scala.collection.mutable.ListBuffer.empty[Modifier]
   protected val decisions: ListBuffer[Decision] = scala.collection.mutable.ListBuffer.empty[Decision]
   protected val actions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
@@ -43,6 +43,14 @@ abstract class Agent(var position: Position, val representation: Representation)
     val messages = actions(i).action(modifiers)
     outMessages ++= messages
     BoxShape(1)
+  }
+
+  def position(): Position = {
+    modifiers.collect { case a: ModPosition => a }.head.position
+  }
+
+  def representation(): Representation = {
+    modifiers.collect { case a: ModRepresentation => a }.head.representation
   }
 
 }

@@ -1,9 +1,9 @@
 package pl.edu.agh.hbs.model.propagation
 
-import pl.edu.agh.hbs.model.skill.basic.modifier.position.Position
+import pl.edu.agh.hbs.model.Agent
 
 abstract class Propagation {
 
-  def isCovered(position: Position): Boolean
+  def shouldReceive(receiver: Agent): Boolean
 
 }
