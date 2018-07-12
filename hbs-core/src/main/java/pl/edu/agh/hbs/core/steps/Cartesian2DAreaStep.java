@@ -11,15 +11,22 @@ import pl.edu.agh.hbs.core.model.events.FramePreparedEvent;
 import pl.edu.agh.hbs.core.model.events.StepCompletedEvent;
 import pl.edu.agh.hbs.core.providers.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Agent;
+import pl.edu.agh.hbs.model.propagation.DirectPropagation;
 import pl.edu.agh.hbs.model.skill.Message;
 import pl.edu.agh.hbs.model.skill.Modifier;
+import pl.edu.agh.hbs.model.skill.basic.message.MesPosition;
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition;
 import scala.Function1;
+import scala.Int;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;
 import scala.runtime.AbstractFunction1;
+import scala.util.Random;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -51,8 +58,17 @@ public class Cartesian2DAreaStep implements Step {
     public void step(String areaId) {
         log.info("Step: " + stateProvider.getStepsNumber(areaId));
         Area area = stateProvider.getAreaById(areaId);
-
-        List<Message> messages = Collections.emptyList();
+        Random r = new scala.util.Random();
+        List<Message> messages = new ArrayList<>();
+        if (stateProvider.getStepsNumber(areaId) == 0) {
+            area.getAgents().forEach(a -> {
+                List<Object> coords = new ArrayList<>();
+                coords.add(r.nextInt(500));
+                coords.add(r.nextInt(500));
+                Seq<Object> seq = JavaConverters.collectionAsScalaIterableConverter(coords).asScala().toSeq();
+                messages.add(new MesPosition(new DirectPropagation(a), new pl.edu.agh.hbs.model.Position(seq)));
+            });
+        }
         Seq<Message> inMessages = JavaConverters.collectionAsScalaIterableConverter(messages).asScala().toSeq();
         List<Message> outMessages = new ArrayList<>();
 
@@ -75,9 +91,9 @@ public class Cartesian2DAreaStep implements Step {
         };
 
         agents.forEach(agent -> {
-            ModPosition position = (ModPosition) agent.modifiers().toStream().find(positionFilter).get();
+            ModPosition modPosition = (ModPosition) agent.modifiers().toStream().find(positionFilter).get();
             bodies.add(new Body(
-                    new Position(position.x(), position.y()),
+                    new Position(modPosition.position().get(0), modPosition.position().get(1)),
                     Color.values()[0].getValue(),
                     AgentViewShape.values()[0].getName()));
         });

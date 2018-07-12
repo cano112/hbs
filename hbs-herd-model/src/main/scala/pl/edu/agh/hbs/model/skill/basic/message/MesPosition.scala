@@ -9,8 +9,9 @@ class MesPosition(override val propagation: Propagation, val position: Position)
 
   def process(agent: Agent): Unit = {
     if (propagation.shouldReceive(agent)) {
-      val modPosition = agent.modifiers.collect { case a: ModPosition => a }.head
-      agent.modifiers -= modPosition
+      val modPosition = agent.modifiers.collect { case a: ModPosition => a }
+      if (modPosition.nonEmpty)
+        agent.modifiers -= modPosition.head
       agent.modifiers += new ModPosition(this.position)
     }
   }
