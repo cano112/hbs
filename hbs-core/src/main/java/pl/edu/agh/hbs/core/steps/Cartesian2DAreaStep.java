@@ -6,9 +6,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.edu.agh.hbs.core.model.Area;
-import pl.edu.agh.hbs.core.model.cartesian.client.*;
+import pl.edu.agh.hbs.core.model.cartesian.client.Body;
+import pl.edu.agh.hbs.core.model.cartesian.client.Color;
+import pl.edu.agh.hbs.core.model.cartesian.client.Frame;
+import pl.edu.agh.hbs.core.model.cartesian.client.Position;
 import pl.edu.agh.hbs.core.model.events.FramePreparedEvent;
 import pl.edu.agh.hbs.core.model.events.StepCompletedEvent;
+import pl.edu.agh.hbs.core.providers.Representation;
 import pl.edu.agh.hbs.core.providers.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Agent;
 import pl.edu.agh.hbs.model.propagation.DirectPropagation;
@@ -17,14 +21,12 @@ import pl.edu.agh.hbs.model.skill.Modifier;
 import pl.edu.agh.hbs.model.skill.basic.message.MesPosition;
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition;
 import scala.Function1;
-import scala.Int;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;
 import scala.runtime.AbstractFunction1;
 import scala.util.Random;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -91,11 +93,15 @@ public class Cartesian2DAreaStep implements Step {
         };
 
         agents.forEach(agent -> {
-            ModPosition modPosition = (ModPosition) agent.modifiers().toStream().find(positionFilter).get();
+//            ModPosition modPosition = (ModPosition) agent.modifiers().toStream().find(positionFilter).get();
+//            Position elmPosition = new Position(modPosition.position().get(0), modPosition.position().get(1));
+            pl.edu.agh.hbs.model.Position position = agent.position();
+            Representation representation = agent.representation();
+            Position elmPosition = new Position(position.get(0), position.get(1));
             bodies.add(new Body(
-                    new Position(modPosition.position().get(0), modPosition.position().get(1)),
+                    elmPosition,
                     Color.values()[0].getValue(),
-                    AgentViewShape.values()[0].getName()));
+                    representation.getIdentity()));
         });
 
         eventBus.post(new FramePreparedEvent(new Frame(bodies), areaId));

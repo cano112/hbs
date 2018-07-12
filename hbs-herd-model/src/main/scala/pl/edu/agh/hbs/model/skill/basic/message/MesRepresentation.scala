@@ -1,8 +1,8 @@
 package pl.edu.agh.hbs.model.skill.basic.message
 
+import pl.edu.agh.hbs.core.providers.Representation
 import pl.edu.agh.hbs.model.Agent
 import pl.edu.agh.hbs.model.propagation.Propagation
-import pl.edu.agh.hbs.model.representation.Representation
 import pl.edu.agh.hbs.model.skill.Message
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation
 

@@ -19,6 +19,8 @@ repositories {
 
 dependencies {
     compile project(':hbs-herd-model')
+    compile project(':hbs-common')
+    compile group: 'org.psnively', name: 'spring_scala_4-1-7_2.11', version: '1.0.0'
     compile 'pl.edu.agh.age:age3-core:0.6-SNAPSHOT'
     compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
     compile group: 'org.yaml', name: 'snakeyaml', version: '1.21'

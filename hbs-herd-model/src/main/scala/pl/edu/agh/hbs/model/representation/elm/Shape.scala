@@ -1,7 +1,15 @@
 package pl.edu.agh.hbs.model.representation.elm
 
-class Shape(name: String, private val parts: Part*) {
+import net.liftweb.json.DefaultFormats
+import net.liftweb.json.Serialization.write
+import pl.edu.agh.hbs.core.providers.Representation
 
-  def generateConfig() = ""
+class Shape(val name: String, private val parts: Part*) extends Representation {
+
+  private implicit val formats: DefaultFormats.type = net.liftweb.json.DefaultFormats
+
+  override def getConfig: String = write(this)
+
+  override def getIdentity: String = name
 
 }
