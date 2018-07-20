@@ -60,17 +60,17 @@ public class Cartesian2DAreaStep implements Step {
     public void step(String areaId) {
         log.info("Step: " + stateProvider.getStepsNumber(areaId));
         Area area = stateProvider.getAreaById(areaId);
-        Random r = new scala.util.Random();
+//        Random r = new scala.util.Random();
         List<Message> messages = new ArrayList<>();
-        if (stateProvider.getStepsNumber(areaId) == 0) {
-            area.getAgents().forEach(a -> {
-                List<Object> coords = new ArrayList<>();
-                coords.add(r.nextInt(500));
-                coords.add(r.nextInt(500));
-                Seq<Object> seq = JavaConverters.collectionAsScalaIterableConverter(coords).asScala().toSeq();
-                messages.add(new MesPosition(new DirectPropagation(a), new pl.edu.agh.hbs.model.Position(seq)));
-            });
-        }
+//        if (stateProvider.getStepsNumber(areaId) == 0) {
+//            area.getAgents().forEach(a -> {
+//                List<Object> coords = new ArrayList<>();
+//                coords.add(r.nextInt(500));
+//                coords.add(r.nextInt(500));
+//                Seq<Object> seq = JavaConverters.collectionAsScalaIterableConverter(coords).asScala().toSeq();
+//                messages.add(new MesPosition(new DirectPropagation(a), new pl.edu.agh.hbs.model.Position(seq)));
+//            });
+//        }
         Seq<Message> inMessages = JavaConverters.collectionAsScalaIterableConverter(messages).asScala().toSeq();
         List<Message> outMessages = new ArrayList<>();
 
@@ -86,11 +86,11 @@ public class Cartesian2DAreaStep implements Step {
         List<Agent> agents = stateProvider.getAreaById(areaId).getAgents();
         List<Body> bodies = new LinkedList<>();
 
-        Function1<Modifier, Object> positionFilter = new AbstractFunction1<Modifier, Object>() {
-            public Boolean apply(Modifier value) {
-                return value instanceof ModPosition;
-            }
-        };
+//        Function1<Modifier, Object> positionFilter = new AbstractFunction1<Modifier, Object>() {
+//            public Boolean apply(Modifier value) {
+//                return value instanceof ModPosition;
+//            }
+//        };
 
         agents.forEach(agent -> {
 //            ModPosition modPosition = (ModPosition) agent.modifiers().toStream().find(positionFilter).get();

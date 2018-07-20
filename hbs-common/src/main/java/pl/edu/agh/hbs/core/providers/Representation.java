@@ -1,6 +1,8 @@
 package pl.edu.agh.hbs.core.providers;
 
-public interface Representation {
+import java.io.Serializable;
+
+public interface Representation extends Serializable {
     String getConfig();
 
     String getIdentity();

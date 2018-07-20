@@ -7,13 +7,14 @@ import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
 
 import scala.collection.mutable.ListBuffer
 
-abstract class Agent extends Serializable {
-  final var modifiers: ListBuffer[Modifier] = scala.collection.mutable.ListBuffer.empty[Modifier]
+abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializable {
+  val modifiers: ListBuffer[Modifier] = scala.collection.mutable.ListBuffer.empty[Modifier]
   protected val decisions: ListBuffer[Decision] = scala.collection.mutable.ListBuffer.empty[Decision]
   protected val actions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
   private val outMessages: ListBuffer[Message] = scala.collection.mutable.ListBuffer.empty[Message]
+  modifiers ++= initModifiers
 
-  final def beforeStep(messages: Seq[Message]): Unit = {
+  def beforeStep(messages: Seq[Message]): Unit = {
     messages.foreach(m => m.process(this))
   }
 

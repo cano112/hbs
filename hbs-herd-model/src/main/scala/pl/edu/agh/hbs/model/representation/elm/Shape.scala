@@ -6,7 +6,7 @@ import pl.edu.agh.hbs.core.providers.Representation
 
 class Shape(val name: String, private val parts: Part*) extends Representation {
 
-  private implicit val formats: DefaultFormats.type = net.liftweb.json.DefaultFormats
+  @transient private implicit val formats: DefaultFormats.type = net.liftweb.json.DefaultFormats
 
   override def getConfig: String = write(this)
 
