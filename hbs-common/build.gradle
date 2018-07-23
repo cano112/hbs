@@ -5,6 +5,8 @@ plugins {
 group 'pl.edu.agh'
 version '1.0-SNAPSHOT'
 
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
 
 
 repositories {

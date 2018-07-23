@@ -8,7 +8,7 @@ class Shape(val name: String, private val parts: Part*) extends Representation {
 
   @transient private implicit val formats: DefaultFormats.type = net.liftweb.json.DefaultFormats
 
-  override def getConfig: String = write(this)
+  override def getConfig: String = "{\"name\":\"" + name + "\",\"parts\":[" + parts.map(p => write(p)).mkString(",") + "]}"
 
   override def getIdentity: String = name
 
