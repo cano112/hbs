@@ -15,16 +15,9 @@ import pl.edu.agh.hbs.core.model.events.StepCompletedEvent;
 import pl.edu.agh.hbs.core.providers.Representation;
 import pl.edu.agh.hbs.core.providers.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Agent;
-import pl.edu.agh.hbs.model.propagation.DirectPropagation;
 import pl.edu.agh.hbs.model.skill.Message;
-import pl.edu.agh.hbs.model.skill.Modifier;
-import pl.edu.agh.hbs.model.skill.basic.message.MesPosition;
-import pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition;
-import scala.Function1;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;
-import scala.runtime.AbstractFunction1;
-import scala.util.Random;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -60,17 +53,7 @@ public class Cartesian2DAreaStep implements Step {
     public void step(String areaId) {
         log.info("Step: " + stateProvider.getStepsNumber(areaId));
         Area area = stateProvider.getAreaById(areaId);
-//        Random r = new scala.util.Random();
         List<Message> messages = new ArrayList<>();
-//        if (stateProvider.getStepsNumber(areaId) == 0) {
-//            area.getAgents().forEach(a -> {
-//                List<Object> coords = new ArrayList<>();
-//                coords.add(r.nextInt(500));
-//                coords.add(r.nextInt(500));
-//                Seq<Object> seq = JavaConverters.collectionAsScalaIterableConverter(coords).asScala().toSeq();
-//                messages.add(new MesPosition(new DirectPropagation(a), new pl.edu.agh.hbs.model.Position(seq)));
-//            });
-//        }
         Seq<Message> inMessages = JavaConverters.collectionAsScalaIterableConverter(messages).asScala().toSeq();
         List<Message> outMessages = new ArrayList<>();
 
@@ -85,16 +68,7 @@ public class Cartesian2DAreaStep implements Step {
     public void afterStep(String areaId) {
         List<Agent> agents = stateProvider.getAreaById(areaId).getAgents();
         List<Body> bodies = new LinkedList<>();
-
-//        Function1<Modifier, Object> positionFilter = new AbstractFunction1<Modifier, Object>() {
-//            public Boolean apply(Modifier value) {
-//                return value instanceof ModPosition;
-//            }
-//        };
-
         agents.forEach(agent -> {
-//            ModPosition modPosition = (ModPosition) agent.modifiers().toStream().find(positionFilter).get();
-//            Position elmPosition = new Position(modPosition.position().get(0), modPosition.position().get(1));
             pl.edu.agh.hbs.model.Position position = agent.position();
             Representation representation = agent.representation();
             Position elmPosition = new Position(position.get(0), position.get(1));
