@@ -6,6 +6,6 @@ abstract class Action extends Serializable {
 
   def stepsDuration: Int
 
-  def action(modifiers: ListBuffer[Modifier]): Unit
+  def action(modifiers: ListBuffer[Modifier]): Seq[Message]
 
 }

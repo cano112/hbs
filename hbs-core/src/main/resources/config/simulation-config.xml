@@ -2,27 +2,34 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:scala-util="http://www.springframework.org/schema/scala/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/scala/util http://www.springframework.org/schema/scala/util/scala-util.xsd">
 
     <context:component-scan base-package="pl.edu.agh.hbs.core"/>
 
     <bean id="stopCondition" class="pl.edu.agh.hbs.core.stop_condition.StepsNumberStopCondition">
         <constructor-arg name="stateProvider" ref="simulationStateProvider"/>
         <constructor-arg name="eventBus" ref="eventBus"/>
-        <constructor-arg name="stepsLimit" value="5"/>
+        <constructor-arg name="stepsLimit" value="60"/>
     </bean>
 
-    <bean id="webClientConfigProvider" class="pl.edu.agh.hbs.core.providers.impl.WebClientConfigProviderImpl">
-        <constructor-arg name="objectMapper" ref="objectMapper"/>
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="propertyEditorRegistrars">
+            <bean class="org.psnively.scala.beans.propertyeditors.ScalaEditorRegistrar"/>
+        </property>
+    </bean>
+
+    <bean id="human" class="pl.edu.agh.hbs.model.representation.elm.shape.HumanShape">
+        <constructor-arg name="factor" value="1"/>
+    </bean>
+
+    <bean id="webClientConfigProvider" class="pl.edu.agh.hbs.simulation.WebClientConfigProviderImpl">
         <constructor-arg name="width" value="1300"/>
         <constructor-arg name="height" value="700"/>
-        <constructor-arg name="agentShapes">
-            <list>
-                <value>CIRCLE</value>
-                <value>BOX</value>
-                <value>TRIANGLE</value>
-                <value>HUMAN</value>
-            </list>
+        <constructor-arg name="representations">
+            <scala-util:seq>
+                <ref bean="human"/>
+            </scala-util:seq>
         </constructor-arg>
     </bean>
 
@@ -34,9 +41,69 @@
                     <constructor-arg name="areaId" value="area-1"/>
                     <constructor-arg name="agents">
                         <list>
-                            <bean id="agent1" class="pl.edu.agh.hbs.simulation.Human"/>
-                            <bean id="agent2" class="pl.edu.agh.hbs.simulation.Human"/>
-                            <bean id="agent3" class="pl.edu.agh.hbs.simulation.Human"/>
+                            <bean id="agent1" class="pl.edu.agh.hbs.simulation.Human">
+                                <constructor-arg name="initModifiers">
+                                    <scala-util:seq>
+                                        <bean id="pos1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                            <constructor-arg name="position">
+                                                <bean id="p1" class="pl.edu.agh.hbs.model.Position">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Integer">100</value>
+                                                            <value type="java.lang.Integer">100</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean id="rep1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                            <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                    </scala-util:seq>
+                                </constructor-arg>
+                            </bean>
+                            <bean id="agent2" class="pl.edu.agh.hbs.simulation.Human">
+                                <constructor-arg name="initModifiers">
+                                    <scala-util:seq>
+                                        <bean id="pos2" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                            <constructor-arg name="position">
+                                                <bean id="p2" class="pl.edu.agh.hbs.model.Position">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Integer">200</value>
+                                                            <value type="java.lang.Integer">200</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean id="rep2" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                            <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                    </scala-util:seq>
+                                </constructor-arg>
+                            </bean>
+                            <bean id="agent3" class="pl.edu.agh.hbs.simulation.Human">
+                                <constructor-arg name="initModifiers">
+                                    <scala-util:seq>
+                                        <bean id="pos3" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                            <constructor-arg name="position">
+                                                <bean id="p3" class="pl.edu.agh.hbs.model.Position">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Integer">300</value>
+                                                            <value type="java.lang.Integer">300</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean id="rep3" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                            <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                    </scala-util:seq>
+                                </constructor-arg>
+                            </bean>
                         </list>
                     </constructor-arg>
                 </bean>

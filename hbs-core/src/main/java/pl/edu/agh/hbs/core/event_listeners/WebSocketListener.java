@@ -48,7 +48,7 @@ public class WebSocketListener extends EventListener {
     @Subscribe
     public void onConnectionOpened(WebSocketConnectionOpenedEvent event) {
         log.info("Connection with: " + event.getConnection().getResourceDescriptor() + " opened");
-        event.getConnection().send(webClientConfigProvider.getClientConfigString());
+        event.getConnection().send(webClientConfigProvider.getConfigString());
     }
 
     @Subscribe
