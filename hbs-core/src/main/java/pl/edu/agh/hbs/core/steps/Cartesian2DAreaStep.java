@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import pl.edu.agh.hbs.core.model.Area;
 import pl.edu.agh.hbs.core.model.cartesian.client.Body;
 import pl.edu.agh.hbs.core.model.cartesian.client.Color;
-import pl.edu.agh.hbs.core.model.cartesian.client.Frame;
-import pl.edu.agh.hbs.core.model.cartesian.client.Position;
+import pl.edu.agh.hbs.core.model.cartesian.client.ViewFrame;
+import pl.edu.agh.hbs.core.model.cartesian.client.ViewPosition;
 import pl.edu.agh.hbs.core.model.events.FramePreparedEvent;
 import pl.edu.agh.hbs.core.model.events.StepCompletedEvent;
 import pl.edu.agh.hbs.core.providers.Representation;
@@ -51,7 +51,7 @@ public class Cartesian2DAreaStep implements Step {
 
     @Override
     public void step(String areaId) {
-        log.info("Step: " + stateProvider.getStepsNumber(areaId));
+        log.info("Step: {}", stateProvider.getStepsNumber(areaId));
         Area area = stateProvider.getAreaById(areaId);
         List<Message> messages = new ArrayList<>();
         Seq<Message> inMessages = JavaConverters.collectionAsScalaIterableConverter(messages).asScala().toSeq();
@@ -59,7 +59,8 @@ public class Cartesian2DAreaStep implements Step {
 
         area.getAgents().forEach(a -> a.beforeStep(inMessages));
         area.getAgents().forEach(Agent::step);
-        area.getAgents().forEach(a -> outMessages.addAll(JavaConverters.asJavaCollectionConverter(a.afterStep()).asJavaCollection()));
+        area.getAgents().forEach(a ->
+                outMessages.addAll(JavaConverters.asJavaCollectionConverter(a.afterStep()).asJavaCollection()));
 
         stateProvider.setAreaById(areaId, area);
     }
@@ -71,14 +72,14 @@ public class Cartesian2DAreaStep implements Step {
         agents.forEach(agent -> {
             pl.edu.agh.hbs.model.Position position = agent.position();
             Representation representation = agent.representation();
-            Position elmPosition = new Position(position.get(0), position.get(1));
+            ViewPosition viewPosition = new ViewPosition(position.get(0), position.get(1));
             bodies.add(new Body(
-                    elmPosition,
+                    viewPosition,
                     Color.values()[0].getValue(),
                     representation.getIdentity()));
         });
 
-        eventBus.post(new FramePreparedEvent(new Frame(bodies), areaId));
+        eventBus.post(new FramePreparedEvent(new ViewFrame(bodies), areaId));
         eventBus.post(new StepCompletedEvent(areaId));
     }
 }

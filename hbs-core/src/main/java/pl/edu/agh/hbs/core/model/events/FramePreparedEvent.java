@@ -1,18 +1,18 @@
 package pl.edu.agh.hbs.core.model.events;
 
-import pl.edu.agh.hbs.core.model.cartesian.client.Frame;
+import pl.edu.agh.hbs.core.model.cartesian.client.ViewFrame;
 
 public final class FramePreparedEvent extends Event {
-    private final Frame frame;
+    private final ViewFrame viewFrame;
     private final String areaId;
 
-    public FramePreparedEvent(Frame frame, String areaId) {
-        this.frame = frame;
+    public FramePreparedEvent(ViewFrame viewFrame, String areaId) {
+        this.viewFrame = viewFrame;
         this.areaId = areaId;
     }
 
-    public Frame getFrame() {
-        return frame;
+    public ViewFrame getViewFrame() {
+        return viewFrame;
     }
 
     public String getAreaId() {

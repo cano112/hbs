@@ -2,13 +2,13 @@ package pl.edu.agh.hbs.core.model.cartesian.client;
 
 import java.util.List;
 
-public class Frame {
+public class ViewFrame {
     private List<Body> bodies;
 
-    public Frame() {
+    public ViewFrame() {
     }
 
-    public Frame(List<Body> bodies) {
+    public ViewFrame(List<Body> bodies) {
         this.bodies = bodies;
     }
 

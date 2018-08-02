@@ -11,7 +11,6 @@ public abstract class Area implements Serializable {
 
     private final String areaId;
     private final List<Agent> agents;
-
     private transient final Step step;
 
     public Area(String areaId, Step step) {

@@ -56,6 +56,9 @@
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
+                                        <bean id = "rad1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                            <constructor-arg name="radius" value="5"/>
+                                        </bean>
                                         <bean id="rep1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representaton" ref="human"/>
                                         </bean>
@@ -77,6 +80,9 @@
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
+                                        <bean id = "rad2" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                            <constructor-arg name="radius" value="5"/>
+                                        </bean>
                                         <bean id="rep2" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representaton" ref="human"/>
                                         </bean>
@@ -97,6 +103,9 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
+                                        </bean>
+                                        <bean id = "rad3" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                            <constructor-arg name="radius" value="5"/>
                                         </bean>
                                         <bean id="rep3" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representaton" ref="human"/>

@@ -1,24 +1,24 @@
 package pl.edu.agh.hbs.core.model.cartesian.client;
 
 public class Body {
-    private Position position;
+    private ViewPosition position;
     private String color;
     private String kind;
 
     public Body() {
     }
 
-    public Body(Position position, String color, String kind) {
+    public Body(ViewPosition position, String color, String kind) {
         this.position = position;
         this.color = color;
         this.kind = kind;
     }
 
-    public Position getPosition() {
+    public ViewPosition getPosition() {
         return position;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(ViewPosition position) {
         this.position = position;
     }
 

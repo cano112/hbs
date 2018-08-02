@@ -1,13 +1,13 @@
 package pl.edu.agh.hbs.core.model.cartesian.client;
 
-public class Position {
+public class ViewPosition {
     private int x;
     private int y;
 
-    public Position() {
+    public ViewPosition() {
     }
 
-    public Position(int x, int y) {
+    public ViewPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }

@@ -38,8 +38,8 @@ public class WebSocketListener extends EventListener {
     @Subscribe
     public void onFramePrepared(FramePreparedEvent event) {
         try {
-            webSocketServer.broadcast(objectMapper.writeValueAsString(event.getFrame()));
-            log.debug("Frame for area: " + event.getAreaId() + " has been sent");
+            webSocketServer.broadcast(objectMapper.writeValueAsString(event.getViewFrame()));
+            log.debug("ViewFrame for area: {} has been sent", event.getAreaId());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -47,25 +47,26 @@ public class WebSocketListener extends EventListener {
 
     @Subscribe
     public void onConnectionOpened(WebSocketConnectionOpenedEvent event) {
-        log.info("Connection with: " + event.getConnection().getResourceDescriptor() + " opened");
+        log.info("Connection with: {} opened", event.getConnection().getResourceDescriptor());
         event.getConnection().send(webClientConfigProvider.getConfigString());
     }
 
     @Subscribe
     public void onConnectionClosed(WebSocketConnectionClosedEvent event) {
-        log.info("Connection: " + event.getConnection().getResourceDescriptor()
-                + " closed with code: " + event.getCode()
-                + ". Reason: " + event.getReason());
+        log.info("Connection: {} closed with code: {}. Reason: {}",
+                event.getConnection().getResourceDescriptor(),
+                event.getCode(),
+                event.getReason());
     }
 
     @Subscribe
     public void onMessageReceived(WebSocketMessageReceivedEvent event) {
-        log.debug("Message received: " + event.getMessage());
+        log.debug("Message received: {}", event.getMessage());
     }
 
     @Subscribe
     public void onError(WebSocketErrorEvent event) {
-        log.error("Error ocurred: " + event.getException().getMessage());
+        log.error("Error ocurred: {}", event.getException().getMessage());
     }
 
     @Subscribe
