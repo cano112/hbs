@@ -2,5 +2,4 @@ package pl.edu.agh.hbs.model.skill.move.modifier
 
 import pl.edu.agh.hbs.model.skill.Modifier
 
-class ModMoveDirection(val x: Int, val y: Int) extends Modifier {
-}
+case class ModMoveDirection(x: Int, y: Int) extends Modifier

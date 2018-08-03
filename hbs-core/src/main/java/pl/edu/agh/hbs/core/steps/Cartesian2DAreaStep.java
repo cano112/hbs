@@ -53,15 +53,15 @@ public class Cartesian2DAreaStep implements Step {
     public void step(String areaId) {
         log.info("Step: {}", stateProvider.getStepsNumber(areaId));
         Area area = stateProvider.getAreaById(areaId);
-        List<Message> messages = new ArrayList<>();
-        Seq<Message> inMessages = JavaConverters.collectionAsScalaIterableConverter(messages).asScala().toSeq();
+        Seq<Message> inMessages = JavaConverters.collectionAsScalaIterableConverter(area.getMessages()).asScala().toSeq();
         List<Message> outMessages = new ArrayList<>();
 
         area.getAgents().forEach(a -> a.beforeStep(inMessages));
         area.getAgents().forEach(Agent::step);
         area.getAgents().forEach(a ->
                 outMessages.addAll(JavaConverters.asJavaCollectionConverter(a.afterStep()).asJavaCollection()));
-
+        area.clearMessages();
+        area.addMessages(outMessages);
         stateProvider.setAreaById(areaId, area);
     }
 

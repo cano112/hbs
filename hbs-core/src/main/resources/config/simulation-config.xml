@@ -57,10 +57,13 @@
                                             </constructor-arg>
                                         </bean>
                                         <bean id = "rad1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
-                                            <constructor-arg name="radius" value="5"/>
+                                            <constructor-arg name="radius" value="50"/>
                                         </bean>
-                                        <bean id="rep1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                        <bean id = "rep1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                        <bean id = "id1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent1" />
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -81,10 +84,13 @@
                                             </constructor-arg>
                                         </bean>
                                         <bean id = "rad2" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
-                                            <constructor-arg name="radius" value="5"/>
+                                            <constructor-arg name="radius" value="70"/>
                                         </bean>
-                                        <bean id="rep2" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                        <bean id = "rep2" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                        <bean id = "id1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent2" />
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -105,10 +111,13 @@
                                             </constructor-arg>
                                         </bean>
                                         <bean id = "rad3" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
-                                            <constructor-arg name="radius" value="5"/>
+                                            <constructor-arg name="radius" value="60"/>
                                         </bean>
-                                        <bean id="rep3" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                        <bean id = "rep3" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                        <bean id = "id1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent3" />
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>

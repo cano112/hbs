@@ -15,6 +15,7 @@ import pl.edu.agh.hbs.core.model.StateFlag;
 import pl.edu.agh.hbs.core.providers.SimulationStateProvider;
 
 import java.util.Map;
+import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
