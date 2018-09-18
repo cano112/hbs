@@ -46,7 +46,7 @@
                                     <scala-util:seq>
                                         <bean id="pos1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
                                             <constructor-arg name="position">
-                                                <bean id="p1" class="pl.edu.agh.hbs.model.Position">
+                                                <bean id="p1" class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
                                                         <scala-util:seq>
                                                             <value type="java.lang.Integer">100</value>
@@ -73,7 +73,7 @@
                                     <scala-util:seq>
                                         <bean id="pos2" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
                                             <constructor-arg name="position">
-                                                <bean id="p2" class="pl.edu.agh.hbs.model.Position">
+                                                <bean id="p2" class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
                                                         <scala-util:seq>
                                                             <value type="java.lang.Integer">200</value>
@@ -100,7 +100,7 @@
                                     <scala-util:seq>
                                         <bean id="pos3" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
                                             <constructor-arg name="position">
-                                                <bean id="p3" class="pl.edu.agh.hbs.model.Position">
+                                                <bean id="p3" class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
                                                         <scala-util:seq>
                                                             <value type="java.lang.Integer">300</value>

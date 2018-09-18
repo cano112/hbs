@@ -1,7 +1,9 @@
 package pl.edu.agh.hbs.model.skill
+import pl.edu.agh.hbs.model.modifier_cardinality.Cardinality
+
 import scala.reflect.ClassTag
 
-abstract class Modifier extends Serializable
+abstract class Modifier(cardinality: Cardinality) extends Serializable
 
 object Modifier {
   def getFirst[A <: Modifier : ClassTag](modifiers: Seq[_ <: Modifier]): A = getFirst[A]((_: A) => true)(modifiers)

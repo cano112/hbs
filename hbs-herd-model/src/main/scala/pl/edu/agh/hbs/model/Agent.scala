@@ -12,6 +12,7 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
   protected val actions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
   private val outMessages: ListBuffer[Message] = scala.collection.mutable.ListBuffer.empty[Message]
   modifiers ++= initModifiers
+  protected var remainingSteps = 0
 
   def beforeStep(messages: Seq[Message]): Unit = {
     messages
@@ -20,7 +21,12 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
   }
 
   def step(): Unit = {
-    takeAction(decide())
+    if (remainingSteps <= 0) {
+      val i = decide()
+      remainingSteps = actions(i).stepsDuration
+      takeAction(i)
+    } else
+      remainingSteps -= 1
   }
 
   def afterStep(): Seq[Message] = {
@@ -42,13 +48,13 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
   }
 
   private def takeAction(i: Int): Unit = {
-    if(i >= 0) {
+    if (i >= 0) {
       val messages = actions(i).action(modifiers)
       outMessages ++= messages
     }
   }
 
-  def position(): Position = Modifier.getFirst[ModPosition](modifiers).position
+  def position(): Vector = Modifier.getFirst[ModPosition](modifiers).position
 
   def representation(): Representation = Modifier.getFirst[ModRepresentation](modifiers).representation
 

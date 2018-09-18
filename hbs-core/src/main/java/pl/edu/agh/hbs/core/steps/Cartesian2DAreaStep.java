@@ -70,7 +70,7 @@ public class Cartesian2DAreaStep implements Step {
         List<Agent> agents = stateProvider.getAreaById(areaId).getAgents();
         List<Body> bodies = new LinkedList<>();
         agents.forEach(agent -> {
-            pl.edu.agh.hbs.model.Position position = agent.position();
+            pl.edu.agh.hbs.model.Vector position = agent.position();
             Representation representation = agent.representation();
             ViewPosition viewPosition = new ViewPosition(position.get(0), position.get(1));
             bodies.add(new Body(
