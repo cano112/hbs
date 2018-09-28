@@ -1,17 +1,18 @@
 package pl.edu.agh.hbs.model
 
 import pl.edu.agh.hbs.core.providers.Representation
+import pl.edu.agh.hbs.model.modifier_cardinality.ModifierBuffer
 import pl.edu.agh.hbs.model.skill.basic.modifier.{ModAgentIdentifier, ModPosition, ModRepresentation}
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
 
 import scala.collection.mutable.ListBuffer
 
 abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializable {
-  implicit val modifiers: ListBuffer[Modifier] = scala.collection.mutable.ListBuffer.empty[Modifier]
+  implicit val modifiers: ModifierBuffer = new ModifierBuffer()
   protected val decisions: ListBuffer[Decision] = scala.collection.mutable.ListBuffer.empty[Decision]
   protected val actions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
   private val outMessages: ListBuffer[Message] = scala.collection.mutable.ListBuffer.empty[Message]
-  modifiers ++= initModifiers
+  modifiers.update(initModifiers)
   protected var remainingSteps = 0
 
   def beforeStep(messages: Seq[Message]): Unit = {
@@ -54,10 +55,10 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
     }
   }
 
-  def position(): Vector = Modifier.getFirst[ModPosition](modifiers).position
+  def position(): Vector = modifiers.getFirst[ModPosition].position
 
-  def representation(): Representation = Modifier.getFirst[ModRepresentation](modifiers).representation
+  def representation(): Representation = modifiers.getFirst[ModRepresentation].representation
 
-  def id(): String = Modifier.getFirst[ModAgentIdentifier](modifiers).id
+  def id(): String = modifiers.getFirst[ModAgentIdentifier].id
 
 }

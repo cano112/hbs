@@ -1,30 +1,23 @@
 package pl.edu.agh.hbs.model.skill.move.action
 
-import pl.edu.agh.hbs.model.Vector
+import pl.edu.agh.hbs.model.modifier_cardinality.ModifierBuffer
 import pl.edu.agh.hbs.model.propagation.CirclePropagation
-import pl.edu.agh.hbs.model.skill.basic.message.MesPosition
+import pl.edu.agh.hbs.model.skill.basic.message.MesVisibleAgent
 import pl.edu.agh.hbs.model.skill.basic.modifier._
-import pl.edu.agh.hbs.model.skill.{Action, Message, Modifier}
-
-import scala.collection.mutable.ListBuffer
+import pl.edu.agh.hbs.model.skill.{Action, Message}
 
 object ActMove extends Action {
 
   override def stepsDuration: Int = 1
 
-  override def action(modifiers: ListBuffer[Modifier]): Seq[Message] = {
-    val modSpeed = Modifier.getFirst[ModSpeed](modifiers)
-    val modPosition = Modifier.getFirst[ModPosition](modifiers)
+  override def action(modifiers: ModifierBuffer): Seq[Message] = {
+    val speed = modifiers.getFirst[ModSpeed].speed
+    val oldPosition = modifiers.getFirst[ModPosition].position
+    val propagationRadius = modifiers.getFirst[ModPositionPropagationRadius].radius
+    val agentId = modifiers.getFirst[ModAgentIdentifier].id
+    val position = oldPosition + speed
 
-    val propagationRadius = Modifier.getFirst[ModPositionPropagationRadius](modifiers).radius
-    val representation = Modifier.getFirst[ModRepresentation](modifiers).representation
-    val agentId = Modifier.getFirst[ModAgentIdentifier](modifiers).id
-    val position = modPosition.position + modSpeed.speed
-
-    modifiers -= modSpeed
-    modifiers -= modPosition
-    modifiers += ModPosition(position)
-
-    Seq(new MesPosition(new CirclePropagation(position, propagationRadius), agentId, position, representation))
+    modifiers.update(ModPosition(position))
+    Seq(new MesVisibleAgent(new CirclePropagation(position, propagationRadius), agentId, position, speed))
   }
 }

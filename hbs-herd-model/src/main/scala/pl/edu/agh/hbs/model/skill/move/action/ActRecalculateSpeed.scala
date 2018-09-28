@@ -1,19 +1,18 @@
 package pl.edu.agh.hbs.model.skill.move.action
 
+import pl.edu.agh.hbs.model.modifier_cardinality.ModifierBuffer
 import pl.edu.agh.hbs.model.skill.basic.modifier._
-import pl.edu.agh.hbs.model.skill.{Action, Message, Modifier}
-
-import scala.collection.mutable.ListBuffer
+import pl.edu.agh.hbs.model.skill.{Action, Message}
 
 object ActRecalculateSpeed extends Action {
 
   override def stepsDuration: Int = 1
 
-  override def action(modifiers: ListBuffer[Modifier]): Seq[Message] = {
-    val position = Modifier.getFirst[ModPosition](modifiers).position
-    val speed = Modifier.getFirst[ModSpeed](modifiers).speed
+  override def action(modifiers: ModifierBuffer): Seq[Message] = {
+    val position = modifiers.getFirst[ModPosition].position
+    val speed = modifiers.getFirst[ModSpeed].speed
 
-    val neighbours = Modifier.getAll[ModVisibleAgent](modifiers)
+    val neighbours = modifiers.getAll[ModVisibleAgent]
     val remainingNeighbours = scala.collection.mutable.ListBuffer.empty[ModVisibleAgent]
     neighbours.copyToBuffer(remainingNeighbours)
     val distance = 50
@@ -74,6 +73,7 @@ object ActRecalculateSpeed extends Action {
     if (speedY > maxSpeed)
       speedY *= speedFactor
 
+    modifiers.update(ModSpeed(new pl.edu.agh.hbs.model.Vector(speedX.toInt, speedY.toInt)))
     Seq()
   }
 }
