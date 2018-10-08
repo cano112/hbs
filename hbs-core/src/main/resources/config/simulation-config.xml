@@ -10,7 +10,7 @@
     <bean id="stopCondition" class="pl.edu.agh.hbs.core.stop_condition.StepsNumberStopCondition">
         <constructor-arg name="stateProvider" ref="simulationStateProvider"/>
         <constructor-arg name="eventBus" ref="eventBus"/>
-        <constructor-arg name="stepsLimit" value="60"/>
+        <constructor-arg name="stepsLimit" value="2000"/>
     </bean>
 
     <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
@@ -24,8 +24,8 @@
     </bean>
 
     <bean id="webClientConfigProvider" class="pl.edu.agh.hbs.simulation.WebClientConfigProviderImpl">
-        <constructor-arg name="width" value="1300"/>
-        <constructor-arg name="height" value="700"/>
+        <constructor-arg name="width" value="2000"/>
+        <constructor-arg name="height" value="1500"/>
         <constructor-arg name="representations">
             <scala-util:seq>
                 <ref bean="human"/>
@@ -44,26 +44,38 @@
                             <bean id="agent1" class="pl.edu.agh.hbs.simulation.Human">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
-                                        <bean id="pos1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
                                             <constructor-arg name="position">
-                                                <bean id="p1" class="pl.edu.agh.hbs.model.Vector">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
                                                         <scala-util:seq>
-                                                            <value type="java.lang.Integer">100</value>
-                                                            <value type="java.lang.Integer">100</value>
+                                                            <value type="java.lang.Double">100</value>
+                                                            <value type="java.lang.Double">100</value>
                                                         </scala-util:seq>
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean id = "rad1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                            <constructor-arg name="velocity">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">5</value>
+                                                            <value type="java.lang.Double">15</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
                                             <constructor-arg name="radius" value="50"/>
                                         </bean>
-                                        <bean id = "rep1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representaton" ref="human"/>
                                         </bean>
-                                        <bean id = "id1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent1" />
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent1"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -71,26 +83,38 @@
                             <bean id="agent2" class="pl.edu.agh.hbs.simulation.Human">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
-                                        <bean id="pos2" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
                                             <constructor-arg name="position">
-                                                <bean id="p2" class="pl.edu.agh.hbs.model.Vector">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
                                                         <scala-util:seq>
-                                                            <value type="java.lang.Integer">200</value>
-                                                            <value type="java.lang.Integer">200</value>
+                                                            <value type="java.lang.Double">900</value>
+                                                            <value type="java.lang.Double">900</value>
                                                         </scala-util:seq>
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean id = "rad2" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                            <constructor-arg name="velocity">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">-5</value>
+                                                            <value type="java.lang.Double">15</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
                                             <constructor-arg name="radius" value="70"/>
                                         </bean>
-                                        <bean id = "rep2" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representaton" ref="human"/>
                                         </bean>
-                                        <bean id = "id1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent2" />
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent2"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -98,26 +122,274 @@
                             <bean id="agent3" class="pl.edu.agh.hbs.simulation.Human">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
-                                        <bean id="pos3" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
                                             <constructor-arg name="position">
-                                                <bean id="p3" class="pl.edu.agh.hbs.model.Vector">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
                                                         <scala-util:seq>
-                                                            <value type="java.lang.Integer">300</value>
-                                                            <value type="java.lang.Integer">300</value>
+                                                            <value type="java.lang.Double">1700</value>
+                                                            <value type="java.lang.Double">1000</value>
                                                         </scala-util:seq>
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean id = "rad3" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                            <constructor-arg name="velocity">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">5</value>
+                                                            <value type="java.lang.Double">-15</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
                                             <constructor-arg name="radius" value="60"/>
                                         </bean>
-                                        <bean id = "rep3" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representaton" ref="human"/>
                                         </bean>
-                                        <bean id = "id1" class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent3" />
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent3"/>
+                                        </bean>
+                                    </scala-util:seq>
+                                </constructor-arg>
+                            </bean>
+
+                            <bean id="agent4" class="pl.edu.agh.hbs.simulation.Human">
+                                <constructor-arg name="initModifiers">
+                                    <scala-util:seq>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                            <constructor-arg name="position">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">600</value>
+                                                            <value type="java.lang.Double">300</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                            <constructor-arg name="velocity">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">8</value>
+                                                            <value type="java.lang.Double">14</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                            <constructor-arg name="radius" value="60"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                            <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent4"/>
+                                        </bean>
+                                    </scala-util:seq>
+                                </constructor-arg>
+                            </bean>
+                            <bean id="agent5" class="pl.edu.agh.hbs.simulation.Human">
+                                <constructor-arg name="initModifiers">
+                                    <scala-util:seq>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                            <constructor-arg name="position">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">200</value>
+                                                            <value type="java.lang.Double">600</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                            <constructor-arg name="velocity">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">-4</value>
+                                                            <value type="java.lang.Double">14</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                            <constructor-arg name="radius" value="60"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                            <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent5"/>
+                                        </bean>
+                                    </scala-util:seq>
+                                </constructor-arg>
+                            </bean>
+                            <bean id="agent6" class="pl.edu.agh.hbs.simulation.Human">
+                                <constructor-arg name="initModifiers">
+                                    <scala-util:seq>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                            <constructor-arg name="position">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">800</value>
+                                                            <value type="java.lang.Double">100</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                            <constructor-arg name="velocity">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">9</value>
+                                                            <value type="java.lang.Double">-10</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                            <constructor-arg name="radius" value="60"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                            <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent6"/>
+                                        </bean>
+                                    </scala-util:seq>
+                                </constructor-arg>
+                            </bean>
+
+                            <bean id="agent7" class="pl.edu.agh.hbs.simulation.Human">
+                                <constructor-arg name="initModifiers">
+                                    <scala-util:seq>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                            <constructor-arg name="position">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">260</value>
+                                                            <value type="java.lang.Double">600</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                            <constructor-arg name="velocity">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">-8</value>
+                                                            <value type="java.lang.Double">-13</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                            <constructor-arg name="radius" value="60"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                            <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent7"/>
+                                        </bean>
+                                    </scala-util:seq>
+                                </constructor-arg>
+                            </bean>
+                            <bean id="agent8" class="pl.edu.agh.hbs.simulation.Human">
+                                <constructor-arg name="initModifiers">
+                                    <scala-util:seq>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                            <constructor-arg name="position">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">700</value>
+                                                            <value type="java.lang.Double">250</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                            <constructor-arg name="velocity">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">7</value>
+                                                            <value type="java.lang.Double">13</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                            <constructor-arg name="radius" value="60"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                            <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent8"/>
+                                        </bean>
+                                    </scala-util:seq>
+                                </constructor-arg>
+                            </bean>
+                            <bean id="agent9" class="pl.edu.agh.hbs.simulation.Human">
+                                <constructor-arg name="initModifiers">
+                                    <scala-util:seq>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                            <constructor-arg name="position">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">1400</value>
+                                                            <value type="java.lang.Double">500</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                            <constructor-arg name="velocity">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">-8</value>
+                                                            <value type="java.lang.Double">16</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                            <constructor-arg name="radius" value="60"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                            <constructor-arg name="representaton" ref="human"/>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
+                                            <constructor-arg name="id" value="agent9"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>

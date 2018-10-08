@@ -4,6 +4,8 @@ import pl.edu.agh.hbs.model.modifier_cardinality.ModifierBuffer
 
 abstract class Decision extends Serializable {
 
+  val actions: List[Action]
+
   def priority: Int
 
   def decision(modifiers: ModifierBuffer): Boolean

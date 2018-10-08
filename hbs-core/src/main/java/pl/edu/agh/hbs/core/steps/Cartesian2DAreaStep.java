@@ -15,6 +15,7 @@ import pl.edu.agh.hbs.core.model.events.StepCompletedEvent;
 import pl.edu.agh.hbs.core.providers.Representation;
 import pl.edu.agh.hbs.core.providers.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Agent;
+import pl.edu.agh.hbs.model.Vector;
 import pl.edu.agh.hbs.model.skill.Message;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;
@@ -43,7 +44,7 @@ public class Cartesian2DAreaStep implements Step {
     @Override
     public void beforeStep(String areaId) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -69,15 +70,17 @@ public class Cartesian2DAreaStep implements Step {
     public void afterStep(String areaId) {
         List<Agent> agents = stateProvider.getAreaById(areaId).getAgents();
         List<Body> bodies = new LinkedList<>();
-        agents.forEach(agent -> {
-            pl.edu.agh.hbs.model.Vector position = agent.position();
+        for (int i = 0; i < agents.size(); i++) {
+            Agent agent = agents.get(i);
+            Vector position = agent.position();
             Representation representation = agent.representation();
-            ViewPosition viewPosition = new ViewPosition(position.get(0), position.get(1));
+            ViewPosition viewPosition = new ViewPosition((int) position.get(0), (int) position.get(1));
             bodies.add(new Body(
                     viewPosition,
-                    Color.values()[0].getValue(),
-                    representation.getIdentity()));
-        });
+                    Color.values()[i % 8].getValue(),
+                    representation.getIdentity(),
+                    (int) agent.rotation()));
+        }
 
         eventBus.post(new FramePreparedEvent(new ViewFrame(bodies), areaId));
         eventBus.post(new StepCompletedEvent(areaId));
