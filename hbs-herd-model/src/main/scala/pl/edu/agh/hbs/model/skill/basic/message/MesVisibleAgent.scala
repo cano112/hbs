@@ -6,9 +6,9 @@ import pl.edu.agh.hbs.model.skill.basic.modifier.ModVisibleAgent
 import pl.edu.agh.hbs.model.{Agent, Vector}
 
 class MesVisibleAgent(override val propagation: Propagation,
-                      override val senderId: String,
+                      val senderId: String,
                       val position: Vector,
-                      val velocity: Vector) extends Message(propagation, senderId) {
+                      val velocity: Vector) extends Message(propagation) {
 
   def process(agent: Agent): Unit = {
     val modVisibleAgents = agent.modifiers

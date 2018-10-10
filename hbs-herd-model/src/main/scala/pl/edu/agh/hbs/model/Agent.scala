@@ -17,9 +17,7 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
   private var remainingSteps: Int = 0
 
   def beforeStep(messages: Seq[Message]): Unit = {
-    messages
-      .filter(m => m.senderId != this.id)
-      .foreach(m => m.process(this))
+    messages.foreach(m => m.process(this))
   }
 
   def step(): Unit = {
