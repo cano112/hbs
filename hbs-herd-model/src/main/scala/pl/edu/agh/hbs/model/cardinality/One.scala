@@ -1,15 +1,16 @@
-package pl.edu.agh.hbs.model.modifier_cardinality
+package pl.edu.agh.hbs.model.cardinality
 
 import pl.edu.agh.hbs.model.skill.Modifier
 
 import scala.collection.mutable.ListBuffer
 
-object OneWithQualifier extends Cardinality {
+object One extends Cardinality {
   override def addTo(modifier: Modifier, modifiers: ListBuffer[Modifier]): Unit = {
-    val modOption = modifiers.collectFirst { case a if a.getClass == modifier.getClass && a.qualifier == modifier.qualifier => a }
+    val modOption = modifiers.collectFirst { case a if a.getClass == modifier.getClass => a }
     modOption match {
       case Some(m) => modifiers -= m
       case None =>
     }
-    modifiers += modifier  }
+    modifiers += modifier
+  }
 }

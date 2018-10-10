@@ -1,7 +1,7 @@
 package pl.edu.agh.hbs.model.skill.move.action
 
 import pl.edu.agh.hbs.model
-import pl.edu.agh.hbs.model.modifier_cardinality.ModifierBuffer
+import pl.edu.agh.hbs.model.cardinality.ModifierBuffer
 import pl.edu.agh.hbs.model.propagation.CircularPropagation
 import pl.edu.agh.hbs.model.skill.basic.message.MesVisibleAgent
 import pl.edu.agh.hbs.model.skill.basic.modifier._

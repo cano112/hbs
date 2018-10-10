@@ -1,6 +1,6 @@
 package pl.edu.agh.hbs.model.skill.move.decision
 
-import pl.edu.agh.hbs.model.modifier_cardinality.ModifierBuffer
+import pl.edu.agh.hbs.model.cardinality.ModifierBuffer
 import pl.edu.agh.hbs.model.skill.move.action.{ActMove, ActRecalculateVelocity, ActRecalculateVelocity2}
 import pl.edu.agh.hbs.model.skill.{Action, Decision}
 

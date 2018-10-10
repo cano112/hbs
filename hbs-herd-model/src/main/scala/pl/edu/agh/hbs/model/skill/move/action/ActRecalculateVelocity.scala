@@ -1,7 +1,7 @@
 package pl.edu.agh.hbs.model.skill.move.action
 
 import pl.edu.agh.hbs.model
-import pl.edu.agh.hbs.model.modifier_cardinality.ModifierBuffer
+import pl.edu.agh.hbs.model.cardinality.ModifierBuffer
 import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.{Action, Message}
 

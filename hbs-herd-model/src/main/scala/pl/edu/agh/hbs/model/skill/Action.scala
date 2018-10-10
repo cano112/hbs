@@ -1,6 +1,6 @@
 package pl.edu.agh.hbs.model.skill
 
-import pl.edu.agh.hbs.model.modifier_cardinality.ModifierBuffer
+import pl.edu.agh.hbs.model.cardinality.ModifierBuffer
 
 abstract class Action extends Serializable {
 
