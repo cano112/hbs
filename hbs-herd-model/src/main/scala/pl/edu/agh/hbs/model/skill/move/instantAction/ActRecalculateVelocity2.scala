@@ -1,18 +1,16 @@
-package pl.edu.agh.hbs.model.skill.move.action
+package pl.edu.agh.hbs.model.skill.move.instantAction
 
 import pl.edu.agh.hbs.model
-import pl.edu.agh.hbs.model.cardinality.ModifierBuffer
-import pl.edu.agh.hbs.model.skill.basic.modifier._
+import pl.edu.agh.hbs.model.ModifierBuffer
+import pl.edu.agh.hbs.model.skill.basic.modifier.{ModPosition, ModVelocity, ModNeighbour}
 import pl.edu.agh.hbs.model.skill.{Action, Message}
 
 object ActRecalculateVelocity2 extends Action {
 
-  override def stepsDuration: Int = 0
-
   override def action(modifiers: ModifierBuffer): Seq[Message] = {
     val position = modifiers.getFirst[ModPosition].position
     val velocity = modifiers.getFirst[ModVelocity].velocity
-    val neighbours = modifiers.getAll[ModVisibleAgent]
+    val neighbours = modifiers.getAll[ModNeighbour]
 
     //cohesion / clumping
     val velocityChange1 = if (neighbours.nonEmpty) {
@@ -50,7 +48,7 @@ object ActRecalculateVelocity2 extends Action {
 
     //Bounding the position
 
-    modifiers.update(ModVelocity(newVelocity))
+    modifiers.update(ModVelocity(newVelocity, "standard"))
     Seq()
   }
 }

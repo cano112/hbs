@@ -1,31 +1,35 @@
 package pl.edu.agh.hbs.model
 
 import pl.edu.agh.hbs.core.providers.Representation
-import pl.edu.agh.hbs.model.cardinality.ModifierBuffer
-import pl.edu.agh.hbs.model.skill.basic.modifier.{ModAgentIdentifier, ModPosition, ModRepresentation, ModVelocity}
+import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializable {
-  implicit val modifiers: ModifierBuffer = new ModifierBuffer()
+  val modifiers: ModifierBuffer = new ModifierBuffer()
   protected val decisions: ListBuffer[Decision] = scala.collection.mutable.ListBuffer.empty[Decision]
+  protected val beforeStepActions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
+  protected val afterStepActions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
+
   private val outMessages: ListBuffer[Message] = scala.collection.mutable.ListBuffer.empty[Message]
-  modifiers.update(initModifiers)
-  private val actions = mutable.Queue[Action]()
+  private val currentActions = mutable.Queue[Action]()
   private var remainingSteps: Int = 0
+
+  modifiers.update(ModLifeStatus() +: initModifiers)
 
   def beforeStep(messages: Seq[Message]): Unit = {
     messages.foreach(m => m.process(this))
+    beforeStepActions.foreach(a => outMessages ++= a.action(modifiers))
   }
 
   def step(): Unit = {
     if (remainingSteps > 0) {
       remainingSteps -= 1
-    } else if (actions.isEmpty) {
+    } else if (currentActions.isEmpty) {
       val currentDecision = decide()
-      actions ++= currentDecision.actions
+      currentActions ++= currentDecision.actions
       takeInstantActions()
       takeAction()
       remainingSteps -= 1
@@ -36,6 +40,7 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
   }
 
   def afterStep(): Seq[Message] = {
+    afterStepActions.foreach(a => outMessages ++= a.action(modifiers))
     val messages = outMessages.clone()
     outMessages.clear()
     messages
@@ -54,19 +59,17 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
   }
 
   private def takeAction(): Unit = {
-    if (actions.nonEmpty) {
-      val currentAction = actions.dequeue()
+    if (currentActions.nonEmpty) {
+      val currentAction = currentActions.dequeue()
       remainingSteps = currentAction.stepsDuration
-      val messages = currentAction.action(modifiers)
-      outMessages ++= messages
+      outMessages ++= currentAction.action(modifiers)
     }
   }
 
   private def takeInstantActions(): Unit = {
-    while (actions.nonEmpty && actions.head.stepsDuration <= 0) {
-      val currentAction = actions.dequeue()
-      val messages = currentAction.action(modifiers)
-      outMessages ++= messages
+    while (currentActions.nonEmpty && currentActions.head.stepsDuration <= 0) {
+      val currentAction = currentActions.dequeue()
+      outMessages ++= currentAction.action(modifiers)
     }
   }
 
@@ -87,5 +90,7 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
   def representation(): Representation = modifiers.getFirst[ModRepresentation].representation
 
   def id(): String = modifiers.getFirst[ModAgentIdentifier].id
+
+  def alive(): Boolean = modifiers.getFirst[ModLifeStatus].alive
 
 }

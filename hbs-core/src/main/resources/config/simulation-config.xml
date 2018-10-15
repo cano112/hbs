@@ -67,8 +67,9 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
+                                            <constructor-arg name="velocitySource" value="standard"/>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
                                             <constructor-arg name="radius" value="50"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
@@ -106,8 +107,11 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
+                                            <constructor-arg name="velocitySource">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
                                             <constructor-arg name="radius" value="70"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
@@ -145,8 +149,11 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
+                                            <constructor-arg name="velocitySource">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
                                             <constructor-arg name="radius" value="60"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
@@ -185,8 +192,11 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
+                                            <constructor-arg name="velocitySource">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
                                             <constructor-arg name="radius" value="60"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
@@ -224,8 +234,11 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
+                                            <constructor-arg name="velocitySource">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
                                             <constructor-arg name="radius" value="60"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
@@ -263,8 +276,11 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
+                                            <constructor-arg name="velocitySource">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
                                             <constructor-arg name="radius" value="60"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
@@ -303,8 +319,11 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
+                                            <constructor-arg name="velocitySource">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
                                             <constructor-arg name="radius" value="60"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
@@ -342,8 +361,11 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
+                                            <constructor-arg name="velocitySource">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
                                             <constructor-arg name="radius" value="60"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
@@ -381,8 +403,11 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
+                                            <constructor-arg name="velocitySource">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPositionPropagationRadius">
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
                                             <constructor-arg name="radius" value="60"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">

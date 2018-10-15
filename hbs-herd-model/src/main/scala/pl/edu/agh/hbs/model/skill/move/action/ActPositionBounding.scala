@@ -7,7 +7,7 @@ import pl.edu.agh.hbs.model.skill.basic.message.MesVisibleAgent
 import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.{Action, Message}
 
-object ActMove extends Action {
+object ActPositionBounding extends Action {
 
   override def stepsDuration: Int = 1
 

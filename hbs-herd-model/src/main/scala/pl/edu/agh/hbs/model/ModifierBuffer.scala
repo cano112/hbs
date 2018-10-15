@@ -1,4 +1,4 @@
-package pl.edu.agh.hbs.model.cardinality
+package pl.edu.agh.hbs.model
 
 import pl.edu.agh.hbs.model.skill.Modifier
 
