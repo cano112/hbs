@@ -4,7 +4,6 @@ import pl.edu.agh.hbs.core.providers.Representation
 import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
 
-import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializable {
@@ -13,9 +12,8 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
   protected val beforeStepActions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
   protected val afterStepActions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
 
+  private val currentActions: CurrentActions = new CurrentActions
   private val outMessages: ListBuffer[Message] = scala.collection.mutable.ListBuffer.empty[Message]
-  private val currentActions = mutable.Queue[Action]()
-  private var remainingSteps: Int = 0
 
   modifiers.update(ModLifeStatus() +: initModifiers)
 
@@ -25,18 +23,11 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
   }
 
   def step(): Unit = {
-    if (remainingSteps > 0) {
-      remainingSteps -= 1
-    } else if (currentActions.isEmpty) {
+    if (currentActions.shouldDecide) {
       val currentDecision = decide()
-      currentActions ++= currentDecision.actions
-      takeInstantActions()
-      takeAction()
-      remainingSteps -= 1
-    } else {
-      takeInstantActions()
-      takeAction()
+      currentActions.updateQueue(currentDecision)
     }
+    currentActions.step(modifiers)
   }
 
   def afterStep(): Seq[Message] = {
@@ -56,21 +47,6 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
       }
     }
     decisions(number)
-  }
-
-  private def takeAction(): Unit = {
-    if (currentActions.nonEmpty) {
-      val currentAction = currentActions.dequeue()
-      remainingSteps = currentAction.stepsDuration
-      outMessages ++= currentAction.action(modifiers)
-    }
-  }
-
-  private def takeInstantActions(): Unit = {
-    while (currentActions.nonEmpty && currentActions.head.stepsDuration <= 0) {
-      val currentAction = currentActions.dequeue()
-      outMessages ++= currentAction.action(modifiers)
-    }
   }
 
   def position(): Vector = modifiers.getFirst[ModPosition].position
