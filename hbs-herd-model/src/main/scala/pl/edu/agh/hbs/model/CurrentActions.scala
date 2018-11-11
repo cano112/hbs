@@ -5,7 +5,7 @@ import pl.edu.agh.hbs.model.skill.{Action, Decision, Message}
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class CurrentActions {
+class CurrentActions extends Serializable {
   private val stepOutput: StepOutput = new StepOutput()
   private val currentActions = mutable.Queue[Action]()
   private var remainingSteps: Int = 0

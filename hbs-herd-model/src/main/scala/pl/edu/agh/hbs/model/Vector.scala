@@ -18,7 +18,7 @@ class Vector private(val value: Double*) extends Serializable {
 
   def unitVector(): Vector = this / magnitude()
 
-  def apply(i: Int): Double = value(i)
+  def apply(i: Int): Double = if (i < value.length) value(i) else 0
 
   def get(i: Int): Double = this (i)
 

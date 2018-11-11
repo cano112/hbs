@@ -7,7 +7,7 @@ import scala.collection.mutable.ListBuffer
 
 class StepOutput(val messages: ListBuffer[Message] = ListBuffer.empty,
                  val agents: ListBuffer[Agent] = ListBuffer.empty,
-                 var isDead: Boolean = false) {
+                 var isDead: Boolean = false) extends Serializable {
 
   def +(other: StepOutput): StepOutput =
     new StepOutput(this.messages ++ other.messages, this.agents ++ other.agents, this.isDead || other.isDead)

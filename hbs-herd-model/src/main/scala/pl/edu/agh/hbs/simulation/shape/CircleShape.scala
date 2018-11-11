@@ -1,4 +1,4 @@
-package pl.edu.agh.hbs.model.representation.elm.shape
+package pl.edu.agh.hbs.simulation.shape
 
 import pl.edu.agh.hbs.model.representation.elm.{Part, Shape}
 

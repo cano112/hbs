@@ -2,10 +2,9 @@ package pl.edu.agh.hbs.model
 
 import pl.edu.agh.hbs.model.skill.Modifier
 
-trait Species {
-}
+trait Species extends Serializable
 
-trait SpeciesObject {
+trait SpeciesObject extends Serializable {
 
   val species: Species
 
