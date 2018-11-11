@@ -2,6 +2,7 @@ package pl.edu.agh.hbs.model
 
 import pl.edu.agh.hbs.core.providers.Representation
 import pl.edu.agh.hbs.model.skill.basic.modifier._
+import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
 
 import scala.collection.mutable.ListBuffer
@@ -13,13 +14,13 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
   protected val afterStepActions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
 
   private val currentActions: CurrentActions = new CurrentActions
-  private val outMessages: ListBuffer[Message] = scala.collection.mutable.ListBuffer.empty[Message]
+  private val stepOutput: StepOutput = new StepOutput()
 
   modifiers.update(ModLifeStatus() +: initModifiers)
 
   def beforeStep(messages: Seq[Message]): Unit = {
     messages.foreach(m => m.process(this))
-    beforeStepActions.foreach(a => outMessages ++= a.action(modifiers))
+    beforeStepActions.foreach(a => stepOutput += a.action(modifiers))
   }
 
   def step(): Unit = {
@@ -27,14 +28,12 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
       val currentDecision = decide()
       currentActions.updateQueue(currentDecision)
     }
-    currentActions.step(modifiers)
+    stepOutput += currentActions.step(modifiers)
   }
 
-  def afterStep(): Seq[Message] = {
-    afterStepActions.foreach(a => outMessages ++= a.action(modifiers))
-    val messages = outMessages.clone()
-    outMessages.clear()
-    messages
+  def afterStep(): StepOutput = {
+    afterStepActions.foreach(a => stepOutput += a.action(modifiers))
+    stepOutput.clearReturn()
   }
 
   private def decide(): Decision = {
@@ -65,8 +64,6 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
 
   def representation(): Representation = modifiers.getFirst[ModRepresentation].representation
 
-  def id(): String = modifiers.getFirst[ModAgentIdentifier].id
-
-  def alive(): Boolean = modifiers.getFirst[ModLifeStatus].alive
+  def id(): String = modifiers.getFirst[ModIdentifier].id
 
 }

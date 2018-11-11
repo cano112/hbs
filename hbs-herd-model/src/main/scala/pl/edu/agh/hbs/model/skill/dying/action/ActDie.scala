@@ -1,9 +1,9 @@
-package pl.edu.agh.hbs.model.skill.basic.action
+package pl.edu.agh.hbs.model.skill.dying.action
 
+import pl.edu.agh.hbs.model.skill.Action
 import pl.edu.agh.hbs.model.{ModifierBuffer, StepOutput}
-import pl.edu.agh.hbs.model.skill.{Action, Message}
 
-object ActWaitStep extends Action {
+object ActDie extends Action {
 
   override def stepsDuration: Int = 1
 

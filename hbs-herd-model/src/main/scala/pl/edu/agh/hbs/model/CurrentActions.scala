@@ -6,7 +6,7 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 class CurrentActions {
-  private val outMessages: ListBuffer[Message] = scala.collection.mutable.ListBuffer.empty[Message]
+  private val stepOutput: StepOutput = new StepOutput()
   private val currentActions = mutable.Queue[Action]()
   private var remainingSteps: Int = 0
 
@@ -14,31 +14,31 @@ class CurrentActions {
 
   def updateQueue(decision: Decision): Unit = currentActions ++= decision.actions
 
-  def step(modifiers: ModifierBuffer): Unit = {
+  def step(modifiers: ModifierBuffer): StepOutput = {
     if (remainingSteps > 0) {
-      remainingSteps -= 1
     } else if (currentActions.isEmpty) {
       takeInstantActions(modifiers)
       takeAction(modifiers)
-      remainingSteps -= 1
     } else {
       takeInstantActions(modifiers)
       takeAction(modifiers)
     }
+    remainingSteps -= 1
+    stepOutput.clearReturn()
   }
 
   private def takeAction(modifiers: ModifierBuffer): Unit = {
     if (currentActions.nonEmpty) {
       val currentAction = currentActions.dequeue()
       remainingSteps = currentAction.stepsDuration
-      outMessages ++= currentAction.action(modifiers)
+      stepOutput += currentAction.action(modifiers)
     }
   }
 
   private def takeInstantActions(modifiers: ModifierBuffer): Unit = {
     while (currentActions.nonEmpty && currentActions.head.stepsDuration <= 0) {
       val currentAction = currentActions.dequeue()
-      outMessages ++= currentAction.action(modifiers)
+      stepOutput += currentAction.action(modifiers)
     }
   }
 

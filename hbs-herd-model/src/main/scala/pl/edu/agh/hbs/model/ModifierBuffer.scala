@@ -12,7 +12,14 @@ class ModifierBuffer extends Serializable {
 
   def update(elems: Seq[Modifier]): Unit = elems.foreach(e => update(e))
 
-  def update(elem: Modifier): Unit = elem.cardinality.addTo(elem, modifiers)
+  def update(elem: Modifier): Unit = {
+    val modOption = modifiers.collectFirst { case m if m.getClass == elem.getClass && m.label == elem.label => m }
+    modOption match {
+      case Some(m) => modifiers -= m
+      case None =>
+    }
+    modifiers += elem
+  }
 
   def -(elem: Modifier): Unit = modifiers -= elem
 
@@ -26,6 +33,8 @@ class ModifierBuffer extends Serializable {
 
   def getFirst[A <: Modifier : ClassTag]: A = getFirst[A]((_: A) => true)
 
+  def getFirst[A <: Modifier : ClassTag](label: String): A = getFirst[A]((m: A) => m.label == label)
+
   def getFirst[A <: Modifier : ClassTag](predicate: A => Boolean): A = {
     val modOption = modifiers.collectFirst { case a: A if predicate(a) => a }
     modOption match {
@@ -35,6 +44,8 @@ class ModifierBuffer extends Serializable {
   }
 
   def getAll[A <: Modifier : ClassTag]: Seq[A] = getAll[A]((_: A) => true)
+
+  def getAll[A <: Modifier : ClassTag](label: String): Seq[A] = getAll[A]((m: A) => m.label == label)
 
   def getAll[A <: Modifier : ClassTag](predicate: A => Boolean): Seq[A] = {
     modifiers.collect { case a: A if predicate(a) => a }
