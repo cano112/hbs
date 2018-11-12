@@ -19,7 +19,11 @@
         </property>
     </bean>
 
-    <bean id="human" class="pl.edu.agh.hbs.model.representation.elm.shape.HumanShape">
+    <bean id="fish" name="fish" class="pl.edu.agh.hbs.simulation.shape.TriangleShape">
+        <constructor-arg name="factor" value="1"/>
+    </bean>
+
+    <bean id="shark" name="shark" class="pl.edu.agh.hbs.simulation.shape.BoxShape">
         <constructor-arg name="factor" value="1"/>
     </bean>
 
@@ -28,7 +32,8 @@
         <constructor-arg name="height" value="1500"/>
         <constructor-arg name="representations">
             <scala-util:seq>
-                <ref bean="human"/>
+                <ref bean="fish"/>
+                <ref bean="shark"/>
             </scala-util:seq>
         </constructor-arg>
     </bean>
@@ -41,7 +46,7 @@
                     <constructor-arg name="areaId" value="area-1"/>
                     <constructor-arg name="agents">
                         <list>
-                            <bean id="agent1" class="pl.edu.agh.hbs.simulation.Human">
+                            <bean id="agent1" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -56,7 +61,7 @@
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                        <bean class="pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity">
                                             <constructor-arg name="velocity">
                                                 <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
@@ -67,21 +72,15 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="velocitySource" value="standard"/>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
-                                            <constructor-arg name="radius" value="50"/>
+                                            <constructor-arg name="label" value="standard"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent1"/>
+                                            <constructor-arg name="representation" ref="fish"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent2" class="pl.edu.agh.hbs.simulation.Human">
+                            <bean id="agent2" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -96,7 +95,7 @@
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                        <bean class="pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity">
                                             <constructor-arg name="velocity">
                                                 <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
@@ -107,23 +106,17 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="velocitySource">
+                                            <constructor-arg name="label">
                                                 <value type="java.lang.String">standard</value>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
-                                            <constructor-arg name="radius" value="70"/>
-                                        </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent2"/>
+                                            <constructor-arg name="representation" ref="fish"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent3" class="pl.edu.agh.hbs.simulation.Human">
+                            <bean id="agent3" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -138,7 +131,7 @@
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                        <bean class="pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity">
                                             <constructor-arg name="velocity">
                                                 <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
@@ -149,24 +142,18 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="velocitySource">
+                                            <constructor-arg name="label">
                                                 <value type="java.lang.String">standard</value>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
-                                            <constructor-arg name="radius" value="60"/>
-                                        </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent3"/>
+                                            <constructor-arg name="representation" ref="fish"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
 
-                            <bean id="agent4" class="pl.edu.agh.hbs.simulation.Human">
+                            <bean id="agent4" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -181,7 +168,7 @@
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                        <bean class="pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity">
                                             <constructor-arg name="velocity">
                                                 <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
@@ -192,23 +179,17 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="velocitySource">
+                                            <constructor-arg name="label">
                                                 <value type="java.lang.String">standard</value>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
-                                            <constructor-arg name="radius" value="60"/>
-                                        </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent4"/>
+                                            <constructor-arg name="representation" ref="fish"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent5" class="pl.edu.agh.hbs.simulation.Human">
+                            <bean id="agent5" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -223,7 +204,7 @@
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                        <bean class="pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity">
                                             <constructor-arg name="velocity">
                                                 <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
@@ -234,23 +215,17 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="velocitySource">
+                                            <constructor-arg name="label">
                                                 <value type="java.lang.String">standard</value>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
-                                            <constructor-arg name="radius" value="60"/>
-                                        </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent5"/>
+                                            <constructor-arg name="representation" ref="fish"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent6" class="pl.edu.agh.hbs.simulation.Human">
+                            <bean id="agent6" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -265,7 +240,7 @@
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                        <bean class="pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity">
                                             <constructor-arg name="velocity">
                                                 <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
@@ -276,24 +251,18 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="velocitySource">
+                                            <constructor-arg name="label">
                                                 <value type="java.lang.String">standard</value>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
-                                            <constructor-arg name="radius" value="60"/>
-                                        </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent6"/>
+                                            <constructor-arg name="representation" ref="fish"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
 
-                            <bean id="agent7" class="pl.edu.agh.hbs.simulation.Human">
+                            <bean id="agent7" class="pl.edu.agh.hbs.simulation.agent.SharkAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -308,7 +277,7 @@
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                        <bean class="pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity">
                                             <constructor-arg name="velocity">
                                                 <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
@@ -319,23 +288,17 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="velocitySource">
+                                            <constructor-arg name="label">
                                                 <value type="java.lang.String">standard</value>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
-                                            <constructor-arg name="radius" value="60"/>
-                                        </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent7"/>
+                                            <constructor-arg name="representation" ref="shark"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent8" class="pl.edu.agh.hbs.simulation.Human">
+                            <bean id="agent8" class="pl.edu.agh.hbs.simulation.agent.SharkAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -350,7 +313,7 @@
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                        <bean class="pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity">
                                             <constructor-arg name="velocity">
                                                 <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
@@ -361,23 +324,17 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="velocitySource">
+                                            <constructor-arg name="label">
                                                 <value type="java.lang.String">standard</value>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
-                                            <constructor-arg name="radius" value="60"/>
-                                        </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent8"/>
+                                            <constructor-arg name="representation" ref="shark"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent9" class="pl.edu.agh.hbs.simulation.Human">
+                            <bean id="agent9" class="pl.edu.agh.hbs.simulation.agent.SharkAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -392,7 +349,7 @@
                                                 </bean>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModVelocity">
+                                        <bean class="pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity">
                                             <constructor-arg name="velocity">
                                                 <bean class="pl.edu.agh.hbs.model.Vector">
                                                     <constructor-arg name="value">
@@ -403,18 +360,12 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="velocitySource">
+                                            <constructor-arg name="label">
                                                 <value type="java.lang.String">standard</value>
                                             </constructor-arg>
                                         </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPropagationRadius">
-                                            <constructor-arg name="radius" value="60"/>
-                                        </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent9"/>
+                                            <constructor-arg name="representation" ref="shark"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
