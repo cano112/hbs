@@ -15,5 +15,5 @@ class BirdAgent(private val initModifiers: Seq[Modifier])
     with FlockingAgent {
   this.modifiers.update(ModSpecies(Bird))
   this.modifiers.update(ModIdentifier(Bird.nextId()))
-  this.modifiers.update(ModVelocity(model.Vector(1), "wind"))
+  this.modifiers.update(ModVelocity(model.Vector(10.0, 0.0), "wind"))
 }

@@ -15,8 +15,11 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
 
   private val currentActions: CurrentActions = new CurrentActions
   private val stepOutput: StepOutput = new StepOutput()
+  this.initialize(initModifiers)
 
-  modifiers.update(ModLifeStatus() +: initModifiers)
+  def initialize(initModifiers: Seq[Modifier]): Unit = {
+    modifiers.update(ModLifeStatus() +: initModifiers)
+  }
 
   def beforeStep(messages: Seq[Message]): Unit = {
     messages.foreach(m => m.process(this))
@@ -48,10 +51,12 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
     decisions(number)
   }
 
+  def parametersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = Seq()
+
   def position(): Vector = modifiers.getFirst[ModPosition].position
 
   def rotation(): Double = {
-    val velocity = modifiers.getFirst[ModVelocity].velocity
+    val velocity = modifiers.getAll[ModVelocity].map(m => m.velocity).reduce((m, acc) => m + acc)
     val angle =
       if (velocity(0) != 0) math.atan(velocity(1) / velocity(0)) * 180 / math.Pi
       else if (velocity(1) >= 0) 0

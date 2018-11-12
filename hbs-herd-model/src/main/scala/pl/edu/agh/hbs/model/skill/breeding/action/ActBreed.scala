@@ -1,13 +1,11 @@
 package pl.edu.agh.hbs.model.skill.breeding.action
 
-import pl.edu.agh.hbs.model
-import pl.edu.agh.hbs.model.skill.{Action, Modifier}
-import pl.edu.agh.hbs.model.skill.basic.modifier._
-import pl.edu.agh.hbs.model.{ModifierBuffer, StepOutput}
-import pl.edu.agh.hbs.model.Vector
 import pl.edu.agh.hbs.model.propagation.CircularPropagation
+import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.common.message.MesNeighbour
-import pl.edu.agh.hbs.model.skill.common.modifier.{ModPropagationRadius, ModVelocity}
+import pl.edu.agh.hbs.model.skill.common.modifier.{ModActionParameters, ModVelocity}
+import pl.edu.agh.hbs.model.skill.{Action, Modifier}
+import pl.edu.agh.hbs.model.{ModifierBuffer, StepOutput, Vector}
 
 import scala.collection.mutable.ListBuffer
 
@@ -21,16 +19,16 @@ object ActBreed extends Action {
     val initModifiers = ListBuffer.empty[Modifier]
     initModifiers += modifiers.getFirst[ModPosition].copy()
     initModifiers += species.copy()
-    modifiers.getAll[ModPropagationRadius].foreach(m => initModifiers += m.copy())
+    modifiers.getAll[ModActionParameters].foreach(m => initModifiers += m.copy())
     initModifiers += ModVelocity(Vector(), "standard")
     initModifiers += ModIdentifier(species.species.nextId())
     initModifiers += modifiers.getFirst[ModRepresentation].copy()
 
-    val child = species.species.newAgent(initModifiers)
+    val child = species.species.newAgent(Seq())
+    child.initialize(child.parametersCopiedForChild(modifiers) ++ initModifiers)
     val childModifiers = child.modifiers
-    val childVelocity = childModifiers.getFirst[ModVelocity].velocity
+    val childVelocity = childModifiers.getFirst[ModVelocity]("standard").velocity
     val childPosition = childModifiers.getFirst[ModPosition].position
-    val childPropagationRadius = childModifiers.getFirst[ModPropagationRadius].radius
     val childId = childModifiers.getFirst[ModIdentifier].id
     val childSpecies = childModifiers.getFirst[ModSpecies].species
 

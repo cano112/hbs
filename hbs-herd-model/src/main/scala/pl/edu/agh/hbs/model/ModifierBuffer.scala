@@ -45,7 +45,7 @@ class ModifierBuffer extends Serializable {
 
   def getAll[A <: Modifier : ClassTag]: Seq[A] = getAll[A]((_: A) => true)
 
-  def getAll[A <: Modifier : ClassTag](label: String): Seq[A] = getAll[A]((m: A) => m.label == label)
+  def getAll[A <: Modifier : ClassTag](labels: Seq[String]): Seq[A] = getAll[A]((m: A) => labels.contains(m.label))
 
   def getAll[A <: Modifier : ClassTag](predicate: A => Boolean): Seq[A] = {
     modifiers.collect { case a: A if predicate(a) => a }
