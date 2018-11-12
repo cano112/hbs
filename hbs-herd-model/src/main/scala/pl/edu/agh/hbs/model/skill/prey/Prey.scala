@@ -1,8 +1,8 @@
-package pl.edu.agh.hbs.model.skill.predator
+package pl.edu.agh.hbs.model.skill.prey
 
 import pl.edu.agh.hbs.model.skill.Modifier
 import pl.edu.agh.hbs.model.skill.dying.energy.ModEnergy
-import pl.edu.agh.hbs.model.skill.predator.modifier.ModFearOf
+import pl.edu.agh.hbs.model.skill.prey.modifier.ModFearOf
 import pl.edu.agh.hbs.model.{Agent, ModifierBuffer}
 
 import scala.collection.mutable.ListBuffer

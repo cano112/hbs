@@ -17,6 +17,7 @@ trait Predator extends Agent {
   override def parametersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {
     val initModifiers = ListBuffer.empty[Modifier]
     modifiers.getAll[ModHuntFor].foreach(m => initModifiers += m.copy())
+    initModifiers += modifiers.getFirst[ModEnergy]("consumed").copy()
     initModifiers ++ super.parametersCopiedForChild(modifiers)
   }
 }

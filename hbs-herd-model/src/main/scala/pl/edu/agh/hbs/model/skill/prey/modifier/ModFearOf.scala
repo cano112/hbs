@@ -1,4 +1,4 @@
-package pl.edu.agh.hbs.model.skill.predator.modifier
+package pl.edu.agh.hbs.model.skill.prey.modifier
 
 import pl.edu.agh.hbs.model.SpeciesObject
 import pl.edu.agh.hbs.model.skill.Modifier
