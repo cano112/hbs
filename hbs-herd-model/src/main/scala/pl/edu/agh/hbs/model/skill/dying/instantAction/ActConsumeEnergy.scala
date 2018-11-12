@@ -13,7 +13,6 @@ object ActConsumeEnergy extends Action {
     modifiers.update(ModEnergy(energy - consumedEnergy, "standard"))
     if (energy - consumedEnergy <= 0)
       modifiers.update(ModLifeStatus(false))
-
-    new StepOutput(isDead = true)
+    new StepOutput()
   }
 }

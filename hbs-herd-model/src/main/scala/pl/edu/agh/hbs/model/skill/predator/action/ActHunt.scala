@@ -23,7 +23,7 @@ object ActHunt extends Action {
     val preyCandidates = modifiers.getAll[ModHuntFor].map(m => m.prey)
     val position = modifiers.getFirst[ModPosition].position
     val preyId = modifiers.getAll[ModNeighbour]
-      .filter(m => preyCandidates.exists(p => p.species.getClass.isAssignableFrom(m.getClass)))
+      .filter(m => preyCandidates.exists(p => p.species.getClass.isAssignableFrom(m.species.species.getClass)))
       .map(m => (m, m.position.distance(position)))
       .minBy(m => m._2)._1.agentId
 

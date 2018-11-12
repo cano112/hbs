@@ -11,7 +11,7 @@ import scala.collection.mutable.ListBuffer
 trait MovingAgent extends Agent {
   this.beforeStepActions += ActRecalculateVelocity
   this.decisions += DecMove
-  this.modifiers.update(ModMoveParameters(0.1, 500))
+  this.modifiers.update(ModMoveParameters(0.1, 1000))
   this.modifiers.update(ModRecalculateVelocityParameters(50))
 
   override def parametersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {

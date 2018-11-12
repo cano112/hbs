@@ -17,8 +17,8 @@ object DecHunt extends Decision {
     val preyCandidates = modifiers.getAll[ModHuntFor].map(m => m.prey)
     val position = modifiers.getFirst[ModPosition].position
     val preys = modifiers.getAll[ModNeighbour]
-      .filter(m => preyCandidates.exists(p => p.species.getClass.isAssignableFrom(m.getClass)))
-      .filter(m => m.position.distance(position) < 30)
+      .filter(m => preyCandidates.exists(p => p.species.getClass.isAssignableFrom(m.species.species.getClass)))
+      .filter(m => m.position.distance(position) < 400)
     preys.nonEmpty
   }
 

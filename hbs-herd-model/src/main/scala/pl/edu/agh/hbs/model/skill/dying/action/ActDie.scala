@@ -10,7 +10,7 @@ object ActDie extends Action {
 
   override def action(modifiers: ModifierBuffer): StepOutput = {
     modifiers.update(ModLifeStatus(alive = false))
-    new StepOutput(isDead = true)
+    new StepOutput()
   }
 
 }
