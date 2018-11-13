@@ -1,6 +1,6 @@
 package pl.edu.agh.hbs.model
 
-import pl.edu.agh.hbs.core.providers.Representation
+import pl.edu.agh.hbs.core.model.Representation
 import pl.edu.agh.hbs.model.modifier_cardinality.ModifierBuffer
 import pl.edu.agh.hbs.model.skill.basic.modifier.{ModAgentIdentifier, ModPosition, ModRepresentation}
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}

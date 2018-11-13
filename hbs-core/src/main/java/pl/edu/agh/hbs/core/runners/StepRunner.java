@@ -6,13 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import pl.edu.agh.hbs.core.event_listeners.EventListener;
-import pl.edu.agh.hbs.core.model.events.AreaStepsSynchronizedEvent;
-import pl.edu.agh.hbs.core.steps.Step;
-import pl.edu.agh.hbs.core.stop_condition.StopCondition;
+import pl.edu.agh.hbs.core.event.EventListener;
+import pl.edu.agh.hbs.core.event.domain.model.AreaStepsSynchronizedEvent;
+import pl.edu.agh.hbs.core.model.domain.step.Step;
+import pl.edu.agh.hbs.core.model.domain.stop.StopCondition;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * Runner for a single area. Runs area steps - in sync with other areas.
+ */
 @Component
 @Scope("prototype")
 public class StepRunner extends EventListener implements Runnable {
@@ -23,7 +26,7 @@ public class StepRunner extends EventListener implements Runnable {
     private final String areaId;
     private final Step step;
     private final StopCondition stopCondition;
-    private final Object lock;
+    private static final Object lock = new Object(); // TODO: change to proper mutex
     private Boolean areasSynchronized;
 
 
@@ -38,7 +41,6 @@ public class StepRunner extends EventListener implements Runnable {
         this.runnerId = runnerId;
         this.areaId = areaId;
         this.areasSynchronized = true;
-        this.lock = new Object();
     }
 
     @Override
