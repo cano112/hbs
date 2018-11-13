@@ -34,13 +34,13 @@ public class ViewServiceTest {
     public void shouldPrepareCorrectFrame() {
         // given
         final Human humanA = prepareHumanWithBoxShape(3, 3, 5);
-        final Human humanB = prepareHumanWithBoxShape(1, 3 ,5);
+        final Human humanB = prepareHumanWithBoxShape(1, 3, 5);
         final Human humanC = prepareHumanWithBoxShape(2, 6, 1);
         given(stateProvider.getAllAgents()).willReturn(Arrays.asList(humanA, humanB, humanC));
-        
+
         // when
         final ViewFrame frame = viewService.prepareViewFrame();
-        
+
         // then
         then(frame.getBodies())
                 .extracting("position", "kind")
@@ -49,12 +49,12 @@ public class ViewServiceTest {
                         Tuple.tuple(toViewPosition(humanB.position()), humanB.representation().getIdentity()),
                         Tuple.tuple(toViewPosition(humanC.position()), humanC.representation().getIdentity()));
     }
-    
+
     private Human prepareHumanWithBoxShape(int factor, int posX, int posY) {
         return new Human(JavaConverters.asScalaBuffer(
-                        Arrays.asList(
-                                new ModRepresentation(new BoxShape(factor)),
-                                new ModPosition(Vector.of(posX, posY)))));
+                Arrays.asList(
+                        new ModRepresentation(new BoxShape(factor)),
+                        new ModPosition(Vector.of(posX, posY)))));
     }
 
     private ViewPosition toViewPosition(Vector position) {

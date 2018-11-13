@@ -55,16 +55,16 @@
                                 <bean class="pl.edu.agh.hbs.model.Vector">
                                     <constructor-arg name="value">
                                         <scala-util:seq>
-                                        <value type="java.lang.Integer">650</value>
-                                        <value type="java.lang.Integer">700</value>
-                                    </scala-util:seq>
+                                            <value type="java.lang.Integer">650</value>
+                                            <value type="java.lang.Integer">700</value>
+                                        </scala-util:seq>
                                     </constructor-arg>
                                 </bean>
                             </constructor-arg>
-                            <constructor-arg name="rightBorderInclusive" value="true" />
-                            <constructor-arg name="leftBorderInclusive" value="true" />
-                            <constructor-arg name="topBorderInclusive" value="true" />
-                            <constructor-arg name="bottomBorderInclusive" value="true" />
+                            <constructor-arg name="rightBorderInclusive" value="true"/>
+                            <constructor-arg name="leftBorderInclusive" value="true"/>
+                            <constructor-arg name="topBorderInclusive" value="true"/>
+                            <constructor-arg name="bottomBorderInclusive" value="true"/>
                         </bean>
                     </constructor-arg>
                     <constructor-arg name="agents">
@@ -91,7 +91,7 @@
                                             <constructor-arg name="representaton" ref="human"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent1" />
+                                            <constructor-arg name="id" value="agent1"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -118,7 +118,7 @@
                                             <constructor-arg name="representaton" ref="human"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent2" />
+                                            <constructor-arg name="id" value="agent2"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -145,7 +145,7 @@
                                             <constructor-arg name="representaton" ref="human"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent3" />
+                                            <constructor-arg name="id" value="agent3"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -178,10 +178,10 @@
                                     </constructor-arg>
                                 </bean>
                             </constructor-arg>
-                            <constructor-arg name="rightBorderInclusive" value="true" />
-                            <constructor-arg name="leftBorderInclusive" value="false" />
-                            <constructor-arg name="topBorderInclusive" value="true" />
-                            <constructor-arg name="bottomBorderInclusive" value="true" />
+                            <constructor-arg name="rightBorderInclusive" value="true"/>
+                            <constructor-arg name="leftBorderInclusive" value="false"/>
+                            <constructor-arg name="topBorderInclusive" value="true"/>
+                            <constructor-arg name="bottomBorderInclusive" value="true"/>
                         </bean>
                     </constructor-arg>
                     <constructor-arg name="agents">
@@ -208,7 +208,7 @@
                                             <constructor-arg name="representaton" ref="human"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent4" />
+                                            <constructor-arg name="id" value="agent4"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -235,7 +235,7 @@
                                             <constructor-arg name="representaton" ref="human"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent5" />
+                                            <constructor-arg name="id" value="agent5"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -262,7 +262,7 @@
                                             <constructor-arg name="representaton" ref="human"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModAgentIdentifier">
-                                            <constructor-arg name="id" value="agent6" />
+                                            <constructor-arg name="id" value="agent6"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>

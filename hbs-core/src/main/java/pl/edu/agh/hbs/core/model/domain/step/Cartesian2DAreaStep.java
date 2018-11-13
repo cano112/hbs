@@ -5,9 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.edu.agh.hbs.core.event.domain.model.StepCompletedEvent;
 import pl.edu.agh.hbs.core.model.domain.Area;
 import pl.edu.agh.hbs.core.model.domain.AreaBordersDefinition;
-import pl.edu.agh.hbs.core.event.domain.model.StepCompletedEvent;
 import pl.edu.agh.hbs.core.service.AreaService;
 import pl.edu.agh.hbs.core.state.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Agent;
@@ -15,7 +15,9 @@ import pl.edu.agh.hbs.model.skill.Message;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -57,7 +59,7 @@ public class Cartesian2DAreaStep implements Step {
         area.getAgents().forEach(a -> a.beforeStep(inMessages));
         area.getAgents().forEach(a -> {
             a.step();
-            if(!area.isInside(a.position())) {
+            if (!area.isInside(a.position())) {
                 area.removeAgent(a);
                 putAgentToMatchingArea(a);
             }

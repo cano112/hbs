@@ -34,11 +34,11 @@ public class CartesianRectangularBordersDefinition implements AreaBordersDefinit
         int upperRightVectorArray[] = this.upperRightPosition.toArray();
         int currentVectorArray[] = Vector.toArray();
 
-        if(hasNotSameSize(bottomLeftVectorArray, upperRightVectorArray, currentVectorArray)) {
+        if (hasNotSameSize(bottomLeftVectorArray, upperRightVectorArray, currentVectorArray)) {
             throw new IllegalArgumentException("Vectors has not the same dimensions");
         }
 
-        for(int i = 0; i < bottomLeftVectorArray.length; i++) {
+        for (int i = 0; i < bottomLeftVectorArray.length; i++) {
             if ((currentVectorArray[i] < bottomLeftVectorArray[i])
                     || (i == 0 && !leftBorderInclusive && currentVectorArray[i] == bottomLeftVectorArray[i])
                     || (i == 1 && !bottomBorderInclusive && currentVectorArray[i] == bottomLeftVectorArray[i])
