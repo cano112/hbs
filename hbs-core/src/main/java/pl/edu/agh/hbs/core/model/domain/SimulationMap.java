@@ -1,7 +1,5 @@
 package pl.edu.agh.hbs.core.model.domain;
 
-import pl.edu.agh.hbs.core.model.domain.Area;
-
 import java.util.List;
 
 public abstract class SimulationMap {

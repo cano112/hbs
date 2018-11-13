@@ -24,6 +24,8 @@ class Vector private(val value: Double*) extends Serializable {
 
   def get(i: Int): Double = this (i)
 
+  def toArray: Array[Double] = value.toArray
+
 }
 
 object Vector {

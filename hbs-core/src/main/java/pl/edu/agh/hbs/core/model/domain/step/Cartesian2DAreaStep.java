@@ -11,6 +11,7 @@ import pl.edu.agh.hbs.core.model.domain.AreaBordersDefinition;
 import pl.edu.agh.hbs.core.service.AreaService;
 import pl.edu.agh.hbs.core.state.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Agent;
+import pl.edu.agh.hbs.model.StepOutput;
 import pl.edu.agh.hbs.model.skill.Message;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;
@@ -64,8 +65,11 @@ public class Cartesian2DAreaStep implements Step {
                 putAgentToMatchingArea(a);
             }
         });
-        area.getAgents().forEach(a ->
-                outMessages.addAll(JavaConverters.asJavaCollectionConverter(a.afterStep()).asJavaCollection()));
+        area.getAgents().forEach(a -> {
+            final StepOutput agentStepOutput = a.afterStep();
+            outMessages.addAll(JavaConverters.asJavaCollection(agentStepOutput.messages()));
+            JavaConverters.asJavaCollection(agentStepOutput.agents()).forEach(this::putAgentToMatchingArea);
+        });
         area.clearMessages();
         area.addMessages(outMessages);
         stateProvider.setAreaById(areaId, area);

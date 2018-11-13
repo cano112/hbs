@@ -1,6 +1,6 @@
 package pl.edu.agh.hbs.model
 
-import pl.edu.agh.hbs.core.providers.Representation
+import pl.edu.agh.hbs.core.model.Representation
 import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}

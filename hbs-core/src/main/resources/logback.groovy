@@ -6,4 +6,4 @@ appender("CONSOLE", ConsoleAppender) {
     }
 }
 
-logger("pl.edu.agh.hbs", DEBUG, ["CONSOLE"])
+logger("pl.edu.agh", DEBUG, ["CONSOLE"])

@@ -10,10 +10,11 @@ import pl.edu.agh.hbs.core.model.ui.cartesian.ViewFrame;
 import pl.edu.agh.hbs.core.model.ui.cartesian.ViewPosition;
 import pl.edu.agh.hbs.core.state.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Vector;
-import pl.edu.agh.hbs.model.representation.elm.shape.BoxShape;
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition;
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation;
-import pl.edu.agh.hbs.simulation.Human;
+import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity;
+import pl.edu.agh.hbs.simulation.agent.HumanAgent;
+import pl.edu.agh.hbs.simulation.shape.BoxShape;
 import scala.collection.JavaConverters;
 
 import java.util.Arrays;
@@ -33,9 +34,9 @@ public class ViewServiceTest {
     @Test
     public void shouldPrepareCorrectFrame() {
         // given
-        final Human humanA = prepareHumanWithBoxShape(3, 3, 5);
-        final Human humanB = prepareHumanWithBoxShape(1, 3, 5);
-        final Human humanC = prepareHumanWithBoxShape(2, 6, 1);
+        final HumanAgent humanA = prepareHumanWithBoxShape(3, 3, 5);
+        final HumanAgent humanB = prepareHumanWithBoxShape(1, 3, 5);
+        final HumanAgent humanC = prepareHumanWithBoxShape(2, 6, 1);
         given(stateProvider.getAllAgents()).willReturn(Arrays.asList(humanA, humanB, humanC));
 
         // when
@@ -50,15 +51,16 @@ public class ViewServiceTest {
                         Tuple.tuple(toViewPosition(humanC.position()), humanC.representation().getIdentity()));
     }
 
-    private Human prepareHumanWithBoxShape(int factor, int posX, int posY) {
-        return new Human(JavaConverters.asScalaBuffer(
+    private HumanAgent prepareHumanWithBoxShape(int factor, int posX, int posY) {
+        return new HumanAgent(JavaConverters.asScalaBuffer(
                 Arrays.asList(
                         new ModRepresentation(new BoxShape(factor)),
-                        new ModPosition(Vector.of(posX, posY)))));
+                        new ModPosition(Vector.of(posX, posY)),
+                        new ModVelocity(Vector.of(3, 3), "standard"))));
     }
 
     private ViewPosition toViewPosition(Vector position) {
-        int[] arrayPosition = position.toArray();
+        double[] arrayPosition = position.toArray();
         return new ViewPosition(arrayPosition[0], arrayPosition[1]);
     }
 }

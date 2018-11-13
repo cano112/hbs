@@ -30,9 +30,9 @@ public class CartesianRectangularBordersDefinition implements AreaBordersDefinit
 
     @Override
     public boolean isInside(Vector Vector) {
-        int bottomLeftVectorArray[] = this.bottomLeftPosition.toArray();
-        int upperRightVectorArray[] = this.upperRightPosition.toArray();
-        int currentVectorArray[] = Vector.toArray();
+        double bottomLeftVectorArray[] = this.bottomLeftPosition.toArray();
+        double upperRightVectorArray[] = this.upperRightPosition.toArray();
+        double currentVectorArray[] = Vector.toArray();
 
         if (hasNotSameSize(bottomLeftVectorArray, upperRightVectorArray, currentVectorArray)) {
             throw new IllegalArgumentException("Vectors has not the same dimensions");
@@ -51,7 +51,7 @@ public class CartesianRectangularBordersDefinition implements AreaBordersDefinit
         return true;
     }
 
-    private boolean hasNotSameSize(int arrayA[], int arrayB[], int arrayC[]) {
+    private boolean hasNotSameSize(double arrayA[], double arrayB[], double arrayC[]) {
         return !(arrayA.length == arrayB.length && arrayB.length == arrayC.length);
     }
 }
