@@ -9,14 +9,12 @@
 
     <bean id="topology" class="pl.edu.agh.age.compute.api.topology.FullMeshTopology"/>
 
-    <bean id="webSocketServer" class="pl.edu.agh.hbs.core.websocket.SimulationWebSocketServer">
+    <bean id="webSocketServer" class="pl.edu.agh.hbs.core.runners.SimulationWebSocketServer">
         <constructor-arg name="eventBus" ref="eventBus"/>
         <constructor-arg name="port" value="8765"/>
     </bean>
 
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
-
-    <bean id="propertiesProvider" class="pl.edu.agh.hbs.core.providers.impl.SimulationPropertiesProvider"/>
 
     <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>
 

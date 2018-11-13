@@ -1,5 +1,7 @@
 package pl.edu.agh.hbs.model
 
+import scala.annotation.varargs
+
 class Vector private(val value: Double*) extends Serializable {
 
   def +(other: Vector): Vector = new Vector(this.value.zipAll(other.value, 0.0, 0.0).map(e => e._1 + e._2): _*)
@@ -25,7 +27,7 @@ class Vector private(val value: Double*) extends Serializable {
 }
 
 object Vector {
+  @varargs def of(value: Double*): Vector = new Vector(value:_*)
 
   def apply(value: Double*): Vector = new Vector(value: _*)
-
 }

@@ -7,7 +7,7 @@
 
     <context:component-scan base-package="pl.edu.agh.hbs.core"/>
 
-    <bean id="stopCondition" class="pl.edu.agh.hbs.core.stop_condition.StepsNumberStopCondition">
+    <bean id="stopCondition" class="pl.edu.agh.hbs.core.model.domain.stop.StepsNumberStopCondition">
         <constructor-arg name="stateProvider" ref="simulationStateProvider"/>
         <constructor-arg name="eventBus" ref="eventBus"/>
         <constructor-arg name="stepsLimit" value="2000"/>
