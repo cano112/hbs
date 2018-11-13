@@ -30,7 +30,7 @@ public class ViewService {
         stateProvider.getAllAgents().forEach(agent -> {
             Vector position = agent.position();
             Representation representation = agent.representation();
-            ViewPosition viewPosition = new ViewPosition(position.get(0), position.get(1));
+            ViewPosition viewPosition = new ViewPosition((int) position.get(0), (int) position.get(1));
             bodies.add(new Body(
                     viewPosition,
                     Color.values()[0].getValue(),

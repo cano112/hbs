@@ -43,7 +43,7 @@ public class Cartesian2DAreaStep implements Step {
     @Override
     public void beforeStep(String areaId) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
