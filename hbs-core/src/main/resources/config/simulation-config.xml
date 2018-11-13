@@ -52,7 +52,7 @@
                                 </bean>
                             </constructor-arg>
                             <constructor-arg name="upperRightPosition">
-                                <bean class="pl.edu.agh.hbs.model.Position">
+                                <bean class="pl.edu.agh.hbs.model.Vector">
                                     <constructor-arg name="value">
                                         <scala-util:seq>
                                         <value type="java.lang.Integer">650</value>
