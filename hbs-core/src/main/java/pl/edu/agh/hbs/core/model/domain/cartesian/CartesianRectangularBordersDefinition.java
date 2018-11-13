@@ -5,8 +5,8 @@ import pl.edu.agh.hbs.model.Vector;
 
 public class CartesianRectangularBordersDefinition implements AreaBordersDefinition {
 
-    private final Vector bottomLeftVector;
-    private final Vector upperRightVector;
+    private final Vector bottomLeftPosition;
+    private final Vector upperRightPosition;
 
     private final boolean leftBorderInclusive;
     private final boolean rightBorderInclusive;
@@ -14,14 +14,14 @@ public class CartesianRectangularBordersDefinition implements AreaBordersDefinit
     private final boolean bottomBorderInclusive;
 
     public CartesianRectangularBordersDefinition(
-            Vector bottomLeftVector,
-            Vector upperRightVector,
-            boolean leftBorderInclusive,
-            boolean rightBorderInclusive,
-            boolean topBorderInclusive,
-            boolean bottomBorderInclusive) {
-        this.bottomLeftVector = bottomLeftVector;
-        this.upperRightVector = upperRightVector;
+            final Vector bottomLeftPosition,
+            final Vector upperRightPosition,
+            final boolean leftBorderInclusive,
+            final boolean rightBorderInclusive,
+            final boolean topBorderInclusive,
+            final boolean bottomBorderInclusive) {
+        this.bottomLeftPosition = bottomLeftPosition;
+        this.upperRightPosition = upperRightPosition;
         this.leftBorderInclusive = leftBorderInclusive;
         this.rightBorderInclusive = rightBorderInclusive;
         this.topBorderInclusive = topBorderInclusive;
@@ -30,8 +30,8 @@ public class CartesianRectangularBordersDefinition implements AreaBordersDefinit
 
     @Override
     public boolean isInside(Vector Vector) {
-        int bottomLeftVectorArray[] = this.bottomLeftVector.toArray();
-        int upperRightVectorArray[] = this.upperRightVector.toArray();
+        int bottomLeftVectorArray[] = this.bottomLeftPosition.toArray();
+        int upperRightVectorArray[] = this.upperRightPosition.toArray();
         int currentVectorArray[] = Vector.toArray();
 
         if(hasNotSameSize(bottomLeftVectorArray, upperRightVectorArray, currentVectorArray)) {
