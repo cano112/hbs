@@ -10,9 +10,8 @@ import pl.edu.agh.age.compute.api.TopologyProvider;
 import pl.edu.agh.age.compute.api.UnicastMessenger;
 import pl.edu.agh.age.compute.api.topology.Topology;
 import pl.edu.agh.hbs.core.model.domain.SimulationMap;
-import pl.edu.agh.hbs.core.state.SimulationStateProvider;
-import pl.edu.agh.hbs.core.runners.StepRunner;
 import pl.edu.agh.hbs.core.model.domain.stop.StopCondition;
+import pl.edu.agh.hbs.core.runners.StepRunner;
 
 import java.io.Serializable;
 import java.util.List;
@@ -67,7 +66,7 @@ public class SimulationTopologyConfigurer {
         List<StepRunner> stepRunners = simulationMap.getAreas()
                 .stream()
                 .map(area -> (StepRunner) beanFactory.getBean("stepRunner",
-                                eventBus, area.getStep(), stopCondition, idGenerator.newId(), area.getAreaId()))
+                        eventBus, area.getStep(), stopCondition, idGenerator.newId(), area.getAreaId()))
                 .collect(Collectors.toList());
 
         stepRunners.forEach(runner ->

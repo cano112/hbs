@@ -10,7 +10,7 @@
     <bean id="stopCondition" class="pl.edu.agh.hbs.core.model.domain.stop.StepsNumberStopCondition">
         <constructor-arg name="stateProvider" ref="simulationStateProvider"/>
         <constructor-arg name="eventBus" ref="eventBus"/>
-        <constructor-arg name="stepsLimit" value="2000"/>
+        <constructor-arg name="stepsLimit" value="60"/>
     </bean>
 
     <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">

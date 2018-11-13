@@ -10,6 +10,7 @@ import java.io.Serializable;
 public interface AreaBordersDefinition extends Serializable {
     /**
      * Checks if given vector is inside borders.
+     *
      * @param Vector vector to check
      * @return true if inside area, false otherwise
      */

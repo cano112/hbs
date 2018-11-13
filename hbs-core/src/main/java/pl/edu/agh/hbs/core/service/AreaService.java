@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class AreaService {
 
     public Optional<String> getAreaIdByPosition(Map<String, AreaBordersDefinition> bordersDefinitions,
-                                                       Vector position) {
+                                                Vector position) {
         List<String> matchingAreaIds = bordersDefinitions
                 .entrySet()
                 .stream()
@@ -22,7 +22,7 @@ public class AreaService {
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
-        if(matchingAreaIds.size() > 1) {
+        if (matchingAreaIds.size() > 1) {
             throw new IllegalStateException("More then one areas found for a given position: "
                     + Arrays.toString(matchingAreaIds.toArray()));
         } else {

@@ -15,6 +15,7 @@ public interface SimulationStateProvider {
 
     /**
      * Retrieve number of steps completed for a given area.
+     *
      * @param areaId area identifier
      * @return number of steps completed
      */
@@ -22,18 +23,21 @@ public interface SimulationStateProvider {
 
     /**
      * Increment completed steps number for a given area. Usually invoked after step completion.
+     *
      * @param areaId area identifier
      */
     void incrementStepsNumber(String areaId);
 
     /**
      * Initialize completed steps number for a given area. Invoked at simulation setup.
+     *
      * @param areaId area identifier
      */
     void initializeStepsNumber(String areaId);
 
     /**
      * Retrieve area data for a given area
+     *
      * @param areaId area identifer
      * @return area current state
      */
@@ -43,13 +47,15 @@ public interface SimulationStateProvider {
      * Set area state in simulation's global state.
      * Usually invoked after updating area's current state, as {@link com.hazelcast.core.IMap} read operations are not
      * backed by distributed map.
+     *
      * @param areaId area identifer
-     * @param area area updated model
+     * @param area   area updated model
      */
     void setAreaById(String areaId, Area area);
 
     /**
      * Retrieve address of the node, where given area is being run.
+     *
      * @param areaId area identifier
      * @return node address
      */
@@ -57,7 +63,8 @@ public interface SimulationStateProvider {
 
     /**
      * Set node address for a given area. Invoked at simulation setup.
-     * @param areaId area identifier
+     *
+     * @param areaId  area identifier
      * @param address node address
      */
     void setAreaLocationByAreaId(String areaId, WorkerAddress address);
@@ -71,7 +78,8 @@ public interface SimulationStateProvider {
 
     /**
      * Set border definition for a given area. Invoked on simulation setup.
-     * @param areaId area identifier
+     *
+     * @param areaId            area identifier
      * @param bordersDefinition border definition
      */
     void setAreaBorderByAreaId(String areaId, AreaBordersDefinition bordersDefinition);

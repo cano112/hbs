@@ -45,10 +45,10 @@ public class StepRunner extends EventListener implements Runnable {
 
     @Override
     public void run() {
-        while(true) {
+        while (true) {
             synchronized (lock) {
-                if(areasSynchronized) {
-                    if(stopCondition.isReached(areaId)) {
+                if (areasSynchronized) {
+                    if (stopCondition.isReached(areaId)) {
                         log.info("Stop condition reached for area: {}", areaId);
                         break;
                     }

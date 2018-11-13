@@ -26,10 +26,10 @@ public class AreaServiceTest {
         // given
         final Map<String, AreaBordersDefinition> areaBorders = new HashMap<>();
         areaBorders.put("area-1",
-                new CartesianRectangularBordersDefinition(Vector.of(0,0), Vector.of(100, 100),
+                new CartesianRectangularBordersDefinition(Vector.of(0, 0), Vector.of(100, 100),
                         true, true, true, true));
         areaBorders.put("area-2",
-                new CartesianRectangularBordersDefinition(Vector.of(100,0), Vector.of(200, 200),
+                new CartesianRectangularBordersDefinition(Vector.of(100, 0), Vector.of(200, 200),
                         false, true, true, true));
 
         // when
@@ -44,10 +44,10 @@ public class AreaServiceTest {
         // given
         final Map<String, AreaBordersDefinition> areaBorders = new HashMap<>();
         areaBorders.put("area-1",
-                new CartesianRectangularBordersDefinition(Vector.of(0,0), Vector.of(100, 100),
+                new CartesianRectangularBordersDefinition(Vector.of(0, 0), Vector.of(100, 100),
                         true, true, true, true));
         areaBorders.put("area-2",
-                new CartesianRectangularBordersDefinition(Vector.of(0,0), Vector.of(200, 200),
+                new CartesianRectangularBordersDefinition(Vector.of(0, 0), Vector.of(200, 200),
                         false, true, true, true));
 
         // expected
@@ -60,10 +60,10 @@ public class AreaServiceTest {
         // given
         final Map<String, AreaBordersDefinition> areaBorders = new HashMap<>();
         areaBorders.put("area-1",
-                new CartesianRectangularBordersDefinition(Vector.of(0,0), Vector.of(100, 100),
+                new CartesianRectangularBordersDefinition(Vector.of(0, 0), Vector.of(100, 100),
                         true, true, true, true));
         areaBorders.put("area-2",
-                new CartesianRectangularBordersDefinition(Vector.of(100,0), Vector.of(200, 200),
+                new CartesianRectangularBordersDefinition(Vector.of(100, 0), Vector.of(200, 200),
                         false, true, true, true));
 
         // when
