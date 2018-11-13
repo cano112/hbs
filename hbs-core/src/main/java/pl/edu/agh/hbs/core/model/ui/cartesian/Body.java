@@ -1,7 +1,5 @@
 package pl.edu.agh.hbs.core.model.ui.cartesian;
 
-import java.util.Objects;
-
 public class Body {
     private ViewPosition position;
     private String color;
@@ -48,20 +46,5 @@ public class Body {
 
     public void setRotation(Integer rotation) {
         this.rotation = rotation;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Body body = (Body) o;
-        return Objects.equals(position, body.position) &&
-                Objects.equals(color, body.color) &&
-                Objects.equals(kind, body.kind);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(position, color, kind);
     }
 }
