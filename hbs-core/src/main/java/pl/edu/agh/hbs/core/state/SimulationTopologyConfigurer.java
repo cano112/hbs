@@ -64,7 +64,7 @@ public class SimulationTopologyConfigurer {
 
         simulationMap.getAreas().forEach(area -> {
             final Collection<String> neightbourAreas = areaService
-                    .findNeighbourAreas(simulationMap.getAreas(), area);
+                    .findNeighbourAreaIds(simulationMap.getAreas(), area);
             area.addNeigbourAreas(neightbourAreas);
             stateProvider.initializeStepsNumber(area.getAreaId());
             stateProvider.setAreaById(area.getAreaId(), area);

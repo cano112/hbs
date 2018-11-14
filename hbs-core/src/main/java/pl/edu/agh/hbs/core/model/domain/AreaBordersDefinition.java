@@ -9,14 +9,20 @@ import java.io.Serializable;
  */
 public interface AreaBordersDefinition extends Serializable {
     /**
-     * Checks if given vector is inside borders.
+     * Check if given vector is inside borders.
      *
      * @param Vector vector to check
      * @return true if inside area, false otherwise
      */
     boolean isInside(Vector Vector);
 
+    /**
+     * @return area's bottom left corner position vector
+     */
     Vector getBottomLeftPosition();
 
+    /**
+     * @return area's upper right corner position vector
+     */
     Vector getUpperRightPosition();
 }

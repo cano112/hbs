@@ -25,6 +25,11 @@ public class ViewService {
         this.stateProvider = checkNotNull(stateProvider);
     }
 
+    /**
+     * Prepares {@link ViewFrame} for current simulation state
+     *
+     * @return frame with all agents state
+     */
     public ViewFrame prepareViewFrame() {
         List<Body> bodies = new LinkedList<>();
         stateProvider.getAllAgents().forEach(agent -> {

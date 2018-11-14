@@ -11,6 +11,14 @@ import java.util.stream.Collectors;
 @Service
 public class AreaService {
 
+    /**
+     * Retrieve area identifier for an area responsible for the map fragment containing given position.
+     *
+     * @param bordersDefinitions map area identifer -> bordeer definition, containing border definitions for all areas
+     * @param position           reference position
+     * @return matching area id or empty when no matching area found
+     * @throws IllegalStateException when more than one matching area found
+     */
     public Optional<String> getAreaIdByPosition(Map<String, AreaBordersDefinition> bordersDefinitions,
                                                 Vector position) {
         List<String> matchingAreaIds = bordersDefinitions
@@ -28,7 +36,15 @@ public class AreaService {
         }
     }
 
-    public Collection<String> findNeighbourAreas(Collection<? extends Area> areas, Area currentArea) {
+    /**
+     * Find areas with border shared with a given area
+     *
+     * @param areas       collection of all areas
+     * @param currentArea reference area
+     * @return collection of area identifiers with at least one border shared with a given area
+     */
+    public Collection<String> findNeighbourAreaIds(Collection<? extends Area> areas, Area currentArea) {
+        //TODO: needs tests
         Collection<String> neighbourAreas = new LinkedList<>();
         areas.forEach(area -> {
             if (!area.equals(currentArea)) {
