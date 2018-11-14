@@ -1,11 +1,11 @@
 package pl.edu.agh.hbs.model.skill
 
-import scala.collection.mutable.ListBuffer
+import pl.edu.agh.hbs.model.{ModifierBuffer, StepOutput}
 
 abstract class Action extends Serializable {
 
-  def stepsDuration: Int
+  def stepsDuration: Int = 0
 
-  def action(modifiers: ListBuffer[Modifier]): Seq[Message]
+  def action(modifiers: ModifierBuffer): StepOutput
 
 }

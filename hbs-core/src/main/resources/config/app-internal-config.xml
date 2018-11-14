@@ -5,18 +5,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="pl.edu.agh.hbs.core"/>
-    <import resource="classpath:config/simulation-config.xml"/>
 
     <bean id="topology" class="pl.edu.agh.age.compute.api.topology.FullMeshTopology"/>
 
-    <bean id="webSocketServer" class="pl.edu.agh.hbs.core.websocket.SimulationWebSocketServer">
+    <bean id="webSocketServer" class="pl.edu.agh.hbs.core.runners.SimulationWebSocketServer">
         <constructor-arg name="eventBus" ref="eventBus"/>
         <constructor-arg name="port" value="8765"/>
     </bean>
 
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
-
-    <bean id="propertiesProvider" class="pl.edu.agh.hbs.core.providers.impl.SimulationPropertiesProvider"/>
 
     <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>
 

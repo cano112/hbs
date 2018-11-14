@@ -1,11 +1,13 @@
 package pl.edu.agh.hbs.model.skill
 
-import scala.collection.mutable.ListBuffer
+import pl.edu.agh.hbs.model.ModifierBuffer
 
 abstract class Decision extends Serializable {
 
+  val actions: List[Action]
+
   def priority: Int
 
-  def decision(modifiers: ListBuffer[Modifier]): Boolean
+  def decision(modifiers: ModifierBuffer): Boolean
 
 }

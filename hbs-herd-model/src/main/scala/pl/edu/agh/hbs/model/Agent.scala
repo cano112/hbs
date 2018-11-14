@@ -1,34 +1,45 @@
 package pl.edu.agh.hbs.model
 
-import pl.edu.agh.hbs.core.providers.Representation
-import pl.edu.agh.hbs.model.representation.elm.shape.BoxShape
-import pl.edu.agh.hbs.model.skill.basic.modifier.{ModPosition, ModRepresentation}
+import pl.edu.agh.hbs.core.model.Representation
+import pl.edu.agh.hbs.model.skill.basic.modifier._
+import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
 
 import scala.collection.mutable.ListBuffer
 
 abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializable {
-  val modifiers: ListBuffer[Modifier] = scala.collection.mutable.ListBuffer.empty[Modifier]
+  val modifiers: ModifierBuffer = new ModifierBuffer()
   protected val decisions: ListBuffer[Decision] = scala.collection.mutable.ListBuffer.empty[Decision]
-  protected val actions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
-  private val outMessages: ListBuffer[Message] = scala.collection.mutable.ListBuffer.empty[Message]
-  modifiers ++= initModifiers
+  protected val beforeStepActions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
+  protected val afterStepActions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
+
+  private val currentActions: CurrentActions = new CurrentActions
+  private val stepOutput: StepOutput = new StepOutput()
+  this.initialize(initModifiers)
+
+  def initialize(initModifiers: Seq[Modifier]): Unit = {
+    modifiers.update(ModLifeStatus() +: initModifiers)
+  }
 
   def beforeStep(messages: Seq[Message]): Unit = {
     messages.foreach(m => m.process(this))
+    beforeStepActions.foreach(a => stepOutput += a.action(modifiers))
   }
 
   def step(): Unit = {
-    takeAction(decide())
+    if (currentActions.shouldDecide) {
+      val currentDecision = decide()
+      currentActions.updateQueue(currentDecision)
+    }
+    stepOutput += currentActions.step(modifiers)
   }
 
-  def afterStep(): Seq[Message] = {
-    val messages = outMessages.clone()
-    outMessages.clear()
-    messages
+  def afterStep(): StepOutput = {
+    afterStepActions.foreach(a => stepOutput += a.action(modifiers))
+    stepOutput.clearReturn()
   }
 
-  private def decide(): Int = {
+  private def decide(): Decision = {
     var number = -1
     var priority = -1
     for ((decision, i) <- decisions.view.zipWithIndex) {
@@ -37,21 +48,27 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
         priority = decision.priority
       }
     }
-    number
+    decisions(number)
   }
 
-  private def takeAction(i: Int): Unit = {
-    val messages = actions(i).action(modifiers)
-    outMessages ++= messages
-    BoxShape(1)
+  def parametersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = Seq()
+
+  def position(): Vector = modifiers.getFirst[ModPosition].position
+
+  def rotation(): Double = {
+    val velocity = modifiers.getAll[ModVelocity].map(m => m.velocity).reduce((m, acc) => m + acc)
+    val angle =
+      if (velocity(0) != 0) math.atan(velocity(1) / velocity(0)) * 180 / math.Pi
+      else if (velocity(1) >= 0) 0
+      else 180
+    if (velocity(0) > 0)
+      angle + 90
+    else
+      angle - 90
   }
 
-  def position(): Position = {
-    modifiers.collect { case a: ModPosition => a }.head.position
-  }
+  def representation(): Representation = modifiers.getFirst[ModRepresentation].representation
 
-  def representation(): Representation = {
-    modifiers.collect { case a: ModRepresentation => a }.head.representation
-  }
+  def id(): String = modifiers.getFirst[ModIdentifier].id
 
 }

@@ -8,5 +8,5 @@ cd <project_root>
 
 ## Running
 ```
-java -enableassertions -jar hbs-core/build/libs/hbs-core-1.0-SNAPSHOT-all.jar classpath:config/herd-behaviour-config.xml
+java -enableassertions -jar hbs-core/build/libs/hbs-core-1.0-SNAPSHOT-all.jar classpath:config/app-internal-config.xml
 ```
