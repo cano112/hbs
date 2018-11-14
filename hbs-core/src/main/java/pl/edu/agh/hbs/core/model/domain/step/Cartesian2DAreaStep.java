@@ -72,6 +72,7 @@ public class Cartesian2DAreaStep implements Step {
         });
         area.clearMessages();
         area.addMessages(outMessages);
+        addMessagesToNeighbourAreas(area, outMessages);
         stateProvider.setAreaById(areaId, area);
     }
 
@@ -81,6 +82,14 @@ public class Cartesian2DAreaStep implements Step {
             Area area = stateProvider.getAreaById(areaId);
             area.addAgent(agent);
             stateProvider.setAreaById(areaId, area);
+        });
+    }
+
+    private void addMessagesToNeighbourAreas(Area area, List<Message> messages) {
+        area.getNeighourAreas().forEach(areaId -> {
+            final Area neighbourArea = stateProvider.getAreaById(areaId);
+            neighbourArea.addMessages(messages);
+            stateProvider.setAreaById(areaId, neighbourArea);
         });
     }
 

@@ -15,4 +15,8 @@ public interface AreaBordersDefinition extends Serializable {
      * @return true if inside area, false otherwise
      */
     boolean isInside(Vector Vector);
+
+    Vector getBottomLeftPosition();
+
+    Vector getUpperRightPosition();
 }

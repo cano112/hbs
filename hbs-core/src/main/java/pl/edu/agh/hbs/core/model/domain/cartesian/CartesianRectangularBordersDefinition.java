@@ -51,6 +51,16 @@ public class CartesianRectangularBordersDefinition implements AreaBordersDefinit
         return true;
     }
 
+    @Override
+    public Vector getBottomLeftPosition() {
+        return bottomLeftPosition;
+    }
+
+    @Override
+    public Vector getUpperRightPosition() {
+        return upperRightPosition;
+    }
+
     private boolean hasNotSameSize(double arrayA[], double arrayB[], double arrayC[]) {
         return !(arrayA.length == arrayB.length && arrayB.length == arrayC.length);
     }

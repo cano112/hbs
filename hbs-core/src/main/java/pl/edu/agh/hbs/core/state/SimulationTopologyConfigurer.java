@@ -12,8 +12,10 @@ import pl.edu.agh.age.compute.api.topology.Topology;
 import pl.edu.agh.hbs.core.model.domain.SimulationMap;
 import pl.edu.agh.hbs.core.model.domain.stop.StopCondition;
 import pl.edu.agh.hbs.core.runners.StepRunner;
+import pl.edu.agh.hbs.core.service.AreaService;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,7 @@ public class SimulationTopologyConfigurer {
     private final SimulationStateProvider stateProvider;
     private final EventBus eventBus;
     private final BeanFactory beanFactory;
+    private final AreaService areaService;
 
     @Autowired
     @SuppressWarnings("unchecked")
@@ -41,7 +44,8 @@ public class SimulationTopologyConfigurer {
             final StopCondition stopCondition,
             final SimulationStateProvider stateProvider,
             final EventBus eventBus,
-            final BeanFactory beanFactory) {
+            final BeanFactory beanFactory,
+            final AreaService areaService) {
 
         checkNotNull(distributionUtilities);
         this.topologyProvider = (TopologyProvider<String>) checkNotNull(topologyProvider);
@@ -52,12 +56,16 @@ public class SimulationTopologyConfigurer {
         this.idGenerator = distributionUtilities.getIdGenerator("area");
         this.eventBus = checkNotNull(eventBus);
         this.beanFactory = checkNotNull(beanFactory);
+        this.areaService = checkNotNull(areaService);
     }
 
     public List<StepRunner> configure(SimulationMap simulationMap) {
         topologyProvider.setTopology(this.topology());
 
         simulationMap.getAreas().forEach(area -> {
+            final Collection<String> neightbourAreas = areaService
+                    .findNeighbourAreas(simulationMap.getAreas(), area);
+            area.addNeigbourAreas(neightbourAreas);
             stateProvider.initializeStepsNumber(area.getAreaId());
             stateProvider.setAreaById(area.getAreaId(), area);
             stateProvider.setAreaBorderByAreaId(area.getAreaId(), area.getAreaBordersDefinition());

@@ -8,6 +8,7 @@ import pl.edu.agh.hbs.model.skill.Message;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class Area implements Serializable {
@@ -16,6 +17,7 @@ public abstract class Area implements Serializable {
     private final AreaBordersDefinition areaBordersDefinition;
     private final Collection<Agent> agents;
     private final Collection<Message> messages;
+    private final Collection<String> neighourAreas;
     private transient final Step step;
 
     public Area(String areaId, Step step, AreaBordersDefinition areaBordersDefinition, Collection<Agent> agents) {
@@ -23,6 +25,7 @@ public abstract class Area implements Serializable {
         this.step = step;
         this.agents = Collections.newSetFromMap(new ConcurrentHashMap<>());
         this.messages = Collections.newSetFromMap(new ConcurrentHashMap<>());
+        this.neighourAreas = Collections.newSetFromMap(new ConcurrentHashMap<>());
         this.areaBordersDefinition = areaBordersDefinition;
 
         this.agents.addAll(agents);
@@ -66,5 +69,34 @@ public abstract class Area implements Serializable {
 
     public boolean isInside(Vector position) {
         return this.areaBordersDefinition.isInside(position);
+    }
+
+    public Collection<String> getNeighourAreas() {
+        return neighourAreas;
+    }
+
+    public void addNeigbourAreas(Collection<String> areas) {
+        this.neighourAreas.addAll(areas);
+    }
+
+    public Vector getBottomLeftCornerPosition() {
+        return areaBordersDefinition.getBottomLeftPosition();
+    }
+
+    public Vector getUpperRightCornerPosition() {
+        return areaBordersDefinition.getUpperRightPosition();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Area area = (Area) o;
+        return Objects.equals(areaId, area.areaId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(areaId);
     }
 }
