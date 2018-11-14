@@ -5,6 +5,7 @@
        xmlns:scala-util="http://www.springframework.org/schema/scala/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/scala/util http://www.springframework.org/schema/scala/util/scala-util.xsd">
 
+    <import resource="classpath:config/app-internal-config.xml"/>
     <context:component-scan base-package="pl.edu.agh.hbs.core"/>
 
     <bean id="stopCondition" class="pl.edu.agh.hbs.core.model.domain.stop.StepsNumberStopCondition">

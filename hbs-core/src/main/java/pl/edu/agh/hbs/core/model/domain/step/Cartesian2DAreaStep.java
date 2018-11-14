@@ -58,15 +58,16 @@ public class Cartesian2DAreaStep implements Step {
         List<Message> outMessages = new ArrayList<>();
 
         area.getAgents().forEach(a -> a.beforeStep(inMessages));
+        area.getAgents().forEach(Agent::step);
         area.getAgents().forEach(a -> {
-            a.step();
+            final StepOutput agentStepOutput = a.afterStep();
+            if (agentStepOutput.isDead()) {
+                area.removeAgent(a);
+            }
             if (!area.isInside(a.position())) {
                 area.removeAgent(a);
                 putAgentToMatchingArea(a);
             }
-        });
-        area.getAgents().forEach(a -> {
-            final StepOutput agentStepOutput = a.afterStep();
             outMessages.addAll(JavaConverters.asJavaCollection(agentStepOutput.messages()));
             JavaConverters.asJavaCollection(agentStepOutput.agents()).forEach(this::putAgentToMatchingArea);
         });
