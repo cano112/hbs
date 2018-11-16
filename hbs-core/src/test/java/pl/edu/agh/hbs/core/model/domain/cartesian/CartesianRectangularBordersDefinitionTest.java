@@ -3,6 +3,7 @@ package pl.edu.agh.hbs.core.model.domain.cartesian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+import pl.edu.agh.hbs.core.simulation.cartesian.CartesianRectangularBordersDefinition;
 import pl.edu.agh.hbs.model.Vector;
 
 import static org.assertj.core.api.BDDAssertions.then;

@@ -8,7 +8,7 @@
 
     <bean id="topology" class="pl.edu.agh.age.compute.api.topology.FullMeshTopology"/>
 
-    <bean id="webSocketServer" class="pl.edu.agh.hbs.core.runners.SimulationWebSocketServer">
+    <bean id="webSocketServer" class="pl.edu.agh.hbs.core.ui.websocket.SimulationWebSocketServer">
         <constructor-arg name="eventBus" ref="eventBus"/>
         <constructor-arg name="port" value="8765"/>
     </bean>
@@ -17,5 +17,5 @@
 
     <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>
 
-    <bean id="runnable" class="pl.edu.agh.hbs.core.runners.HerdBehaviourSimulationRunner"/>
+    <bean id="runnable" class="pl.edu.agh.hbs.core.bootstrap.HerdBehaviourSimulationRunner"/>
 </beans>
