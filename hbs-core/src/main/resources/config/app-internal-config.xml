@@ -4,11 +4,11 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="pl.edu.agh.hbs.core"/>
+    <context:component-scan base-package="pl.edu.agh.hbs"/>
 
     <bean id="topology" class="pl.edu.agh.age.compute.api.topology.FullMeshTopology"/>
 
-    <bean id="webSocketServer" class="pl.edu.agh.hbs.core.ui.websocket.SimulationWebSocketServer">
+    <bean id="webSocketServer" class="pl.edu.agh.hbs.api.ui.websocket.SimulationWebSocketServer">
         <constructor-arg name="eventBus" ref="eventBus"/>
         <constructor-arg name="port" value="8765"/>
     </bean>
@@ -17,5 +17,5 @@
 
     <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>
 
-    <bean id="runnable" class="pl.edu.agh.hbs.core.bootstrap.HerdBehaviourSimulationRunner"/>
+    <bean id="runnable" class="pl.edu.agh.hbs.bootstrap.HerdBehaviourSimulationRunner"/>
 </beans>

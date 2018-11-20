@@ -1,6 +1,6 @@
 package pl.edu.agh.hbs.model
 
-import pl.edu.agh.hbs.core.model.Representation
+import pl.edu.agh.hbs.api.ui.Representation
 import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
@@ -71,4 +71,18 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
 
   def id(): String = modifiers.getFirst[ModIdentifier].id
 
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Agent]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Agent =>
+      (that canEqual this) &&
+        modifiers.getFirst[ModIdentifier].id == that.modifiers.getFirst[ModIdentifier].id
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(modifiers.getFirst[ModIdentifier].id)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }
