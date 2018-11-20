@@ -36,14 +36,14 @@ public class AreaStepBucketEventListener implements EntryUpdatedListener<AreaSte
         if (event.getValue() == 0) {
             switch (event.getKey()) {
                 case BEFORE_STEP:
-                    simulationStateProvider.fillBucket(AreaStepStage.STEP);
+                    simulationStateProvider.setStepLatchCount(AreaStepStage.STEP);
                     break;
                 case STEP:
-                    simulationStateProvider.fillBucket(AreaStepStage.AFTER_STEP);
+                    simulationStateProvider.setStepLatchCount(AreaStepStage.AFTER_STEP);
                     break;
                 case AFTER_STEP:
                     eventBus.post(new FramePreparedEvent(viewService.prepareViewFrame()));
-                    simulationStateProvider.fillBucket(AreaStepStage.BEFORE_STEP);
+                    simulationStateProvider.setStepLatchCount(AreaStepStage.BEFORE_STEP);
             }
         }
     }

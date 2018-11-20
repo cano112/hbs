@@ -1,6 +1,7 @@
 package pl.edu.agh.hbs.model
 
 import pl.edu.agh.hbs.api.ui.Representation
+import pl.edu.agh.hbs.api.ui.dto.Color
 import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
@@ -68,6 +69,13 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
   }
 
   def representation(): Representation = modifiers.getFirst[ModRepresentation].representation
+
+  def color(): Color = {
+    modifiers.getAll[ModColor]
+      .map(mod => mod.color)
+      .headOption
+      .getOrElse(Color.ORANGE)
+  }
 
   def id(): String = modifiers.getFirst[ModIdentifier].id
 

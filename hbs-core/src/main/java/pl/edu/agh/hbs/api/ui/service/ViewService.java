@@ -33,12 +33,13 @@ public class ViewService {
     public ViewFrame prepareViewFrame() {
         List<Body> bodies = new LinkedList<>();
         stateProvider.getAllAgents().forEach(agent -> {
-            Vector position = agent.position();
-            Representation representation = agent.representation();
-            ViewPosition viewPosition = new ViewPosition((int) position.get(0), (int) position.get(1));
+            final Vector position = agent.position();
+            final Representation representation = agent.representation();
+            final Color color = agent.color();
+            final ViewPosition viewPosition = new ViewPosition((int) position.get(0), (int) position.get(1));
             bodies.add(new Body(
                     viewPosition,
-                    Color.values()[0].getValue(),
+                    color.getValue(),
                     representation.getIdentity(),
                     (int) agent.rotation()));
         });

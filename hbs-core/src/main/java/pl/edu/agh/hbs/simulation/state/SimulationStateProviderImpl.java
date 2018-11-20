@@ -1,8 +1,6 @@
 package pl.edu.agh.hbs.simulation.state;
 
 import com.hazelcast.core.IMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -31,8 +29,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Lazy
 public class SimulationStateProviderImpl implements SimulationStateProvider {
 
-    private static final Logger log = LoggerFactory.getLogger(SimulationStateProviderImpl.class);
-
     private final IMap<String, WorkerAddress> areaLocations;
 
     private final IMap<String, Integer> areaStepsCount;
@@ -41,9 +37,9 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
 
     private final IMap<String, AreaBordersDefinition> areaBorders;
 
-    private final IMap<AreaStepStage, Integer> areaStepBuckets;
+    private final IMap<AreaStepStage, Integer> areaStepLatches;
 
-    private final IMap<String, Integer> constants;
+    private final IMap<ConstantLabel, Integer> constants;
 
     @Autowired
     public SimulationStateProviderImpl(
@@ -59,13 +55,15 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
         areaLocations = distributionUtilities.getMap("area-locations");
         areaBorders = distributionUtilities.getMap("area-borders");
         constants = distributionUtilities.getMap("constants");
-        areaStepBuckets = distributionUtilities.getMap("area-step-buckets");
-        areaStepBuckets.set(AreaStepStage.BEFORE_STEP, 0);
-        areaStepBuckets.set(AreaStepStage.STEP, 0);
-        areaStepBuckets.set(AreaStepStage.AFTER_STEP, 0);
+        areaStepLatches = distributionUtilities.getMap("area-step-buckets");
+
+        areaStepLatches.putIfAbsent(AreaStepStage.BEFORE_STEP, 0);
+        areaStepLatches.putIfAbsent(AreaStepStage.STEP, 0);
+        areaStepLatches.putIfAbsent(AreaStepStage.AFTER_STEP, 0);
+        constants.putIfAbsent(ConstantLabel.AREAS_COUNT, 0);
 
         areas.addEntryListener(areaAddedEventListener, true);
-        areaStepBuckets.addEntryListener(areaStepBucketEventListener, true);
+        areaStepLatches.addEntryListener(areaStepBucketEventListener, true);
     }
 
     @Override
@@ -138,36 +136,47 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
     }
 
     @Override
-    public void setAreasCount(int count) {
-        constants.set("areasCount", count);
+    public void addAreasCount(int count) {
+        constants.lock(ConstantLabel.AREAS_COUNT);
+        final int currentCount = constants.get(ConstantLabel.AREAS_COUNT);
+        constants.set(ConstantLabel.AREAS_COUNT, currentCount + count);
+        constants.unlock(ConstantLabel.AREAS_COUNT);
     }
 
     @Override
-    public void fillBucket(AreaStepStage stage, int count) {
-        areaStepBuckets.set(stage, count);
+    public void setStepLatchCount(AreaStepStage stage, int count) {
+        areaStepLatches.set(stage, count);
     }
 
     @Override
-    public void fillBucket(AreaStepStage stage) {
-        areaStepBuckets.set(stage, areaBorders.size());
+    public void setStepLatchCount(AreaStepStage stage) {
+        areaStepLatches.set(stage, constants.get(ConstantLabel.AREAS_COUNT));
+    }
+
+    @Override
+    public void addToStepLatch(AreaStepStage stage, int count) {
+        areaStepLatches.lock(stage);
+        final int currentCount = areaStepLatches.get(stage);
+        areaStepLatches.set(stage, currentCount + count);
+        areaStepLatches.unlock(stage);
     }
 
     @Override
     public void getToken(AreaStepStage stage) {
-        areaStepBuckets.lock(stage);
+        areaStepLatches.lock(stage);
         try {
-            final int current = areaStepBuckets.get(stage);
+            final int current = areaStepLatches.get(stage);
             if (current == 0) {
                 throw new IllegalStateException("No token available");
             }
-            areaStepBuckets.set(stage, current - 1);
+            areaStepLatches.set(stage, current - 1);
         } finally {
-            areaStepBuckets.unlock(stage);
+            areaStepLatches.unlock(stage);
         }
     }
 
     @Override
     public boolean isTokenAvailable(AreaStepStage stage) {
-        return areaStepBuckets.get(stage) > 0;
+        return areaStepLatches.get(stage) > 0;
     }
 }

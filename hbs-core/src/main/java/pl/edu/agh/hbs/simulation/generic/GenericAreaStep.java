@@ -4,13 +4,16 @@ import com.google.common.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.edu.agh.hbs.api.*;
+import pl.edu.agh.hbs.exceptions.SimulationExecutionException;
 import pl.edu.agh.hbs.model.Agent;
 import pl.edu.agh.hbs.model.StepOutput;
 import pl.edu.agh.hbs.model.skill.Message;
 import pl.edu.agh.hbs.simulation.state.AreaStateService;
 import pl.edu.agh.hbs.simulation.state.events.model.StepCompletedEvent;
+import pl.edu.agh.hbs.utils.PropertiesUtils;
 import pl.edu.agh.hbs.utils.ScalaInterop;
 import scala.collection.Seq;
 
@@ -24,24 +27,30 @@ public class GenericAreaStep implements Step {
 
     private static final Logger log = LoggerFactory.getLogger(GenericAreaStep.class);
 
+    private static final String DELAY_ENABLED_PROPERTIES_KEY = "hbs.simulation.step.delay.enabled";
+    private static final String DELAY_DURATION_PROPERTIES_KEY = "hbs.simulation.step.delay.duration";
     private final EventBus eventBus;
     private final SimulationStateProvider stateProvider;
     private final AreaStateService areaStateService;
     private final MessageDistributionStrategy messageDistributionStrategy;
+    private final Properties simulationProperties;
 
     @Autowired
     public GenericAreaStep(final EventBus eventBus,
                            final SimulationStateProvider stateProvider,
                            final AreaStateService areaStateService,
-                           final MessageDistributionStrategy messageDistributionStrategy) {
+                           final MessageDistributionStrategy messageDistributionStrategy,
+                           @Qualifier("simulationProperties") final Properties simulationProperties) {
         this.eventBus = checkNotNull(eventBus);
         this.stateProvider = checkNotNull(stateProvider);
         this.areaStateService = checkNotNull(areaStateService);
         this.messageDistributionStrategy = checkNotNull(messageDistributionStrategy);
+        this.simulationProperties = simulationProperties;
     }
 
     @Override
     public void beforeStep(String areaId) {
+        delayStep();
         log.debug("Before step: {}, area: {}", stateProvider.getStepsNumber(areaId), areaId);
 
         stateProvider.lockArea(areaId);
@@ -53,6 +62,20 @@ public class GenericAreaStep implements Step {
         });
         stateProvider.setAreaById(areaId, area);
         stateProvider.unlockArea(areaId);
+    }
+
+    private void delayStep() {
+        final boolean delayEnabled = PropertiesUtils
+                .getBooleanValue(simulationProperties, DELAY_ENABLED_PROPERTIES_KEY);
+        if (delayEnabled) {
+            final int delayDuration = PropertiesUtils
+                    .getIntegerValue(simulationProperties, DELAY_DURATION_PROPERTIES_KEY);
+            try {
+                Thread.sleep(delayDuration);
+            } catch (InterruptedException e) {
+                throw new SimulationExecutionException("Step delay sleep has been interrupted", e);
+            }
+        }
     }
 
     @Override

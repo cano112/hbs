@@ -52,8 +52,17 @@ public interface SimulationStateProvider {
      */
     void setAreaById(String areaId, Area area);
 
+    /**
+     * Acquire lock for a given area
+     *
+     * @param areaId area identifier
+     */
     void lockArea(String areaId);
 
+    /**
+     * Unlock given area
+     * @param areaId area identifier
+     */
     void unlockArea(String areaId);
 
     /**
@@ -96,7 +105,7 @@ public interface SimulationStateProvider {
      * Set number of areas in distributed map - for quicker access
      * @param count number of areas
      */
-    void setAreasCount(int count);
+    void addAreasCount(int count);
 
     /**
      * Areas are synchronized in three stages: 'before step', 'step' and 'after step'. The synchronization point
@@ -111,17 +120,25 @@ public interface SimulationStateProvider {
      * @param stage stage of step execution
      * @param count number of tokens to put into bucket
      */
-    void fillBucket(AreaStepStage stage, int count);
+    void setStepLatchCount(AreaStepStage stage, int count);
 
     /**
      * @param stage stage of step execution
-     * @see SimulationStateProvider#fillBucket(AreaStepStage, int)
+     * @see SimulationStateProvider#setStepLatchCount(AreaStepStage, int)
      */
-    void fillBucket(AreaStepStage stage);
+    void setStepLatchCount(AreaStepStage stage);
+
+    /**
+     * Add a given number of tokens to latch
+     *
+     * @param stage stage of step execution
+     * @param count number of tokens
+     */
+    void addToStepLatch(AreaStepStage stage, int count);
 
     /**
      * Get token from a bucket for a given stage
-     * @see SimulationStateProvider#fillBucket(AreaStepStage, int)
+     * @see SimulationStateProvider#setStepLatchCount(AreaStepStage, int)
      * @param stage stage of step execution
      */
     void getToken(AreaStepStage stage);

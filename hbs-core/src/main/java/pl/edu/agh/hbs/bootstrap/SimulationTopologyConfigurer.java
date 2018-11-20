@@ -61,8 +61,10 @@ public class SimulationTopologyConfigurer {
     }
 
     public List<StepRunner> configure(SimulationMap simulationMap) {
+        final int areasCount = simulationMap.getAreas().size();
         computeTopologyProvider.setTopology(this.topology());
-        stateProvider.setAreasCount(simulationMap.getAreas().size());
+        stateProvider.addAreasCount(areasCount);
+
         simulationMap.getAreas().forEach(area -> {
             final Collection<String> neighbourAreas = areaStateService
                     .findNeighbourAreaIds(simulationMap.getAreas(), area);
@@ -72,7 +74,8 @@ public class SimulationTopologyConfigurer {
             stateProvider.setAreaById(areaId, area);
             stateProvider.setAreaBorderByAreaId(areaId, area.getAreaBordersDefinition());
         });
-        stateProvider.fillBucket(AreaStepStage.BEFORE_STEP, simulationMap.getAreas().size());
+
+        stateProvider.addToStepLatch(AreaStepStage.BEFORE_STEP, areasCount);
 
         List<StepRunner> stepRunners = simulationMap.getAreas()
                 .stream()

@@ -3,12 +3,12 @@ package pl.edu.agh.hbs.bootstrap;
 import com.google.common.util.concurrent.ListenableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import pl.edu.agh.age.compute.api.ThreadPool;
 import pl.edu.agh.hbs.api.SimulationMap;
 import pl.edu.agh.hbs.api.ui.websocket.SimulationWebSocketServer;
 import pl.edu.agh.hbs.exceptions.SimulationExecutionException;
 
-import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Simulation entry-point - runnable used by Age 3 engine.
+ * Simulation entry-point - {@link Runnable} implementation used by Age 3 engine.
  * The purpose of this class is to invoke simulation configurer {@link SimulationTopologyConfigurer} and then
  * run {@link StepRunner} for each area configured.
  */
@@ -29,7 +29,7 @@ public class HerdBehaviourSimulationRunner implements Runnable {
     private final SimulationWebSocketServer webSocketServer;
     private final SimulationMap map;
 
-    @Inject
+    @Autowired
     public HerdBehaviourSimulationRunner(final ThreadPool threadPool,
                                          final SimulationTopologyConfigurer simulationTopologyConfigurer,
                                          final SimulationWebSocketServer webSocketServer,
