@@ -9,11 +9,16 @@ import scala.collection.mutable.ListBuffer
 
 trait MovingAgent extends Agent {
   this.decisions += DecMove
-  this.modifiers.update(ModMoveParameters(0.1, 1000, 50))
 
   override def modifiersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {
     val initModifiers = ListBuffer.empty[Modifier]
     modifiers.getAll[ModMoveParameters].foreach(m => initModifiers += m.copy())
     initModifiers ++ super.modifiersCopiedForChild(modifiers)
+  }
+
+  override def defaultInitModifiers(): Seq[Modifier] = {
+    val initModifiers = ListBuffer.empty[Modifier]
+    initModifiers += ModMoveParameters(0.1, 1000, 50)
+    initModifiers ++ super.defaultInitModifiers()
   }
 }

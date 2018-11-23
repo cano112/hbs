@@ -19,7 +19,9 @@ abstract class Agent(private val initModifiers: Seq[Modifier], private val inher
 
   private val currentActions: CurrentActions = new CurrentActions
   private val stepOutput: StepOutput = new StepOutput()
-  modifiers.update(modifiersCopiedForChild(inheritedModifiers) ++ initModifiers :+ ModLifeStatus())
+  private val default = defaultInitModifiers()
+  private val inherited = modifiersCopiedForChild(inheritedModifiers)
+  modifiers.update(defaultInitModifiers() ++ modifiersCopiedForChild(inheritedModifiers) ++ initModifiers :+ ModLifeStatus())
   afterStepActions += ActIncrementTimers
 
   def beforeStep(messages: Seq[Message]): Unit = {
@@ -54,10 +56,14 @@ abstract class Agent(private val initModifiers: Seq[Modifier], private val inher
 
   def modifiersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {
     val initModifiers = ListBuffer.empty[Modifier]
-    initModifiers += ModVelocity(Vector(), "standard")
-    modifiers.getAll[ModTimer].foreach(m => initModifiers += ModTimer(0, m.label))
     modifiers.getAll[ModPosition].foreach(m => initModifiers += m.copy())
     modifiers.getAll[ModRepresentation].foreach(m => initModifiers += m.copy())
+    initModifiers
+  }
+
+  def defaultInitModifiers(): Seq[Modifier] = {
+    val initModifiers = ListBuffer.empty[Modifier]
+    initModifiers += ModVelocity(Vector(), "standard")
     initModifiers
   }
 

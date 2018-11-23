@@ -5,7 +5,7 @@ import pl.edu.agh.hbs.model.skill.Action
 import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.breeding.modifier.ModBreedParameters
 import pl.edu.agh.hbs.model.skill.common.message.MesNeighbour
-import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity
+import pl.edu.agh.hbs.model.skill.common.modifier.{ModTimer, ModVelocity}
 import pl.edu.agh.hbs.model.{ModifierBuffer, StepOutput}
 
 import scala.collection.mutable.ListBuffer
@@ -15,6 +15,8 @@ object ActBreed extends Action {
   override def stepsDuration: Int = 1
 
   override def action(modifiers: ModifierBuffer): StepOutput = {
+    modifiers.update(ModTimer(0, "breed"))
+
     val species = modifiers.getFirst[ModSpecies].species
     val radius = modifiers.getFirst[ModBreedParameters].propagationRadius
 
