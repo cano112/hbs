@@ -2,6 +2,7 @@ package pl.edu.agh.hbs.model.skill.flocking.instantAction
 
 import pl.edu.agh.hbs.model
 import pl.edu.agh.hbs.model.skill.Action
+import pl.edu.agh.hbs.model.skill.basic.modifier.ModSpecies
 import pl.edu.agh.hbs.model.skill.common.modifier
 import pl.edu.agh.hbs.model.skill.common.modifier.{ModNeighbour, ModVelocity}
 import pl.edu.agh.hbs.model.skill.flocking.modifier.ModAlignmentVelocityParameters
@@ -11,9 +12,11 @@ object ActAlignmentVelocity extends Action {
 
   override def action(modifiers: ModifierBuffer): StepOutput = {
     val velocity = modifiers.getFirst[ModVelocity]("standard").velocity
-    val neighbours = modifiers.getAll[ModNeighbour]
-    //    val alignmentFactor = modifiers.getFirst[ModActionParameters]("AlignmentVelocity").parameters.getOrElse("alignmentFactor", 0.5)
     val alignmentFactor = modifiers.getFirst[ModAlignmentVelocityParameters].alignmentFactor
+    val species = modifiers.getFirst[ModSpecies].species
+    val neighbours = modifiers.getAll[ModNeighbour]
+      .filter(m => species.species.getClass.isAssignableFrom(m.species.species.getClass)
+        || m.species.species.getClass.isAssignableFrom(species.species.getClass))
 
     //alignment / schooling
     val alignmentVelocity = if (neighbours.nonEmpty) {

@@ -2,7 +2,7 @@ package pl.edu.agh.hbs.model.skill.dying.instantAction
 
 import pl.edu.agh.hbs.model.skill.Action
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModLifeStatus
-import pl.edu.agh.hbs.model.skill.dying.energy.ModEnergy
+import pl.edu.agh.hbs.model.skill.common.modifier.ModEnergy
 import pl.edu.agh.hbs.model.{ModifierBuffer, StepOutput}
 
 object ActConsumeEnergy extends Action {

@@ -1,10 +1,8 @@
 package pl.edu.agh.hbs.model.skill.predator.action
 
-import pl.edu.agh.hbs.model.propagation.CircularPropagation
 import pl.edu.agh.hbs.model.skill.Action
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition
-import pl.edu.agh.hbs.model.skill.common.modifier.ModNeighbour
-import pl.edu.agh.hbs.model.skill.dying.energy.ModEnergy
+import pl.edu.agh.hbs.model.skill.common.modifier.{ModEnergy, ModNeighbour}
 import pl.edu.agh.hbs.model.skill.predator.message.MesDie
 import pl.edu.agh.hbs.model.skill.predator.modifier.ModHuntFor
 import pl.edu.agh.hbs.model.{ModifierBuffer, StepOutput}
@@ -27,7 +25,7 @@ object ActHunt extends Action {
       .map(m => (m, m.position.distance(position)))
       .minBy(m => m._2)._1.agentId
 
-    new StepOutput(ListBuffer(new MesDie(new CircularPropagation(position, 1000), preyId)))
+    new StepOutput(ListBuffer(new MesDie(preyId)))
 
   }
 

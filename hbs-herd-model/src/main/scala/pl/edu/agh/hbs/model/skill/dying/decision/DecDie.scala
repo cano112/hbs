@@ -1,8 +1,8 @@
 package pl.edu.agh.hbs.model.skill.dying.decision
 
 import pl.edu.agh.hbs.model.ModifierBuffer
+import pl.edu.agh.hbs.model.skill.common.modifier.ModEnergy
 import pl.edu.agh.hbs.model.skill.dying.action.ActDie
-import pl.edu.agh.hbs.model.skill.dying.energy.ModEnergy
 import pl.edu.agh.hbs.model.skill.{Action, Decision}
 
 object DecDie extends Decision {

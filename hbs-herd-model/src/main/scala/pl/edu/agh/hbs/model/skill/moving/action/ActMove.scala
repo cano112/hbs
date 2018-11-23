@@ -25,9 +25,12 @@ object ActMove extends Action {
     val propagationRadius = modifiers.getFirst[ModMoveParameters].propagationRadius
 
     var position = oldPosition + (velocity * velocityFactor)
+
+    //bounding position todo
     position = model.Vector((position(0) + 2000 * 5) % 2000, (position(1) + 1500 * 5) % 1500)
     modifiers.update(ModPosition(position))
 
-    new StepOutput(ListBuffer(new MesNeighbour(new CircularPropagation(position, propagationRadius), agentId, species, position, velocity, Seq(new CircularPerception(propagationRadius+50, position)))))
+    new StepOutput(
+      ListBuffer(new MesNeighbour(new CircularPropagation(position, propagationRadius), agentId, species, position, velocity, Seq(new CircularPerception(propagationRadius + 50, position)))))
   }
 }

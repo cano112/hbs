@@ -2,12 +2,15 @@ package pl.edu.agh.hbs.model
 
 import pl.edu.agh.hbs.core.model.Representation
 import pl.edu.agh.hbs.model.skill.basic.modifier._
-import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity
+import pl.edu.agh.hbs.model.skill.common.instantAction.ActIncrementTimers
+import pl.edu.agh.hbs.model.skill.common.modifier.{ModTimer, ModVelocity}
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
 
 import scala.collection.mutable.ListBuffer
 
-abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializable {
+abstract class Agent(private val initModifiers: Seq[Modifier], private val inheritedModifiers: ModifierBuffer)
+  extends Serializable {
+
   val modifiers: ModifierBuffer = new ModifierBuffer()
   protected val decisions: ListBuffer[Decision] = scala.collection.mutable.ListBuffer.empty[Decision]
   protected val beforeStepActions: ListBuffer[Action] = scala.collection.mutable.ListBuffer.empty[Action]
@@ -15,11 +18,8 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
 
   private val currentActions: CurrentActions = new CurrentActions
   private val stepOutput: StepOutput = new StepOutput()
-  this.initialize(initModifiers)
-
-  def initialize(initModifiers: Seq[Modifier]): Unit = {
-    modifiers.update(ModLifeStatus() +: initModifiers)
-  }
+  modifiers.update(modifiersCopiedForChild(inheritedModifiers) ++ initModifiers :+ ModLifeStatus())
+  afterStepActions += ActIncrementTimers
 
   def beforeStep(messages: Seq[Message]): Unit = {
     messages.foreach(m => m.process(this))
@@ -51,7 +51,14 @@ abstract class Agent(private val initModifiers: Seq[Modifier]) extends Serializa
     decisions(number)
   }
 
-  def parametersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = Seq()
+  def modifiersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {
+    val initModifiers = ListBuffer.empty[Modifier]
+    initModifiers += ModVelocity(Vector(), "standard")
+    modifiers.getAll[ModTimer].foreach(m => initModifiers += ModTimer(0, m.label))
+    modifiers.getAll[ModPosition].foreach(m => initModifiers += m.copy())
+    modifiers.getAll[ModRepresentation].foreach(m => initModifiers += m.copy())
+    initModifiers
+  }
 
   def position(): Vector = modifiers.getFirst[ModPosition].position
 
