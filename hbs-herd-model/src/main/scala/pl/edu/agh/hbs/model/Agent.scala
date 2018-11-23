@@ -1,6 +1,7 @@
 package pl.edu.agh.hbs.model
 
-import pl.edu.agh.hbs.core.model.Representation
+import pl.edu.agh.hbs.api.ui.Representation
+import pl.edu.agh.hbs.api.ui.dto.Color
 import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.common.instantAction.ActIncrementTimers
 import pl.edu.agh.hbs.model.skill.common.modifier.{ModTimer, ModVelocity}
@@ -76,6 +77,27 @@ abstract class Agent(private val initModifiers: Seq[Modifier], private val inher
 
   def representation(): Representation = modifiers.getFirst[ModRepresentation].representation
 
+  def color(): Color = {
+    modifiers.getAll[ModColor]
+      .map(mod => mod.color)
+      .headOption
+      .getOrElse(Color.ORANGE)
+  }
+
   def id(): String = modifiers.getFirst[ModIdentifier].id
 
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Agent]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Agent =>
+      (that canEqual this) &&
+        modifiers.getFirst[ModIdentifier].id == that.modifiers.getFirst[ModIdentifier].id
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(modifiers.getFirst[ModIdentifier].id)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }

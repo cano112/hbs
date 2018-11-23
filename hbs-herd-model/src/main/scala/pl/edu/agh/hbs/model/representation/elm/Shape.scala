@@ -2,7 +2,7 @@ package pl.edu.agh.hbs.model.representation.elm
 
 import net.liftweb.json.DefaultFormats
 import net.liftweb.json.Serialization.write
-import pl.edu.agh.hbs.core.model.Representation
+import pl.edu.agh.hbs.api.ui.Representation
 
 class Shape(val name: String, private val parts: Part*) extends Representation {
 

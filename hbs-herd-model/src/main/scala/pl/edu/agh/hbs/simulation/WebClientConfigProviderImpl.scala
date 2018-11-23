@@ -1,7 +1,6 @@
 package pl.edu.agh.hbs.simulation
 
-import pl.edu.agh.hbs.core.model.Representation
-import pl.edu.agh.hbs.core.state.WebClientConfigProvider
+import pl.edu.agh.hbs.api.ui.{Representation, WebClientConfigProvider}
 
 class WebClientConfigProviderImpl(val width: Int, val height: Int, val representations: Representation*) extends WebClientConfigProvider {
 
