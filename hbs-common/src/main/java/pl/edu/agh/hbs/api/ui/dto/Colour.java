@@ -1,6 +1,6 @@
 package pl.edu.agh.hbs.api.ui.dto;
 
-public enum Color {
+public enum Colour {
     ORANGE("orange"),
     BROWN("brown"),
     BLUE("blue"),
@@ -10,7 +10,7 @@ public enum Color {
     YELLOW("yellow"),
     WHITE("white");
 
-    Color(String value) {
+    Colour(String value) {
         this.value = value;
     }
 

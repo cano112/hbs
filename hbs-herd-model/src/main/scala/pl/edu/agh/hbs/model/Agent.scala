@@ -1,7 +1,7 @@
 package pl.edu.agh.hbs.model
 
 import pl.edu.agh.hbs.api.ui.Representation
-import pl.edu.agh.hbs.api.ui.dto.Color
+import pl.edu.agh.hbs.api.ui.dto.Colour
 import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.common.instantAction.ActIncrementTimers
 import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity
@@ -44,7 +44,7 @@ abstract class Agent(private val initModifiers: Seq[Modifier], private val inher
     var number = -1
     var priority = -1
     for ((decision, i) <- decisions.view.zipWithIndex) {
-      if (decision.decision(modifiers) && decision.priority > priority) {
+      if (decision.decision(modifiers) && decision.priority >= priority) {
         number = i
         priority = decision.priority
       }
@@ -82,12 +82,7 @@ abstract class Agent(private val initModifiers: Seq[Modifier], private val inher
 
   def representation(): Representation = modifiers.getFirst[ModRepresentation].representation
 
-  def color(): Color = {
-    modifiers.getAll[ModColor]
-      .map(mod => mod.color)
-      .headOption
-      .getOrElse(Color.ORANGE)
-  }
+  def colour(): Colour = modifiers.getFirst[ModRepresentation].colour
 
   def id(): String = modifiers.getFirst[ModIdentifier].id
 

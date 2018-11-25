@@ -18,12 +18,12 @@
         </property>
     </bean>
 
-    <bean id="fish" name="fish" class="pl.edu.agh.hbs.simulation.shape.TriangleShape">
+    <bean id="fish" name="fish" class="pl.edu.agh.hbs.simulation.shape.FishShape">
         <constructor-arg name="factor" value="1"/>
     </bean>
 
-    <bean id="shark" name="shark" class="pl.edu.agh.hbs.simulation.shape.BoxShape">
-        <constructor-arg name="factor" value="1"/>
+    <bean id="shark" name="shark" class="pl.edu.agh.hbs.simulation.shape.FishShape">
+        <constructor-arg name="factor" value="2"/>
     </bean>
 
     <bean class="pl.edu.agh.hbs.model.ModifierBuffer"/>
@@ -105,6 +105,7 @@
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -141,6 +142,7 @@
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -177,6 +179,7 @@
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -214,6 +217,7 @@
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -250,6 +254,7 @@
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -286,6 +291,7 @@
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -323,6 +329,7 @@
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representation" ref="shark"/>
+                                            <constructor-arg name="colour" value="RED"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -359,6 +366,7 @@
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representation" ref="shark"/>
+                                            <constructor-arg name="colour" value="RED"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
@@ -395,6 +403,7 @@
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
                                             <constructor-arg name="representation" ref="shark"/>
+                                            <constructor-arg name="colour" value="RED"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>

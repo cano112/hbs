@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.edu.agh.hbs.api.SimulationStateProvider;
 import pl.edu.agh.hbs.api.ui.Representation;
 import pl.edu.agh.hbs.api.ui.dto.Body;
-import pl.edu.agh.hbs.api.ui.dto.Color;
+import pl.edu.agh.hbs.api.ui.dto.Colour;
 import pl.edu.agh.hbs.api.ui.dto.ViewFrame;
 import pl.edu.agh.hbs.api.ui.dto.ViewPosition;
 import pl.edu.agh.hbs.model.Vector;
@@ -35,11 +35,11 @@ public class ViewService {
         stateProvider.getAllAgents().forEach(agent -> {
             final Vector position = agent.position();
             final Representation representation = agent.representation();
-            final Color color = agent.color();
+            final Colour colour = agent.colour();
             final ViewPosition viewPosition = new ViewPosition((int) position.get(0), (int) position.get(1));
             bodies.add(new Body(
                     viewPosition,
-                    color.getValue(),
+                    colour.getValue(),
                     representation.getIdentity(),
                     (int) agent.rotation()));
         });
