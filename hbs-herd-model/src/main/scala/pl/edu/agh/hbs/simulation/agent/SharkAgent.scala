@@ -22,7 +22,6 @@ class SharkAgent(private val initModifiers: Seq[Modifier], inheritedModifiers: M
 
   override def modifiersCopiedFromParent(inherited: ModifierBuffer): Seq[Modifier] = {
     val modifiers = ListBuffer.empty[Modifier]
-    inherited.getAll[ModVelocity](Seq("wind")).foreach(m => modifiers += m.copy())
     super.modifiersCopiedFromParent(inherited) ++ modifiers
   }
 
@@ -31,7 +30,7 @@ class SharkAgent(private val initModifiers: Seq[Modifier], inheritedModifiers: M
     modifiers += ModHuntFor(Fish)
     modifiers += ModSpecies(Shark)
     modifiers += ModIdentifier(Shark.nextId())
-    modifiers += ModVelocity(model.Vector(new Random().nextDouble() * 10, 0.0), "wind")
+    modifiers += ModVelocity(model.Vector((new Random().nextDouble() - 0.5) * 20, (new Random().nextDouble() - 0.5) * 20), "current")
     super.defaultModifiers() ++ modifiers
   }
 }
