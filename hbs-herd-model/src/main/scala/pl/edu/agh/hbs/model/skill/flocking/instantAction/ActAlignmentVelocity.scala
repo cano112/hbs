@@ -3,7 +3,6 @@ package pl.edu.agh.hbs.model.skill.flocking.instantAction
 import pl.edu.agh.hbs.model
 import pl.edu.agh.hbs.model.skill.Action
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModSpecies
-import pl.edu.agh.hbs.model.skill.common.modifier
 import pl.edu.agh.hbs.model.skill.common.modifier.{ModNeighbour, ModVelocity}
 import pl.edu.agh.hbs.model.skill.flocking.modifier.ModAlignmentVelocityParameters
 import pl.edu.agh.hbs.model.{ModifierBuffer, StepOutput}
@@ -24,7 +23,7 @@ object ActAlignmentVelocity extends Action {
       (perceivedVelocity - velocity) * alignmentFactor
     } else model.Vector()
 
-    modifiers.update(modifier.ModVelocity(alignmentVelocity, "alignment"))
+    modifiers.update(ModVelocity(alignmentVelocity, "alignment"))
     new StepOutput()
   }
 }
