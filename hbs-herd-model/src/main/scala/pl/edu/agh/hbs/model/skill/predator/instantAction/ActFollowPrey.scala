@@ -1,4 +1,6 @@
 package pl.edu.agh.hbs.model.skill.predator.instantAction
+
+import pl.edu.agh.hbs.model
 import pl.edu.agh.hbs.model.skill.Action
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition
 import pl.edu.agh.hbs.model.skill.common.modifier.{ModNeighbour, ModVelocity}
@@ -12,11 +14,15 @@ object ActFollowPrey extends Action {
     val position = modifiers.getFirst[ModPosition].position
     val followFactor = modifiers.getFirst[ModFollowPreyParameters].followFactor
 
-    val closestPreyPosition = modifiers.getAll[ModNeighbour]
+    val preys = modifiers.getAll[ModNeighbour]
       .filter(m => preyCandidates.exists(p => p.species.getClass.isAssignableFrom(m.species.species.getClass)))
-      .map(m => (m, m.position.distance(position)))
-      .minBy(m => m._2)._1.position
-    val followVelocity = (closestPreyPosition - position) * followFactor
+
+    val followVelocity = if (preys.nonEmpty) {
+      val closestPreyPosition = preys
+        .map(m => (m, m.position.distance(position)))
+        .minBy(m => m._2)._1.position
+      (closestPreyPosition - position) * followFactor
+    } else model.Vector()
 
     modifiers.update(ModVelocity(followVelocity, "prey"))
     new StepOutput()

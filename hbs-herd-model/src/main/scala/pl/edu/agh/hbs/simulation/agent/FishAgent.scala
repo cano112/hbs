@@ -8,8 +8,10 @@ import pl.edu.agh.hbs.model.skill.common.modifier.{ModEnergy, ModVelocity}
 import pl.edu.agh.hbs.model.skill.dying.DyingAgent
 import pl.edu.agh.hbs.model.skill.flocking.FlockingAgent
 import pl.edu.agh.hbs.model.skill.moving.MovingAgent
+import pl.edu.agh.hbs.model.skill.prey.Prey
+import pl.edu.agh.hbs.model.skill.prey.modifier.ModFearOf
 import pl.edu.agh.hbs.model.{Agent, ModifierBuffer}
-import pl.edu.agh.hbs.simulation.species.Fish
+import pl.edu.agh.hbs.simulation.species.{Fish, Shark}
 
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
@@ -19,7 +21,8 @@ class FishAgent(private val initModifiers: Seq[Modifier], inheritedModifiers: Mo
     with MovingAgent
     with FlockingAgent
     with BreedingAgent
-    with DyingAgent {
+    with DyingAgent
+    with Prey {
 
   override def modifiersCopiedFromParent(inherited: ModifierBuffer): Seq[Modifier] = {
     val modifiers = ListBuffer.empty[Modifier]
@@ -29,6 +32,7 @@ class FishAgent(private val initModifiers: Seq[Modifier], inheritedModifiers: Mo
 
   override def defaultModifiers(): Seq[Modifier] = {
     val modifiers = ListBuffer.empty[Modifier]
+    modifiers += ModFearOf(Shark)
     modifiers += ModSpecies(Fish)
     modifiers += ModIdentifier(Fish.nextId())
     modifiers += ModEnergy(0, "consumed")
