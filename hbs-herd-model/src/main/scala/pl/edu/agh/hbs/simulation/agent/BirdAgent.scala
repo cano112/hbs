@@ -16,11 +16,11 @@ class BirdAgent(private val initModifiers: Seq[Modifier], inheritedModifiers: Mo
     with MovingAgent
     with FlockingAgent {
 
-  override def defaultInitModifiers(): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    initModifiers += ModSpecies(Bird)
-    initModifiers += ModIdentifier(Bird.nextId())
-    initModifiers += ModVelocity(model.Vector(10.0, 0.0), "wind")
-    initModifiers ++ super.defaultInitModifiers()
+  override def defaultModifiers(): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    modifiers += ModSpecies(Bird)
+    modifiers += ModIdentifier(Bird.nextId())
+    modifiers += ModVelocity(model.Vector(10.0, 0.0), "wind")
+    super.defaultModifiers() ++ modifiers
   }
 }

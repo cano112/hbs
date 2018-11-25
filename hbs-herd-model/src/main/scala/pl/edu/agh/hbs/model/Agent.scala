@@ -4,7 +4,7 @@ import pl.edu.agh.hbs.api.ui.Representation
 import pl.edu.agh.hbs.api.ui.dto.Color
 import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.common.instantAction.ActIncrementTimers
-import pl.edu.agh.hbs.model.skill.common.modifier.{ModTimer, ModVelocity}
+import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
 
 import scala.collection.mutable.ListBuffer
@@ -19,9 +19,7 @@ abstract class Agent(private val initModifiers: Seq[Modifier], private val inher
 
   private val currentActions: CurrentActions = new CurrentActions
   private val stepOutput: StepOutput = new StepOutput()
-  private val default = defaultInitModifiers()
-  private val inherited = modifiersCopiedForChild(inheritedModifiers)
-  modifiers.update(defaultInitModifiers() ++ modifiersCopiedForChild(inheritedModifiers) ++ initModifiers :+ ModLifeStatus())
+  modifiers.update(defaultModifiers() ++ modifiersCopiedFromParent(inheritedModifiers) ++ initModifiers)
   afterStepActions += ActIncrementTimers
 
   def beforeStep(messages: Seq[Message]): Unit = {
@@ -54,17 +52,18 @@ abstract class Agent(private val initModifiers: Seq[Modifier], private val inher
     decisions(number)
   }
 
-  def modifiersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    modifiers.getAll[ModPosition].foreach(m => initModifiers += m.copy())
-    modifiers.getAll[ModRepresentation].foreach(m => initModifiers += m.copy())
-    initModifiers
+  def modifiersCopiedFromParent(inherited: ModifierBuffer): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    inherited.getAll[ModPosition].foreach(m => modifiers += m.copy())
+    inherited.getAll[ModRepresentation].foreach(m => modifiers += m.copy())
+    modifiers
   }
 
-  def defaultInitModifiers(): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    initModifiers += ModVelocity(Vector(), "standard")
-    initModifiers
+  def defaultModifiers(): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    modifiers += ModVelocity(Vector(), "standard")
+    modifiers += ModLifeStatus()
+    modifiers
   }
 
   def position(): Vector = modifiers.getFirst[ModPosition].position

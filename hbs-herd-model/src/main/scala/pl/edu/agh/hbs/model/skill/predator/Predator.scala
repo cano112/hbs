@@ -11,19 +11,19 @@ import scala.collection.mutable.ListBuffer
 trait Predator extends Agent {
   this.decisions += DecHunt
 
-  override def modifiersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    modifiers.getAll[ModHuntFor].foreach(m => initModifiers += m.copy())
-    modifiers.getAll[ModEnergy](Seq("eaten")).foreach(m => initModifiers += m.copy())
-    modifiers.getAll[ModHuntParameters].foreach(m => initModifiers += m.copy())
-    initModifiers ++ super.modifiersCopiedForChild(modifiers)
+  override def modifiersCopiedFromParent(inherited: ModifierBuffer): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    inherited.getAll[ModHuntFor].foreach(m => modifiers += m.copy())
+    inherited.getAll[ModEnergy](Seq("eaten")).foreach(m => modifiers += m.copy())
+    inherited.getAll[ModHuntParameters].foreach(m => modifiers += m.copy())
+    super.modifiersCopiedFromParent(inherited) ++ modifiers
   }
 
-  override def defaultInitModifiers(): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    initModifiers += ModEnergy(400, "standard")
-    initModifiers += ModEnergy(50, "eaten")
-    initModifiers += ModHuntParameters(100)
-    initModifiers ++ super.defaultInitModifiers()
+  override def defaultModifiers(): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    modifiers += ModEnergy(400, "standard")
+    modifiers += ModEnergy(50, "eaten")
+    modifiers += ModHuntParameters(100)
+    super.defaultModifiers() ++ modifiers
   }
 }

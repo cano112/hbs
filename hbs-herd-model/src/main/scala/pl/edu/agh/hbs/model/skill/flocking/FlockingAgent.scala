@@ -12,19 +12,19 @@ trait FlockingAgent extends Agent {
   this.beforeStepActions += ActSeparationVelocity
   this.beforeStepActions += ActAlignmentVelocity
 
-  override def modifiersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    modifiers.getAll[ModCohesionVelocityParameters].foreach(m => initModifiers += m.copy())
-    modifiers.getAll[ModSeparationVelocityParameters].foreach(m => initModifiers += m.copy())
-    modifiers.getAll[ModAlignmentVelocityParameters].foreach(m => initModifiers += m.copy())
-    initModifiers ++ super.modifiersCopiedForChild(modifiers)
+  override def modifiersCopiedFromParent(inherited: ModifierBuffer): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    inherited.getAll[ModCohesionVelocityParameters].foreach(m => modifiers += m.copy())
+    inherited.getAll[ModSeparationVelocityParameters].foreach(m => modifiers += m.copy())
+    inherited.getAll[ModAlignmentVelocityParameters].foreach(m => modifiers += m.copy())
+    super.modifiersCopiedFromParent(inherited) ++ modifiers
   }
 
-  override def defaultInitModifiers(): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    initModifiers += ModCohesionVelocityParameters(1 / 7.5)
-    initModifiers += ModSeparationVelocityParameters(1, 25)
-    initModifiers += ModAlignmentVelocityParameters(0.5)
-    initModifiers ++ super.defaultInitModifiers()
+  override def defaultModifiers(): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    modifiers += ModCohesionVelocityParameters(1 / 7.5)
+    modifiers += ModSeparationVelocityParameters(1, 25)
+    modifiers += ModAlignmentVelocityParameters(0.5)
+    super.defaultModifiers() ++ modifiers
   }
 }

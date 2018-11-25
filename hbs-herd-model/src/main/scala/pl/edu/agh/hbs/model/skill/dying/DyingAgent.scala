@@ -13,16 +13,16 @@ trait DyingAgent extends Agent {
   this.decisions += DecIsDead
   this.afterStepActions += ActConsumeEnergy
 
-  override def modifiersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    modifiers.getAll[ModEnergy](Seq("consumed")).foreach(m => initModifiers += m.copy())
-    initModifiers ++ super.modifiersCopiedForChild(modifiers)
+  override def modifiersCopiedFromParent(inherited: ModifierBuffer): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    inherited.getAll[ModEnergy](Seq("consumed")).foreach(m => modifiers += m.copy())
+    super.modifiersCopiedFromParent(inherited) ++ modifiers
   }
 
-  override def defaultInitModifiers(): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    initModifiers += ModEnergy(100, "standard")
-    initModifiers += ModEnergy(1, "consumed")
-    initModifiers ++ super.defaultInitModifiers()
+  override def defaultModifiers(): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    modifiers += ModEnergy(100, "standard")
+    modifiers += ModEnergy(1, "consumed")
+    super.defaultModifiers() ++ modifiers
   }
 }

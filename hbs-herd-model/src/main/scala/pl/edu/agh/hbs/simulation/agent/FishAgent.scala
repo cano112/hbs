@@ -21,18 +21,18 @@ class FishAgent(private val initModifiers: Seq[Modifier], inheritedModifiers: Mo
     with BreedingAgent
     with DyingAgent {
 
-  override def modifiersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    modifiers.getAll[ModVelocity](Seq("wind")).foreach(m => initModifiers += m.copy())
-    initModifiers ++ super.modifiersCopiedForChild(modifiers)
+  override def modifiersCopiedFromParent(inherited: ModifierBuffer): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    inherited.getAll[ModVelocity](Seq("wind")).foreach(m => modifiers += m.copy())
+    super.modifiersCopiedFromParent(inherited) ++ modifiers
   }
 
-  override def defaultInitModifiers(): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    initModifiers += ModSpecies(Fish)
-    initModifiers += ModIdentifier(Fish.nextId())
-    initModifiers += ModEnergy(0, "consumed")
-    initModifiers += ModVelocity(model.Vector(new Random().nextDouble() * 10, 0.0), "wind")
-    initModifiers ++ super.defaultInitModifiers()
+  override def defaultModifiers(): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    modifiers += ModSpecies(Fish)
+    modifiers += ModIdentifier(Fish.nextId())
+    modifiers += ModEnergy(0, "consumed")
+    modifiers += ModVelocity(model.Vector(new Random().nextDouble() * 10, 0.0), "wind")
+    super.defaultModifiers() ++ modifiers
   }
 }

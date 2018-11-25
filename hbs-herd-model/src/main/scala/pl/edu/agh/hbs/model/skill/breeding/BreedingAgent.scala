@@ -11,16 +11,16 @@ import scala.collection.mutable.ListBuffer
 trait BreedingAgent extends Agent {
   this.decisions += DecBreed
 
-  override def modifiersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    modifiers.getAll[ModBreedParameters].foreach(m => initModifiers += m.copy())
-    initModifiers ++ super.modifiersCopiedForChild(modifiers)
+  override def modifiersCopiedFromParent(inherited: ModifierBuffer): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    inherited.getAll[ModBreedParameters].foreach(m => modifiers += m.copy())
+    super.modifiersCopiedFromParent(inherited) ++ modifiers
   }
 
-  override def defaultInitModifiers(): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    initModifiers += ModBreedParameters(40, 1000)
-    initModifiers += ModTimer(0, "breed")
-    initModifiers ++ super.defaultInitModifiers()
+  override def defaultModifiers(): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    modifiers += ModBreedParameters(40, 1000)
+    modifiers += ModTimer(0, "breed")
+    super.defaultModifiers() ++ modifiers
   }
 }
