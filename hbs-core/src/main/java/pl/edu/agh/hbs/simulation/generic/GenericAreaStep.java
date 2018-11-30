@@ -48,22 +48,6 @@ public class GenericAreaStep implements Step {
         this.simulationProperties = simulationProperties;
     }
 
-    @Override
-    public void beforeStep(String areaId) {
-        delayStep();
-        log.debug("Before step: {}, area: {}", stateProvider.getStepsNumber(areaId), areaId);
-
-        stateProvider.lockArea(areaId);
-        final Area area = stateProvider.getAreaById(areaId);
-        final Collection<Message> inMessages = area.getMessages();
-        area.getAgents().forEach(a -> {
-            Seq<Message> filteredMessages = messageDistributionStrategy.filterForAgent(a, inMessages);
-            a.beforeStep(filteredMessages);
-        });
-        stateProvider.setAreaById(areaId, area);
-        stateProvider.unlockArea(areaId);
-    }
-
     private void delayStep() {
         final boolean delayEnabled = PropertiesUtils
                 .getBooleanValue(simulationProperties, DELAY_ENABLED_PROPERTIES_KEY);
@@ -80,12 +64,22 @@ public class GenericAreaStep implements Step {
 
     @Override
     public void step(String areaId) {
+        delayStep();
         log.debug("Step: {}, area: {}", stateProvider.getStepsNumber(areaId), areaId);
-        stateProvider.lockArea(areaId);
-        final Area area = stateProvider.getAreaById(areaId);
-        area.getAgents().forEach(Agent::step);
-        stateProvider.setAreaById(areaId, area);
-        stateProvider.unlockArea(areaId);
+        try {
+            stateProvider.lockArea(areaId);
+            final Area area = stateProvider.getAreaById(areaId);
+            final Collection<Message> inMessages = area.getMessages();
+            area.getAgents().forEach(a -> {
+                Seq<Message> filteredMessages = messageDistributionStrategy.filterForAgent(a, inMessages);
+                a.beforeStep(filteredMessages);
+            });
+
+            area.getAgents().forEach(Agent::step);
+            stateProvider.setAreaById(areaId, area);
+        } finally {
+            stateProvider.unlockArea(areaId);
+        }
     }
 
     @Override
