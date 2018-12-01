@@ -23,7 +23,7 @@ abstract class Agent(private val initModifiers: Seq[Modifier], private val inher
   afterStepActions += ActIncrementTimers
 
   def beforeStep(messages: Seq[Message]): Unit = {
-    messages.foreach(m => m.process(this))
+    messages.foreach(m => if (m.shouldProcess(this)) m.process(modifiers))
     beforeStepActions.foreach(a => stepOutput += a.action(modifiers))
   }
 
