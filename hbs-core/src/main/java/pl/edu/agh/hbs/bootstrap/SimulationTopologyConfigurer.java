@@ -75,7 +75,7 @@ public class SimulationTopologyConfigurer {
             stateProvider.setAreaBorderByAreaId(areaId, area.getAreaBordersDefinition());
         });
 
-        stateProvider.addToStepLatch(AreaStepStage.BEFORE_STEP, areasCount);
+        stateProvider.addToStepLatch(AreaStepStage.STEP, areasCount);
 
         List<StepRunner> stepRunners = simulationMap.getAreas()
                 .stream()

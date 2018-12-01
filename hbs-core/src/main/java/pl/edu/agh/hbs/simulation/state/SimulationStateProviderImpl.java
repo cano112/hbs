@@ -11,7 +11,7 @@ import pl.edu.agh.hbs.api.AreaBordersDefinition;
 import pl.edu.agh.hbs.api.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Agent;
 import pl.edu.agh.hbs.simulation.state.events.listeners.AreaAddedEventListener;
-import pl.edu.agh.hbs.simulation.state.events.listeners.AreaStepBucketEventListener;
+import pl.edu.agh.hbs.simulation.state.events.listeners.AreaStepLatchEventListener;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -44,7 +44,7 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
     @Autowired
     public SimulationStateProviderImpl(
             final DistributionUtilities distributionUtilities,
-            final AreaStepBucketEventListener areaStepBucketEventListener,
+            final AreaStepLatchEventListener areaStepLatchEventListener,
             final AreaAddedEventListener areaAddedEventListener) {
 
         checkNotNull(distributionUtilities);
@@ -57,13 +57,12 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
         constants = distributionUtilities.getMap("constants");
         areaStepLatches = distributionUtilities.getMap("area-step-buckets");
 
-        areaStepLatches.putIfAbsent(AreaStepStage.BEFORE_STEP, 0);
         areaStepLatches.putIfAbsent(AreaStepStage.STEP, 0);
         areaStepLatches.putIfAbsent(AreaStepStage.AFTER_STEP, 0);
         constants.putIfAbsent(ConstantLabel.AREAS_COUNT, 0);
 
         areas.addEntryListener(areaAddedEventListener, true);
-        areaStepLatches.addEntryListener(areaStepBucketEventListener, true);
+        areaStepLatches.addEntryListener(areaStepLatchEventListener, true);
     }
 
     @Override
@@ -137,10 +136,13 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
 
     @Override
     public void addAreasCount(int count) {
-        constants.lock(ConstantLabel.AREAS_COUNT);
-        final int currentCount = constants.get(ConstantLabel.AREAS_COUNT);
-        constants.set(ConstantLabel.AREAS_COUNT, currentCount + count);
-        constants.unlock(ConstantLabel.AREAS_COUNT);
+        try {
+            constants.lock(ConstantLabel.AREAS_COUNT);
+            final int currentCount = constants.get(ConstantLabel.AREAS_COUNT);
+            constants.set(ConstantLabel.AREAS_COUNT, currentCount + count);
+        } finally {
+            constants.unlock(ConstantLabel.AREAS_COUNT);
+        }
     }
 
     @Override
@@ -155,10 +157,13 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
 
     @Override
     public void addToStepLatch(AreaStepStage stage, int count) {
-        areaStepLatches.lock(stage);
-        final int currentCount = areaStepLatches.get(stage);
-        areaStepLatches.set(stage, currentCount + count);
-        areaStepLatches.unlock(stage);
+        try {
+            areaStepLatches.lock(stage);
+            final int currentCount = areaStepLatches.get(stage);
+            areaStepLatches.set(stage, currentCount + count);
+        } finally {
+            areaStepLatches.unlock(stage);
+        }
     }
 
     @Override
