@@ -46,13 +46,11 @@ public class StepRunner implements Runnable {
                 break;
             }
 
-            while (!simulationStateProvider.isTokenAvailable(AreaStepStage.BEFORE_STEP)) ;
-            simulationStateProvider.getToken(AreaStepStage.BEFORE_STEP);
-            step.beforeStep(areaId);
-
+            // Cannot make it reactive (eg. with the usage of EntryUpdatedEventListener) - we need synchronized access
             while (!simulationStateProvider.isTokenAvailable(AreaStepStage.STEP)) ;
             simulationStateProvider.getToken(AreaStepStage.STEP);
             step.step(areaId);
+
 
             while (!simulationStateProvider.isTokenAvailable(AreaStepStage.AFTER_STEP)) ;
             simulationStateProvider.getToken(AreaStepStage.AFTER_STEP);

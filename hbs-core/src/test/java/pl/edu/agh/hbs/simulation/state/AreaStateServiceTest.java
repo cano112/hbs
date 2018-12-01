@@ -1,4 +1,4 @@
-package pl.edu.agh.hbs.service;
+package pl.edu.agh.hbs.simulation.state;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import pl.edu.agh.hbs.api.AreaBordersDefinition;
 import pl.edu.agh.hbs.model.Vector;
 import pl.edu.agh.hbs.simulation.cartesian.CartesianRectangularBordersDefinition;
-import pl.edu.agh.hbs.simulation.state.AreaStateService;
 
 import java.util.HashMap;
 import java.util.Map;

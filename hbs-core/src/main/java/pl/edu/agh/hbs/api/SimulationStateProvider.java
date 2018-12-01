@@ -61,6 +61,7 @@ public interface SimulationStateProvider {
 
     /**
      * Unlock given area
+     *
      * @param areaId area identifier
      */
     void unlockArea(String areaId);
@@ -103,6 +104,7 @@ public interface SimulationStateProvider {
 
     /**
      * Set number of areas in distributed map - for quicker access
+     *
      * @param count number of areas
      */
     void addAreasCount(int count);
@@ -111,7 +113,7 @@ public interface SimulationStateProvider {
      * Areas are synchronized in three stages: 'before step', 'step' and 'after step'. The synchronization point
      * is after each stage - areas are concurrent only inside a given stage. For synchronization,
      * we use 'bucket mechanism' - some kind of countdown latch, where we have three buckets with tokens.
-     *
+     * <p>
      * We fill the bucket with a given number of tokens, which are removed when an area finishes its stage.
      * When the bucket is empty, we fill the next bucket (before step' -> 'step' -> 'after step').
      * {@link pl.edu.agh.hbs.bootstrap.StepRunner} waits until the bucket contains at least one token and then
@@ -138,8 +140,9 @@ public interface SimulationStateProvider {
 
     /**
      * Get token from a bucket for a given stage
-     * @see SimulationStateProvider#setStepLatchCount(AreaStepStage, int)
+     *
      * @param stage stage of step execution
+     * @see SimulationStateProvider#setStepLatchCount(AreaStepStage, int)
      */
     void getToken(AreaStepStage stage);
 

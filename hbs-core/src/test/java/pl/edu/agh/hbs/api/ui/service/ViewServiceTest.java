@@ -1,4 +1,4 @@
-package pl.edu.agh.hbs.service;
+package pl.edu.agh.hbs.api.ui.service;
 
 import org.assertj.core.groups.Tuple;
 import org.junit.Test;
@@ -9,7 +9,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import pl.edu.agh.hbs.api.SimulationStateProvider;
 import pl.edu.agh.hbs.api.ui.dto.ViewFrame;
 import pl.edu.agh.hbs.api.ui.dto.ViewPosition;
-import pl.edu.agh.hbs.api.ui.service.ViewService;
 import pl.edu.agh.hbs.model.Vector;
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition;
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation;
@@ -62,6 +61,6 @@ public class ViewServiceTest {
 
     private ViewPosition toViewPosition(Vector position) {
         double[] arrayPosition = position.toArray();
-        return new ViewPosition(arrayPosition[0], arrayPosition[1]);
+        return new ViewPosition((int) arrayPosition[0], (int) arrayPosition[1]);
     }
 }
