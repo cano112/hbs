@@ -1,17 +1,19 @@
 package pl.edu.agh.hbs.model.skill.basic.message
 
-import pl.edu.agh.hbs.model.Agent
-import pl.edu.agh.hbs.model.propagation.Propagation
+import pl.edu.agh.hbs.ui.Representation
+import pl.edu.agh.hbs.ui.dto.Colour
+import pl.edu.agh.hbs.model.ModifierBuffer
+import pl.edu.agh.hbs.model.perception.DirectPerception
 import pl.edu.agh.hbs.model.skill.Message
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation
-import pl.edu.agh.hbs.ui.Representation
 
-class MesRepresentationChange(override val propagation: Propagation,
-                              val representation: Representation) extends Message(propagation) {
 
-  def process(agent: Agent): Unit = {
-    if (propagation.shouldReceive(agent))
-      agent.modifiers.update(ModRepresentation(this.representation))
+class MesRepresentationChange(val agentId: String,
+                              val representation: Representation,
+                              val colour: Colour) extends Message(perception = Seq(new DirectPerception(agentId))) {
+
+  def process(modifiers: ModifierBuffer): Unit = {
+    modifiers.update(ModRepresentation(this.representation, this.colour))
   }
 
 }

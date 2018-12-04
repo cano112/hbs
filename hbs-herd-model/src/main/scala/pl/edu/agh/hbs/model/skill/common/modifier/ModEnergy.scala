@@ -1,4 +1,4 @@
-package pl.edu.agh.hbs.model.skill.dying.energy
+package pl.edu.agh.hbs.model.skill.common.modifier
 
 import pl.edu.agh.hbs.model.skill.Modifier
 

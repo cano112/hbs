@@ -1,19 +1,25 @@
 package pl.edu.agh.hbs.model.skill.prey
 
 import pl.edu.agh.hbs.model.skill.Modifier
-import pl.edu.agh.hbs.model.skill.dying.energy.ModEnergy
-import pl.edu.agh.hbs.model.skill.prey.modifier.ModFearOf
+import pl.edu.agh.hbs.model.skill.prey.instantAction.ActRunAwayFromPredator
+import pl.edu.agh.hbs.model.skill.prey.modifier.{ModFearOf, ModRunAwayFromPredatorParameters}
 import pl.edu.agh.hbs.model.{Agent, ModifierBuffer}
 
 import scala.collection.mutable.ListBuffer
 
 trait Prey extends Agent {
-  this.modifiers.update(ModEnergy(200, "standard"))
-  this.modifiers.update(ModEnergy(1, "consumed"))
+  this.beforeStepActions += ActRunAwayFromPredator
 
-  override def parametersCopiedForChild(modifiers: ModifierBuffer): Seq[Modifier] = {
-    val initModifiers = ListBuffer.empty[Modifier]
-    modifiers.getAll[ModFearOf].foreach(m => initModifiers += m.copy())
-    initModifiers ++ super.parametersCopiedForChild(modifiers)
+  override def modifiersCopiedFromParent(inherited: ModifierBuffer): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    inherited.getAll[ModFearOf].foreach(m => modifiers += m.copy())
+    inherited.getAll[ModRunAwayFromPredatorParameters].foreach(m => modifiers += m.copy())
+    super.modifiersCopiedFromParent(inherited) ++ modifiers
+  }
+
+  override def defaultModifiers(): Seq[Modifier] = {
+    val modifiers = ListBuffer.empty[Modifier]
+    modifiers += ModRunAwayFromPredatorParameters(0.2)
+    super.defaultModifiers() ++ modifiers
   }
 }

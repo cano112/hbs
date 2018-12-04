@@ -18,12 +18,12 @@
         </property>
     </bean>
 
-    <bean id="fish" name="fish" class="pl.edu.agh.hbs.simulation.shape.FishShape">
-        <constructor-arg name="factor" value="1"/>
+    <bean id="sheep" name="sheep" class="pl.edu.agh.hbs.simulation.shape.SheepShape">
+        <constructor-arg name="factor" value="2"/>
     </bean>
 
-    <bean id="shark" name="shark" class="pl.edu.agh.hbs.simulation.shape.FishShape">
-        <constructor-arg name="factor" value="2"/>
+    <bean id="wolf" name="wolf" class="pl.edu.agh.hbs.simulation.shape.WolfShape">
+        <constructor-arg name="factor" value="5"/>
     </bean>
 
     <bean class="pl.edu.agh.hbs.model.ModifierBuffer"/>
@@ -33,8 +33,8 @@
         <constructor-arg name="height" value="1500"/>
         <constructor-arg name="representations">
             <scala-util:seq>
-                <ref bean="fish"/>
-                <ref bean="shark"/>
+                <ref bean="sheep"/>
+                <ref bean="wolf"/>
             </scala-util:seq>
         </constructor-arg>
     </bean>
@@ -75,7 +75,7 @@
                     </constructor-arg>
                     <constructor-arg name="agents">
                         <list>
-                            <bean id="agent1" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
+                            <bean id="agent1" class="pl.edu.agh.hbs.simulation.agent.SheepAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -104,13 +104,13 @@
                                             <constructor-arg name="label" value="standard"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="representation" ref="sheep"/>
                                             <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent2" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
+                            <bean id="agent2" class="pl.edu.agh.hbs.simulation.agent.SheepAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -141,13 +141,13 @@
                                             </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="representation" ref="sheep"/>
                                             <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent3" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
+                            <bean id="agent3" class="pl.edu.agh.hbs.simulation.agent.SheepAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -178,14 +178,14 @@
                                             </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="representation" ref="sheep"/>
                                             <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
 
-                            <bean id="agent4" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
+                            <bean id="agent4" class="pl.edu.agh.hbs.simulation.agent.SheepAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -216,13 +216,13 @@
                                             </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="representation" ref="sheep"/>
                                             <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent5" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
+                            <bean id="agent5" class="pl.edu.agh.hbs.simulation.agent.SheepAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -253,13 +253,13 @@
                                             </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="representation" ref="sheep"/>
                                             <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent6" class="pl.edu.agh.hbs.simulation.agent.FishAgent">
+                            <bean id="agent6" class="pl.edu.agh.hbs.simulation.agent.SheepAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -290,14 +290,14 @@
                                             </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="fish"/>
+                                            <constructor-arg name="representation" ref="sheep"/>
                                             <constructor-arg name="colour" value="GREEN"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
 
-                            <bean id="agent7" class="pl.edu.agh.hbs.simulation.agent.SharkAgent">
+                            <bean id="agent7" class="pl.edu.agh.hbs.simulation.agent.WolfAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -328,13 +328,13 @@
                                             </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="shark"/>
+                                            <constructor-arg name="representation" ref="wolf"/>
                                             <constructor-arg name="colour" value="RED"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent8" class="pl.edu.agh.hbs.simulation.agent.SharkAgent">
+                            <bean id="agent8" class="pl.edu.agh.hbs.simulation.agent.WolfAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -365,13 +365,13 @@
                                             </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="shark"/>
+                                            <constructor-arg name="representation" ref="wolf"/>
                                             <constructor-arg name="colour" value="RED"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent9" class="pl.edu.agh.hbs.simulation.agent.SharkAgent">
+                            <bean id="agent9" class="pl.edu.agh.hbs.simulation.agent.WolfAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -402,7 +402,7 @@
                                             </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="shark"/>
+                                            <constructor-arg name="representation" ref="wolf"/>
                                             <constructor-arg name="colour" value="RED"/>
                                         </bean>
                                     </scala-util:seq>

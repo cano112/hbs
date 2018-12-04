@@ -1,11 +1,14 @@
 package pl.edu.agh.hbs.model.skill
 
-import pl.edu.agh.hbs.model.Agent
-import pl.edu.agh.hbs.model.perception.{Perception, SimplePerception}
-import pl.edu.agh.hbs.model.propagation.Propagation
+import pl.edu.agh.hbs.model.perception.{AllPerception, Perception}
+import pl.edu.agh.hbs.model.propagation.{AllPropagation, Propagation}
+import pl.edu.agh.hbs.model.{Agent, ModifierBuffer}
 
-abstract class Message(val propagation: Propagation, val perception: Seq[Perception] = Seq(new SimplePerception())) extends Serializable {
+abstract class Message(val propagation: Propagation = new AllPropagation(),
+                       val perception: Seq[Perception] = Seq(new AllPerception())) extends Serializable {
 
-  def process(agent: Agent): Unit
+  def shouldProcess(agent: Agent): Boolean = perception.forall(p => p.shouldProcess(agent))
+
+  def process(modifiers: ModifierBuffer): Unit
 
 }

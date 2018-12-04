@@ -8,7 +8,7 @@ trait SpeciesObject extends Serializable {
 
   val species: Species
 
-  def newAgent(initModifiers: Seq[Modifier]): Agent
+  def newAgent(initModifiers: Seq[Modifier], inheritedModifiers: ModifierBuffer): Agent
 
   private var counter = 0
 
