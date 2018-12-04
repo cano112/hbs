@@ -5,9 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.edu.agh.age.compute.api.ThreadPool;
-import pl.edu.agh.hbs.api.SimulationMap;
-import pl.edu.agh.hbs.api.ui.websocket.SimulationWebSocketServer;
 import pl.edu.agh.hbs.exceptions.SimulationExecutionException;
+import pl.edu.agh.hbs.simulation.api.SimulationMap;
+import pl.edu.agh.hbs.ui.websocket.SimulationWebSocketServer;
 
 import java.util.Collections;
 import java.util.List;

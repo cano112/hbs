@@ -1,9 +1,9 @@
 package pl.edu.agh.hbs.simulation.generic;
 
-import pl.edu.agh.hbs.api.Area;
-import pl.edu.agh.hbs.api.AreaBordersDefinition;
-import pl.edu.agh.hbs.api.Step;
 import pl.edu.agh.hbs.model.Agent;
+import pl.edu.agh.hbs.simulation.api.Area;
+import pl.edu.agh.hbs.simulation.api.AreaBordersDefinition;
+import pl.edu.agh.hbs.simulation.api.Step;
 
 import java.util.Collection;
 

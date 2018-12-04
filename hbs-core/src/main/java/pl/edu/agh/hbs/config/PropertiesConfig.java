@@ -12,9 +12,10 @@ import java.util.Properties;
 @Configuration
 public class PropertiesConfig {
 
+    private static final String PROPERTIES_PATH = "/simulation.properties";
     @Bean
     public Properties simulationProperties() throws IOException {
-        final Resource resource = new ClassPathResource("/simulation.properties");
+        final Resource resource = new ClassPathResource(PROPERTIES_PATH);
         return PropertiesLoaderUtils.loadProperties(resource);
     }
 }

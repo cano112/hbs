@@ -1,7 +1,7 @@
 package pl.edu.agh.hbs.simulation.cartesian;
 
-import pl.edu.agh.hbs.api.AreaBordersDefinition;
 import pl.edu.agh.hbs.model.Vector;
+import pl.edu.agh.hbs.simulation.api.AreaBordersDefinition;
 
 public class CartesianRectangularBordersDefinition implements AreaBordersDefinition {
 

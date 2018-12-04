@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import pl.edu.agh.hbs.api.SimulationStateProvider;
-import pl.edu.agh.hbs.api.Step;
-import pl.edu.agh.hbs.api.StopCondition;
-import pl.edu.agh.hbs.simulation.state.AreaStepStage;
+import pl.edu.agh.hbs.simulation.api.Step;
+import pl.edu.agh.hbs.simulation.api.StopCondition;
+import pl.edu.agh.hbs.state.AreaStepStage;
+import pl.edu.agh.hbs.state.SimulationStateProvider;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

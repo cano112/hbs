@@ -1,10 +1,10 @@
 package pl.edu.agh.hbs.model
 
-import pl.edu.agh.hbs.api.ui.Representation
-import pl.edu.agh.hbs.api.ui.dto.Color
 import pl.edu.agh.hbs.model.skill.basic.modifier._
 import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity
 import pl.edu.agh.hbs.model.skill.{Action, Decision, Message, Modifier}
+import pl.edu.agh.hbs.ui.Representation
+import pl.edu.agh.hbs.ui.dto.Color
 
 import scala.collection.mutable.ListBuffer
 

@@ -1,10 +1,10 @@
 package pl.edu.agh.hbs.simulation.generic.stop;
 
 import com.google.common.eventbus.EventBus;
-import pl.edu.agh.hbs.api.SimulationStateProvider;
-import pl.edu.agh.hbs.api.StopCondition;
-import pl.edu.agh.hbs.simulation.state.SimulationStateProviderImpl;
-import pl.edu.agh.hbs.simulation.state.events.model.StopConditionReachedEvent;
+import pl.edu.agh.hbs.simulation.api.StopCondition;
+import pl.edu.agh.hbs.state.SimulationStateProvider;
+import pl.edu.agh.hbs.state.SimulationStateProviderImpl;
+import pl.edu.agh.hbs.state.events.model.StopConditionReachedEvent;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

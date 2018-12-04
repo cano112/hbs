@@ -9,11 +9,11 @@ import pl.edu.agh.age.compute.api.DistributionUtilities;
 import pl.edu.agh.age.compute.api.TopologyProvider;
 import pl.edu.agh.age.compute.api.UnicastMessenger;
 import pl.edu.agh.age.compute.api.topology.Topology;
-import pl.edu.agh.hbs.api.SimulationMap;
-import pl.edu.agh.hbs.api.SimulationStateProvider;
-import pl.edu.agh.hbs.api.StopCondition;
-import pl.edu.agh.hbs.simulation.state.AreaStateService;
-import pl.edu.agh.hbs.simulation.state.AreaStepStage;
+import pl.edu.agh.hbs.simulation.api.SimulationMap;
+import pl.edu.agh.hbs.simulation.api.StopCondition;
+import pl.edu.agh.hbs.state.AreaStateService;
+import pl.edu.agh.hbs.state.AreaStepStage;
+import pl.edu.agh.hbs.state.SimulationStateProvider;
 
 import java.io.Serializable;
 import java.util.Collection;

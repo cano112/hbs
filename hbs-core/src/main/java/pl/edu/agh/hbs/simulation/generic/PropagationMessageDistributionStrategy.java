@@ -3,12 +3,12 @@ package pl.edu.agh.hbs.simulation.generic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import pl.edu.agh.hbs.api.Area;
-import pl.edu.agh.hbs.api.MessageDistributionStrategy;
-import pl.edu.agh.hbs.api.SimulationStateProvider;
 import pl.edu.agh.hbs.model.Agent;
 import pl.edu.agh.hbs.model.Vector;
 import pl.edu.agh.hbs.model.skill.Message;
+import pl.edu.agh.hbs.simulation.api.Area;
+import pl.edu.agh.hbs.simulation.api.MessageDistributionStrategy;
+import pl.edu.agh.hbs.state.SimulationStateProvider;
 import pl.edu.agh.hbs.utils.ScalaInterop;
 import scala.collection.Seq;
 

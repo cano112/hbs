@@ -2,10 +2,10 @@ package pl.edu.agh.hbs.simulation.generic;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import pl.edu.agh.hbs.api.Area;
-import pl.edu.agh.hbs.api.MessageDistributionStrategy;
 import pl.edu.agh.hbs.model.Agent;
 import pl.edu.agh.hbs.model.skill.Message;
+import pl.edu.agh.hbs.simulation.api.Area;
+import pl.edu.agh.hbs.simulation.api.MessageDistributionStrategy;
 import pl.edu.agh.hbs.utils.ScalaInterop;
 import scala.collection.Seq;
 
