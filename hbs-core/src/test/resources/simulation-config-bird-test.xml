@@ -9,9 +9,8 @@
     <bean id="stopCondition" class="pl.edu.agh.hbs.simulation.generic.stop.StepsNumberStopCondition">
         <constructor-arg name="stateProvider" ref="simulationStateProvider"/>
         <constructor-arg name="eventBus" ref="eventBus"/>
-        <constructor-arg name="stepsLimit" value="2000"/>
+        <constructor-arg name="stepsLimit" value="10"/>
     </bean>
-
 
     <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
         <property name="propertyEditorRegistrars">
@@ -19,16 +18,18 @@
         </property>
     </bean>
 
-    <bean id="human" class="pl.edu.agh.hbs.simulation.shape.HumanShape">
+    <bean id="bird" class="pl.edu.agh.hbs.simulation.shape.TriangleShape">
         <constructor-arg name="factor" value="1"/>
     </bean>
+
+    <bean class="pl.edu.agh.hbs.model.ModifierBuffer"/>
 
     <bean id="webClientConfigProvider" class="pl.edu.agh.hbs.simulation.WebClientConfigProviderImpl">
         <constructor-arg name="width" value="2000"/>
         <constructor-arg name="height" value="1500"/>
         <constructor-arg name="representations">
             <scala-util:seq>
-                <ref bean="human"/>
+                <ref bean="bird"/>
             </scala-util:seq>
         </constructor-arg>
     </bean>
@@ -59,7 +60,7 @@
                                 <bean class="pl.edu.agh.hbs.model.Vector">
                                     <constructor-arg name="value">
                                         <scala-util:seq>
-                                            <value type="java.lang.Double">2500</value>
+                                            <value type="java.lang.Double">1000</value>
                                             <value type="java.lang.Double">1500</value>
                                         </scala-util:seq>
                                     </constructor-arg>
@@ -69,7 +70,7 @@
                     </constructor-arg>
                     <constructor-arg name="agents">
                         <list>
-                            <bean id="agent1" class="pl.edu.agh.hbs.simulation.agent.HumanAgent">
+                            <bean id="agent1" class="pl.edu.agh.hbs.simulation.agent.BirdAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -98,12 +99,13 @@
                                             <constructor-arg name="label" value="standard"/>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
+                                            <constructor-arg name="representation" ref="bird"/>
+                                            <constructor-arg name="colour" value="ORANGE"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent2" class="pl.edu.agh.hbs.simulation.agent.HumanAgent">
+                            <bean id="agent2" class="pl.edu.agh.hbs.simulation.agent.BirdAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -129,51 +131,18 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="label" value="standard">
+                                            <constructor-arg name="label">
+                                                <value type="java.lang.String">standard</value>
                                             </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
+                                            <constructor-arg name="representation" ref="bird"/>
+                                            <constructor-arg name="colour" value="ORANGE"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent3" class="pl.edu.agh.hbs.simulation.agent.HumanAgent">
-                                <constructor-arg name="initModifiers">
-                                    <scala-util:seq>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
-                                            <constructor-arg name="position">
-                                                <bean class="pl.edu.agh.hbs.model.Vector">
-                                                    <constructor-arg name="value">
-                                                        <scala-util:seq>
-                                                            <value type="java.lang.Double">1700</value>
-                                                            <value type="java.lang.Double">1000</value>
-                                                        </scala-util:seq>
-                                                    </constructor-arg>
-                                                </bean>
-                                            </constructor-arg>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity">
-                                            <constructor-arg name="velocity">
-                                                <bean class="pl.edu.agh.hbs.model.Vector">
-                                                    <constructor-arg name="value">
-                                                        <scala-util:seq>
-                                                            <value type="java.lang.Double">5</value>
-                                                            <value type="java.lang.Double">-15</value>
-                                                        </scala-util:seq>
-                                                    </constructor-arg>
-                                                </bean>
-                                            </constructor-arg>
-                                            <constructor-arg name="label" value="standard"/>
-                                        </bean>
-                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
-                                        </bean>
-                                    </scala-util:seq>
-                                </constructor-arg>
-                            </bean>
-
-                            <bean id="agent4" class="pl.edu.agh.hbs.simulation.agent.HumanAgent">
+                            <bean id="agent4" class="pl.edu.agh.hbs.simulation.agent.BirdAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -199,15 +168,18 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="label" value="standard"/>
+                                            <constructor-arg name="label">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
+                                            <constructor-arg name="representation" ref="bird"/>
+                                            <constructor-arg name="colour" value="ORANGE"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent5" class="pl.edu.agh.hbs.simulation.agent.HumanAgent">
+                            <bean id="agent5" class="pl.edu.agh.hbs.simulation.agent.BirdAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -233,15 +205,18 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="label" value="standard"/>
+                                            <constructor-arg name="label">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
+                                            <constructor-arg name="representation" ref="bird"/>
+                                            <constructor-arg name="colour" value="ORANGE"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent6" class="pl.edu.agh.hbs.simulation.agent.HumanAgent">
+                            <bean id="agent6" class="pl.edu.agh.hbs.simulation.agent.BirdAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -267,16 +242,18 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="label" value="standard"/>
+                                            <constructor-arg name="label">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
+                                            <constructor-arg name="representation" ref="bird"/>
+                                            <constructor-arg name="colour" value="ORANGE"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-
-                            <bean id="agent7" class="pl.edu.agh.hbs.simulation.agent.HumanAgent">
+                            <bean id="agent7" class="pl.edu.agh.hbs.simulation.agent.BirdAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -302,15 +279,18 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="label" value="standard"/>
+                                            <constructor-arg name="label">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
+                                            <constructor-arg name="representation" ref="bird"/>
+                                            <constructor-arg name="colour" value="ORANGE"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent8" class="pl.edu.agh.hbs.simulation.agent.HumanAgent">
+                            <bean id="agent8" class="pl.edu.agh.hbs.simulation.agent.BirdAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -336,15 +316,91 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="label" value="standard"/>
+                                            <constructor-arg name="label">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
+                                            <constructor-arg name="representation" ref="bird"/>
+                                            <constructor-arg name="colour" value="ORANGE"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
-                            <bean id="agent9" class="pl.edu.agh.hbs.simulation.agent.HumanAgent">
+                        </list>
+                    </constructor-arg>
+                </bean>
+                <bean id="area-2" class="pl.edu.agh.hbs.simulation.generic.GenericArea">
+                    <constructor-arg name="step" ref="genericStep"/>
+                    <constructor-arg name="areaId" value="area-2"/>
+                    <constructor-arg name="areaBordersDefinition">
+                        <bean class="pl.edu.agh.hbs.simulation.cartesian.CartesianRectangularBordersDefinition">
+                            <constructor-arg name="bottomBorderInclusive" value="true"/>
+                            <constructor-arg name="topBorderInclusive" value="true"/>
+                            <constructor-arg name="rightBorderInclusive" value="true"/>
+                            <constructor-arg name="leftBorderInclusive" value="false"/>
+                            <constructor-arg name="bottomLeftPosition">
+                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                    <constructor-arg name="value">
+                                        <scala-util:seq>
+                                            <value type="java.lang.Double">1000</value>
+                                            <value type="java.lang.Double">0</value>
+                                        </scala-util:seq>
+                                    </constructor-arg>
+                                </bean>
+                            </constructor-arg>
+                            <constructor-arg name="upperRightPosition">
+                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                    <constructor-arg name="value">
+                                        <scala-util:seq>
+                                            <value type="java.lang.Double">2000</value>
+                                            <value type="java.lang.Double">1500</value>
+                                        </scala-util:seq>
+                                    </constructor-arg>
+                                </bean>
+                            </constructor-arg>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg name="agents">
+                        <list>
+                            <bean id="agent3" class="pl.edu.agh.hbs.simulation.agent.BirdAgent">
+                                <constructor-arg name="initModifiers">
+                                    <scala-util:seq>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
+                                            <constructor-arg name="position">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">1700</value>
+                                                            <value type="java.lang.Double">1000</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity">
+                                            <constructor-arg name="velocity">
+                                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                                    <constructor-arg name="value">
+                                                        <scala-util:seq>
+                                                            <value type="java.lang.Double">5</value>
+                                                            <value type="java.lang.Double">-15</value>
+                                                        </scala-util:seq>
+                                                    </constructor-arg>
+                                                </bean>
+                                            </constructor-arg>
+                                            <constructor-arg name="label">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
+                                        </bean>
+                                        <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
+                                            <constructor-arg name="representation" ref="bird"/>
+                                            <constructor-arg name="colour" value="ORANGE"/>
+                                        </bean>
+                                    </scala-util:seq>
+                                </constructor-arg>
+                            </bean>
+                            <bean id="agent9" class="pl.edu.agh.hbs.simulation.agent.BirdAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition">
@@ -370,10 +426,13 @@
                                                     </constructor-arg>
                                                 </bean>
                                             </constructor-arg>
-                                            <constructor-arg name="label" value="standard"/>
+                                            <constructor-arg name="label">
+                                                <value type="java.lang.String">standard</value>
+                                            </constructor-arg>
                                         </bean>
                                         <bean class="pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation">
-                                            <constructor-arg name="representation" ref="human"/>
+                                            <constructor-arg name="representation" ref="bird"/>
+                                            <constructor-arg name="colour" value="ORANGE"/>
                                         </bean>
                                     </scala-util:seq>
                                 </constructor-arg>

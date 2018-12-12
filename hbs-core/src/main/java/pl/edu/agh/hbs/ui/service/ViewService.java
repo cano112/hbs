@@ -2,13 +2,13 @@ package pl.edu.agh.hbs.ui.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.hbs.model.Vector;
 import pl.edu.agh.hbs.state.SimulationStateProvider;
 import pl.edu.agh.hbs.ui.Representation;
 import pl.edu.agh.hbs.ui.dto.Body;
 import pl.edu.agh.hbs.ui.dto.Colour;
 import pl.edu.agh.hbs.ui.dto.ViewFrame;
 import pl.edu.agh.hbs.ui.dto.ViewPosition;
-import pl.edu.agh.hbs.model.Vector;
 
 import java.util.LinkedList;
 import java.util.List;

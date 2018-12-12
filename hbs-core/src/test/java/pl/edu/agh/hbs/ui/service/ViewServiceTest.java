@@ -6,13 +6,15 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import pl.edu.agh.hbs.model.ModifierBuffer;
 import pl.edu.agh.hbs.model.Vector;
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModPosition;
 import pl.edu.agh.hbs.model.skill.basic.modifier.ModRepresentation;
 import pl.edu.agh.hbs.model.skill.common.modifier.ModVelocity;
-import pl.edu.agh.hbs.simulation.agent.HumanAgent;
+import pl.edu.agh.hbs.simulation.agent.BirdAgent;
 import pl.edu.agh.hbs.simulation.shape.BoxShape;
 import pl.edu.agh.hbs.state.SimulationStateProvider;
+import pl.edu.agh.hbs.ui.dto.Colour;
 import pl.edu.agh.hbs.ui.dto.ViewFrame;
 import pl.edu.agh.hbs.ui.dto.ViewPosition;
 import scala.collection.JavaConverters;
@@ -34,10 +36,10 @@ public class ViewServiceTest {
     @Test
     public void shouldPrepareCorrectFrame() {
         // given
-        final HumanAgent humanA = prepareHumanWithBoxShape(3, 3, 5);
-        final HumanAgent humanB = prepareHumanWithBoxShape(1, 3, 5);
-        final HumanAgent humanC = prepareHumanWithBoxShape(2, 6, 1);
-        given(stateProvider.getAllAgents()).willReturn(Arrays.asList(humanA, humanB, humanC));
+        final BirdAgent birdA = prepareBirdWithBoxShape(3, 3, 5);
+        final BirdAgent birdB = prepareBirdWithBoxShape(1, 3, 5);
+        final BirdAgent birdC = prepareBirdWithBoxShape(2, 6, 1);
+        given(stateProvider.getAllAgents()).willReturn(Arrays.asList(birdA, birdB, birdC));
 
         // when
         final ViewFrame frame = viewService.prepareViewFrame();
@@ -46,17 +48,17 @@ public class ViewServiceTest {
         then(frame.getBodies())
                 .extracting("position", "kind")
                 .contains(
-                        Tuple.tuple(toViewPosition(humanA.position()), humanA.representation().getIdentity()),
-                        Tuple.tuple(toViewPosition(humanB.position()), humanB.representation().getIdentity()),
-                        Tuple.tuple(toViewPosition(humanC.position()), humanC.representation().getIdentity()));
+                        Tuple.tuple(toViewPosition(birdA.position()), birdA.representation().getIdentity()),
+                        Tuple.tuple(toViewPosition(birdB.position()), birdB.representation().getIdentity()),
+                        Tuple.tuple(toViewPosition(birdC.position()), birdC.representation().getIdentity()));
     }
 
-    private HumanAgent prepareHumanWithBoxShape(int factor, int posX, int posY) {
-        return new HumanAgent(JavaConverters.asScalaBuffer(
+    private BirdAgent prepareBirdWithBoxShape(int factor, int posX, int posY) {
+        return new BirdAgent(JavaConverters.asScalaBuffer(
                 Arrays.asList(
-                        new ModRepresentation(new BoxShape(factor)),
+                        new ModRepresentation(new BoxShape(factor), Colour.BLUE),
                         new ModPosition(Vector.of(posX, posY)),
-                        new ModVelocity(Vector.of(3, 3), "standard"))));
+                        new ModVelocity(Vector.of(3, 3), "standard"))), new ModifierBuffer());
     }
 
     private ViewPosition toViewPosition(Vector position) {

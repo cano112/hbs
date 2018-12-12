@@ -13,6 +13,7 @@ import java.util.Properties;
 public class PropertiesConfig {
 
     private static final String PROPERTIES_PATH = "/simulation.properties";
+
     @Bean
     public Properties simulationProperties() throws IOException {
         final Resource resource = new ClassPathResource(PROPERTIES_PATH);
