@@ -1,6 +1,5 @@
 package pl.edu.agh.hbs.state;
 
-import pl.edu.agh.age.compute.api.WorkerAddress;
 import pl.edu.agh.hbs.model.Agent;
 import pl.edu.agh.hbs.simulation.api.Area;
 import pl.edu.agh.hbs.simulation.api.AreaBordersDefinition;
@@ -68,22 +67,6 @@ public interface SimulationStateProvider {
     void unlockArea(String areaId);
 
     /**
-     * Retrieve address of the node, where given area is being run.
-     *
-     * @param areaId area identifier
-     * @return node address
-     */
-    WorkerAddress getAreaLocationByAreaId(String areaId);
-
-    /**
-     * Set node address for a given area. Invoked at simulation setup.
-     *
-     * @param areaId  area identifier
-     * @param address node address
-     */
-    void setAreaLocationByAreaId(String areaId, WorkerAddress address);
-
-    /**
      * Get collection of area identifiers mapped to border definition. Not backed by Hazelcast's distributed map.
      *
      * @return unmodifiable shallow copy of state map with border definitions
@@ -104,13 +87,6 @@ public interface SimulationStateProvider {
     Collection<Agent> getAllAgents();
 
     /**
-     * Set number of areas in distributed map - for quicker access
-     *
-     * @param count number of areas
-     */
-    void addAreasCount(int count);
-
-    /**
      * Areas are synchronized in two stages: 'step' and 'after step'. The synchronization point
      * is after each stage - areas are concurrent only inside a given stage. For synchronization,
      * we use countdown latches.
@@ -123,14 +99,6 @@ public interface SimulationStateProvider {
      * @param stage stage of step execution
      */
     void setStepLatchCount(AreaStepStage stage);
-
-    /**
-     * Add a given number of tokens to latch
-     *
-     * @param stage stage of step execution
-     * @param count number of tokens
-     */
-    void addToStepLatch(AreaStepStage stage, int count);
 
     /**
      * Get token from a bucket for a given stage
@@ -147,4 +115,10 @@ public interface SimulationStateProvider {
      * @return true if available, false otherwise
      */
     boolean isTokenAvailable(AreaStepStage stage);
+
+    boolean isMasterNode();
+
+    int addNode();
+
+    int getNodesCount();
 }

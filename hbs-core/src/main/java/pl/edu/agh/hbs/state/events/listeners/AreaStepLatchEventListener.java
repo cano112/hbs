@@ -20,7 +20,6 @@ public class AreaStepLatchEventListener implements EntryUpdatedListener<AreaStep
     private final SimulationStateProvider simulationStateProvider;
     private final ViewService viewService;
 
-
     @Autowired
     @Lazy
     public AreaStepLatchEventListener(final EventBus eventBus,
@@ -33,7 +32,7 @@ public class AreaStepLatchEventListener implements EntryUpdatedListener<AreaStep
 
     @Override
     public void entryUpdated(EntryEvent<AreaStepStage, Integer> event) {
-        if (event.getValue() == 0) {
+        if (event.getValue() == 0 && simulationStateProvider.isMasterNode()) {
             switch (event.getKey()) {
                 case STEP:
                     simulationStateProvider.setStepLatchCount(AreaStepStage.AFTER_STEP);

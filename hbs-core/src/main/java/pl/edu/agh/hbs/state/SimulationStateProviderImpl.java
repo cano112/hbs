@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.edu.agh.age.compute.api.DistributionUtilities;
-import pl.edu.agh.age.compute.api.WorkerAddress;
 import pl.edu.agh.hbs.model.Agent;
 import pl.edu.agh.hbs.simulation.api.Area;
 import pl.edu.agh.hbs.simulation.api.AreaBordersDefinition;
@@ -28,8 +27,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Lazy
 public class SimulationStateProviderImpl implements SimulationStateProvider {
 
-    private final IMap<String, WorkerAddress> areaLocations;
-
     private final IMap<String, Integer> areaStepsCount;
 
     private final IMap<String, Area> areas;
@@ -39,6 +36,8 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
     private final IMap<AreaStepStage, Integer> areaStepLatches;
 
     private final IMap<ConstantLabel, Integer> constants;
+
+    private boolean master;
 
     @Autowired
     public SimulationStateProviderImpl(
@@ -51,17 +50,18 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
 
         areaStepsCount = distributionUtilities.getMap("steps-count");
         areas = distributionUtilities.getMap("area-models");
-        areaLocations = distributionUtilities.getMap("area-locations");
         areaBorders = distributionUtilities.getMap("area-borders");
         constants = distributionUtilities.getMap("constants");
         areaStepLatches = distributionUtilities.getMap("area-step-buckets");
 
         areaStepLatches.putIfAbsent(AreaStepStage.STEP, 0);
         areaStepLatches.putIfAbsent(AreaStepStage.AFTER_STEP, 0);
-        constants.putIfAbsent(ConstantLabel.AREAS_COUNT, 0);
+        constants.putIfAbsent(ConstantLabel.NODES_COUNT, 0);
 
         areas.addEntryListener(areaAddedEventListener, true);
         areaStepLatches.addEntryListener(areaStepLatchEventListener, true);
+
+        master = false;
     }
 
     @Override
@@ -106,16 +106,6 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
     }
 
     @Override
-    public WorkerAddress getAreaLocationByAreaId(String areaId) {
-        return areaLocations.get(areaId);
-    }
-
-    @Override
-    public void setAreaLocationByAreaId(String areaId, WorkerAddress address) {
-        areaLocations.set(areaId, address);
-    }
-
-    @Override
     public Map<String, AreaBordersDefinition> getAreaBorderDefinitions() {
         return Collections.unmodifiableMap(new HashMap<>(areaBorders));
     }
@@ -134,30 +124,8 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
     }
 
     @Override
-    public void addAreasCount(int count) {
-        try {
-            constants.lock(ConstantLabel.AREAS_COUNT);
-            final int currentCount = constants.get(ConstantLabel.AREAS_COUNT);
-            constants.set(ConstantLabel.AREAS_COUNT, currentCount + count);
-        } finally {
-            constants.unlock(ConstantLabel.AREAS_COUNT);
-        }
-    }
-
-    @Override
     public void setStepLatchCount(AreaStepStage stage) {
-        areaStepLatches.set(stage, constants.get(ConstantLabel.AREAS_COUNT));
-    }
-
-    @Override
-    public void addToStepLatch(AreaStepStage stage, int count) {
-        try {
-            areaStepLatches.lock(stage);
-            final int currentCount = areaStepLatches.get(stage);
-            areaStepLatches.set(stage, currentCount + count);
-        } finally {
-            areaStepLatches.unlock(stage);
-        }
+        areaStepLatches.set(stage, areas.size());
     }
 
     @Override
@@ -177,5 +145,30 @@ public class SimulationStateProviderImpl implements SimulationStateProvider {
     @Override
     public boolean isTokenAvailable(AreaStepStage stage) {
         return areaStepLatches.get(stage) > 0;
+    }
+
+    @Override
+    public boolean isMasterNode() {
+        return master;
+    }
+
+    @Override
+    public int getNodesCount() {
+        return constants.get(ConstantLabel.NODES_COUNT);
+    }
+
+    @Override
+    public int addNode() {
+        try {
+            constants.lock(ConstantLabel.NODES_COUNT);
+            int currentCount = constants.get(ConstantLabel.NODES_COUNT);
+            if (currentCount == 0) {
+                master = true;
+            }
+            constants.set(ConstantLabel.NODES_COUNT, currentCount + 1);
+            return currentCount;
+        } finally {
+            constants.unlock(ConstantLabel.NODES_COUNT);
+        }
     }
 }

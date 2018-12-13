@@ -6,8 +6,6 @@
 
     <context:component-scan base-package="pl.edu.agh.hbs"/>
 
-    <bean id="topology" class="pl.edu.agh.age.compute.api.topology.FullMeshTopology"/>
-
     <bean id="webSocketServer" class="pl.edu.agh.hbs.ui.websocket.SimulationWebSocketServer">
         <constructor-arg name="eventBus" ref="eventBus"/>
         <constructor-arg name="port" value="8765"/>

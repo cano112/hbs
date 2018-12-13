@@ -20,7 +20,6 @@ public class StepRunner implements Runnable {
 
     private static final Logger log = LoggerFactory.getLogger(StepRunner.class);
 
-    private final long runnerId;
     private final String areaId;
     private final Step step;
     private final StopCondition stopCondition;
@@ -29,12 +28,10 @@ public class StepRunner implements Runnable {
     public StepRunner(final SimulationStateProvider simulationStateProvider,
                       final Step step,
                       final StopCondition stopCondition,
-                      final long runnerId,
                       final String areaId) {
         this.simulationStateProvider = checkNotNull(simulationStateProvider);
         this.step = checkNotNull(step);
         this.stopCondition = checkNotNull(stopCondition);
-        this.runnerId = runnerId;
         this.areaId = areaId;
     }
 
