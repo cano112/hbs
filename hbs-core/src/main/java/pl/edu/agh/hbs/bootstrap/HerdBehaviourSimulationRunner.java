@@ -61,6 +61,7 @@ public class HerdBehaviourSimulationRunner implements Runnable {
             threadPool.submitAll(Collections.singletonList(webSocketServer));
         }
 
+        final long startTime = System.nanoTime();
         final List<ListenableFuture<?>> futures = threadPool.submitAll(stepRunners);
 
         futures.forEach(f -> {
@@ -70,5 +71,7 @@ public class HerdBehaviourSimulationRunner implements Runnable {
                 throw new SimulationExecutionException(e);
             }
         });
+        final long time = System.nanoTime() - startTime;
+        log.info("Simulation execution time: " + time / 1e6 + " ms");
     }
 }

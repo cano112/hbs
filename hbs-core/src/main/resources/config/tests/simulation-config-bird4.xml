@@ -61,7 +61,7 @@
                                     <constructor-arg name="value">
                                         <scala-util:seq>
                                             <value type="java.lang.Double">1000</value>
-                                            <value type="java.lang.Double">1500</value>
+                                            <value type="java.lang.Double">750</value>
                                         </scala-util:seq>
                                     </constructor-arg>
                                 </bean>
@@ -216,6 +216,42 @@
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
+                        </list>
+                    </constructor-arg>
+                </bean>
+                <bean id="area-3" class="pl.edu.agh.hbs.simulation.generic.GenericArea">
+                    <constructor-arg name="step" ref="genericStep"/>
+                    <constructor-arg name="areaId" value="area-3"/>
+                    <constructor-arg name="areaBordersDefinition">
+                        <bean class="pl.edu.agh.hbs.simulation.cartesian.CartesianRectangularBordersDefinition">
+                            <constructor-arg name="bottomBorderInclusive" value="false"/>
+                            <constructor-arg name="topBorderInclusive" value="true"/>
+                            <constructor-arg name="rightBorderInclusive" value="true"/>
+                            <constructor-arg name="leftBorderInclusive" value="true"/>
+                            <constructor-arg name="bottomLeftPosition">
+                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                    <constructor-arg name="value">
+                                        <scala-util:seq>
+                                            <value type="java.lang.Double">0</value>
+                                            <value type="java.lang.Double">750</value>
+                                        </scala-util:seq>
+                                    </constructor-arg>
+                                </bean>
+                            </constructor-arg>
+                            <constructor-arg name="upperRightPosition">
+                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                    <constructor-arg name="value">
+                                        <scala-util:seq>
+                                            <value type="java.lang.Double">1000</value>
+                                            <value type="java.lang.Double">1500</value>
+                                        </scala-util:seq>
+                                    </constructor-arg>
+                                </bean>
+                            </constructor-arg>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg name="agents">
+                        <list>
                             <bean id="agent5" class="pl.edu.agh.hbs.simulation.agent.BirdAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
@@ -391,7 +427,7 @@
                                     <constructor-arg name="value">
                                         <scala-util:seq>
                                             <value type="java.lang.Double">2000</value>
-                                            <value type="java.lang.Double">1500</value>
+                                            <value type="java.lang.Double">750</value>
                                         </scala-util:seq>
                                     </constructor-arg>
                                 </bean>
@@ -548,6 +584,42 @@
                                     </scala-util:seq>
                                 </constructor-arg>
                             </bean>
+                        </list>
+                    </constructor-arg>
+                </bean>
+                <bean id="area-4" class="pl.edu.agh.hbs.simulation.generic.GenericArea">
+                    <constructor-arg name="step" ref="genericStep"/>
+                    <constructor-arg name="areaId" value="area-4"/>
+                    <constructor-arg name="areaBordersDefinition">
+                        <bean class="pl.edu.agh.hbs.simulation.cartesian.CartesianRectangularBordersDefinition">
+                            <constructor-arg name="bottomBorderInclusive" value="false"/>
+                            <constructor-arg name="topBorderInclusive" value="true"/>
+                            <constructor-arg name="rightBorderInclusive" value="true"/>
+                            <constructor-arg name="leftBorderInclusive" value="false"/>
+                            <constructor-arg name="bottomLeftPosition">
+                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                    <constructor-arg name="value">
+                                        <scala-util:seq>
+                                            <value type="java.lang.Double">1000</value>
+                                            <value type="java.lang.Double">750</value>
+                                        </scala-util:seq>
+                                    </constructor-arg>
+                                </bean>
+                            </constructor-arg>
+                            <constructor-arg name="upperRightPosition">
+                                <bean class="pl.edu.agh.hbs.model.Vector">
+                                    <constructor-arg name="value">
+                                        <scala-util:seq>
+                                            <value type="java.lang.Double">2000</value>
+                                            <value type="java.lang.Double">1500</value>
+                                        </scala-util:seq>
+                                    </constructor-arg>
+                                </bean>
+                            </constructor-arg>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg name="agents">
+                        <list>
                             <bean id="agent13" class="pl.edu.agh.hbs.simulation.agent.BirdAgent">
                                 <constructor-arg name="initModifiers">
                                     <scala-util:seq>
