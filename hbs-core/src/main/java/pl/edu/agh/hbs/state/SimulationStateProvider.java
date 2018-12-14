@@ -116,9 +116,20 @@ public interface SimulationStateProvider {
      */
     boolean isTokenAvailable(AreaStepStage stage);
 
+    /**
+     * @return true if on cluster's master node
+     */
     boolean isMasterNode();
 
+    /**
+     * Add node to simulation state
+     *
+     * @return number of nodes added before the current one
+     */
     int addNode();
 
+    /**
+     * @return number of nodes already registered
+     */
     int getNodesCount();
 }
